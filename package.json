@@ -7,10 +7,11 @@
     { "name": "Pavan Kumar Sunkara", "email": "pavan.sss1991@gmail.com" }
   ],
   "dependencies": {
-    "docco": "*",
-    "coffee-script": "~1.1.3"
+    "request": "*"
   },
   "devDependencies": {
+    "docco": "*",
+    "coffee-script": "~1.1.3",
     "vows": "~0.5.13"
   },
   "keywords": ["wrapper", "api", "v3", "github"],
@@ -18,10 +19,10 @@
     "type": "git",
     "url": "git://github.com/pkumar/octonode.git"
   },
-  "main": "./lib/index",
+  "main": "./lib/octonode",
   "scripts": {
     "test": "vows --spec $(find test -name '*-test.coffee')",
-    "preinstall": "cake docs && cake lib"
+    "prepublish": "cake docs && cake lib"
   },
   "engines": { "node": "~0.6.1" }
 }
