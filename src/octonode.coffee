@@ -4,10 +4,7 @@
 # Copyright © 2011 Pavan Kumar Sunkara. All rights reserved
 #
 
-octonode = module.exports
+octonode = module.exports =
 
-# Requiring modules
-octonode.request = require 'request'
-
-# [Authentication](octonode/auth.html) for github
-octonode.auth = require './octonode/auth'
+  # [Authentication](octonode/auth.html) for github
+  auth: require './octonode/auth'
