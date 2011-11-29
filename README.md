@@ -197,13 +197,13 @@ repo.update_reference('ref', 'sha', force, callback);
 ```
 
 ## Contributors
-[Contributors](http://github.com/pkumar/nocof/contributors)
+[Contributors](http://github.com/pkumar/octonode/contributors)
 
 ## License
 MIT/X11
 
 ## Bug Reports
-Report [here](http://github.com/pkumar/nocof/issues)
+Report [here](http://github.com/pkumar/octonode/issues)
 
 ## Contact
 Pavan Kumar Sunkara
