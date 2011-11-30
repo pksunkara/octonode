@@ -8,3 +8,6 @@ octonode = module.exports =
 
   # [Authentication](octonode/auth.html) for github
   auth: require './octonode/auth'
+
+  # [Client](octonode/client.html) for github
+  client: require './octonode/client'
