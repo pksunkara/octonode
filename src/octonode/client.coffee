@@ -6,14 +6,30 @@
 
 # Requiring modules
 request = require 'request'
+User = require './user'
+Repository = require './repository'
+Organization = require './organization'
 
 # Initiate class
 class Client
 
   constructor: (@token) ->
 
+  # Get user instance for client
+  user: (name) ->
+    new User name, this
+
+  # Get repository instance for client
+  repository: (name) ->
+    new Repository name, this
+
+  # Get organization instance for client
+  organization: (name) ->
+    new Organization name, this
+
   # Github api URL builder
   query: (uri) ->
+    uri = '/' + uri if uri[0] isnt '/'
     uri = "https://api.github.com#{uri}"
     uri+= "?access_token=#{@token}" if @token
     return uri

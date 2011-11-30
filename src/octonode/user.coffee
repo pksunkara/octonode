@@ -5,7 +5,12 @@
 #
 
 # Requiring modules
-Client = require './client'
 
 # Initiate class
-class User extends Client
+class User
+
+  constructor: (@name, @client) ->
+
+  # Get a user
+  info: (cb) ->
+    @client.get "/users/#{@name}", cb

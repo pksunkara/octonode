@@ -5,7 +5,12 @@
 #
 
 # Requiring modules
-Client = require './client'
 
 # Initiate class
-class Repository extends Client
+class Repository
+
+  constructor: (@name, @client) ->
+
+  # Get a repository
+  info: (cb) ->
+    @client.get "/repos/#{@name}", cb

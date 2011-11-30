@@ -5,7 +5,12 @@
 #
 
 # Requiring modules
-Client = require './client'
 
 # Initiate class
-class Organization extends Client
+class Organization
+
+  constructor: (@name, @client) ->
+
+  # Get an organization
+  info: (cb) ->
+    @client.get "/orgs/#{@name}", cb
