@@ -6,6 +6,7 @@
 
 # Requiring modules
 request = require 'request'
+qs = require 'querystring'
 
 # Authentication module
 auth = module.exports =
@@ -15,21 +16,54 @@ auth = module.exports =
     cli: 0
     web: 1
 
-  load: (options) ->
+  config: (options) ->
     if options.username and options.password
       @mode = @modes.cli
     else if options.client_id and options.client_secret
       @mode = @modes.web
+    else
+      throw new Error('No working mode recognized')
     @options = options
+    return this
 
-  login: (scopes) ->
-    if @mode==@modes.cli
+  login: (scopes, callback) ->
+    if @mode == @modes.cli
       request
         url: "https://#{@options.username}:#{@options.password}@api.github.com/authorizations",
         method: 'POST',
         body: JSON.stringify
           "scopes": scopes
         headers:
-          'Content-type': 'application/json'
+          'Content-Type': 'application/json'
       , (err, res, body) ->
-        console.log JSON.parse(body)
+        body = JSON.parse body
+        if res.statusCode==401
+          throw new Error body.message
+        else
+          callback body.token
+    else if @mode == @modes.web
+      if scopes instanceof Array
+        uri = 'https://github.com/login/oauth/authorize'
+        uri+= '?client_id=' + @options.client_id
+        uri+= '&scope=' + scopes.join(',')
+      else
+        request
+          url: 'https://github.com/login/oauth/access_token'
+          method: 'POST'
+          body: qs.stringify
+            code: scopes
+            client_id: @options.client_id
+            client_secret: @options.client_secret
+          headers:
+            'Content-Type': 'application/x-www-form-urlencoded'
+        , (err, res, body) ->
+          if res.statusCode==404
+            throw new Error 'Access token not found'
+          else
+            body = qs.parse body
+            if body.error
+              throw new Error body.error
+            else
+              callback body.access_token
+    else
+      throw new Error('No working mode defined')
