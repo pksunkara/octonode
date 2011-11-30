@@ -11,3 +11,12 @@ octonode = module.exports =
 
   # [Client](octonode/client.html) for github
   client: require './octonode/client'
+
+  # [User](octonode/user.html) class for github
+  user: require './octonode/user'
+
+  # [Repository](octonode/repositoru.html) class for github
+  repository: require './octonode/repository'
+
+  # [Organization](octonode/organization.html) class for github
+  organization: require './octonode/organization'

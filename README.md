@@ -1,6 +1,5 @@
-# octonode - nodejs github library
+# octonode
 
-## Description
 octonode is a library for nodejs to access the [github v3 api](developer.github.com)
 
 ## Installation
@@ -9,29 +8,19 @@ npm install octonode
 ```
 
 ## Usage
-The module exposes the objects `User`, `Organisation` and `Repository`
+
+__Please see the `expl` folder for examples__
+
+The module exposes the objects `User`, `Organization` and `Repository`
 for interacting with the respective github entities.
 All methods take at least a callback function as argument, which is
 called with the result data after the method is finished. The callback
 function should have the following signature:
 
 ```js
-function(status, data)
-{
-  // do something with the data
-  console.log(data);
-};
-```
-
-Status is a string describing whether the function call was a success or
-an error occurred and data is the actual result data. The status strings are
-available from the octonode module for comparison:
-
-```js
-octonode.status = {
-  SUCCESS: "success", // everything went great
-  ERROR: "error",     // something went wrong
-  NIMPL: "notimplemented" // method not yet implemented
+function(status, body) {
+  if (status==404)
+    console.log(body);
 };
 ```
 
@@ -41,6 +30,9 @@ Every object provides several method to interact with the entity it represents.
 var octonode = require('octonode');
 
 var me = octonode.User('pkumar');
+
+// Get information
+me.info(callback);
 
 // work with email data
 me.get_email_addresses(callback);
@@ -76,7 +68,8 @@ me.stop_watching('repo', callback);
 me.get_issues(params, callback);
 
 // organization data
-var org = octonode.Organisation('bulletjs')
+var org = octonode.Organization('bulletjs');
+
 org.info(callback);
 org.update(dict_with_update_properties, callback);
 org.get_members(callback);
@@ -196,17 +189,28 @@ repo.create_reference('ref', 'sha', callback);
 repo.update_reference('ref', 'sha', force, callback);
 ```
 
+If you like this projects, please watch this and follow me.
+
+### Testing
+```
+npm test
+```
+
 ## Contributors
-[Contributors](http://github.com/pkumar/octonode/contributors)
+Here is a list of [Contributors](http://github.com/pkumar/octonode/contributors)
+
+### TODO
+- Tests for all functions
+
+__I accept pull requests and guarantee a reply back within a day__
 
 ## License
 MIT/X11
 
 ## Bug Reports
-Report [here](http://github.com/pkumar/octonode/issues)
+Report [here](http://github.com/pkumar/octonode/issues). __Guaranteed reply within a day__.
 
 ## Contact
-Pavan Kumar Sunkara
-[pavan [dot] sss1991 [at] gmail [dot] com](mailto:pavan.sss1991@gmail.com)
+Pavan Kumar Sunkara (pavan.sss1991@gmail.com)
 
 Follow me on [github](https://github.com/users/follow?target=pkumar), [twitter](http://twitter.com/pksunkara)
