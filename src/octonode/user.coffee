@@ -12,7 +12,7 @@ class User
   constructor: (@name, @client) ->
 
   # Get a user
-  # `/users/pkumar` (no)
+  # `/users/pkumar`
   info: (cb) ->
     @client.get "/users/#{@name}", (s, b) ->
       if s is 404 then throw new Error 'User not found' else cb b

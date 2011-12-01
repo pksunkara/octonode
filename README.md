@@ -14,7 +14,7 @@ var github = require('octonode');
 
 var ghme  = client.me();
 var ghuser = client.user('pkumar');
-var ghrepo = client.repository('pkumar/octonode');
+var ghrepo = client.repository('pkumar/hub');
 var ghorg  = client.organization('flatiron');
 ```
 
@@ -91,15 +91,35 @@ client.get('/user', function (status, body) {
 });
 ```
 
+__All the callbacks for the following will take only a data argument__
+
 ### Github authenticated user api
 __Token required for the following__
 
 - Get information about the user (/user)
 
 ```js
-ghme.info(function (data) {
-  console.log(data); //json object
-});
+ghme.info(callback); //json
+```
+
+- Get emails of the user (/user/emails)
+
+```js
+ghme.getEmails(callback); //array
+```
+
+- Set emails of the user (POST /user/emails)
+
+```js
+ghme.setEmails(['new1@ma.il', 'new2@ma.il'], callback); //array
+ghme.setEmails('new@ma.il', callback); //array
+```
+
+- Delete emails of the user (DELETE /user/emails)
+
+```js
+ghme.delEmails(['new1@ma.il', 'new2@ma.il'], callback); //null
+ghme.delEmails('new@ma.il', callback); //null
 ```
 
 ### Github users api
@@ -108,9 +128,7 @@ __No token required for the following__
 - Get information about an user (/users/pkumar)
 
 ```js
-ghuser.info(function (data) {
-  console.log(data); //json object
-});
+ghuser.info(callback); //json
 ```
 
 ### Github repositories api
@@ -119,9 +137,7 @@ __No token required for the following__
 - Get information about a repository (/repos/pkumar/octonode)
 
 ```js
-ghrepo.info(function (data) {
-  console.log(data); //json object
-});
+ghrepo.info(callback); //json
 ```
 
 ### Github organizations api
@@ -130,9 +146,7 @@ __No token required for the following__
 - Get information about an organization (/orgs/flatiron)
 
 ```js
-ghorg.info(function (data) {
-  console.log(data); //json object
-});
+ghorg.info(callback); //json
 ```
 
 If you like this project, please watch this and follow me.
@@ -148,13 +162,6 @@ Here is a list of [Contributors](http://github.com/pkumar/octonode/contributors)
 ### TODO
 
 ```js
-// work with email data
-me.get_email_addresses(callback);
-me.set_email_addresses(['new@mail.com', 'alsonew@mail.com'], callback);
-me.set_email_addresses('new@mail.com', callback);
-me.delete_email_addresses(['new@mail.com', 'alsonew@mail.com'], callback);
-me.delete_email_addresses('new@mail.com', callback);
-
 // follower data
 me.get_followers(callback);
 me.get_following(callback);

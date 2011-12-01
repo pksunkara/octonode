@@ -46,6 +46,7 @@ class Client
       method: 'GET'
     , (err, res, body) ->
       if err then throw err
+      if res.statusCode is 401 then throw new Error 'Requires authentication'
       callback res.statusCode, JSON.parse(body)
 
   # Github api POST request
@@ -58,6 +59,7 @@ class Client
         'Content-Type': 'application/json'
     , (err, res, body) ->
       if err then throw err
+      if res.statusCode is 401 then throw new Error 'Requires authentication'
       callback res.statusCode, JSON.parse(body)
 
   # Github api PUT request
@@ -70,6 +72,7 @@ class Client
         'Content-Type': 'application/json'
     , (err, res, body) ->
       if err then throw err
+      if res.statusCode is 401 then throw new Error 'Requires authentication'
       callback res.statusCode, JSON.parse(body)
 
   # Github api DELETE request
@@ -82,6 +85,7 @@ class Client
         'Content-Type': 'application/json'
     , (err, res, body) ->
       if err then throw err
+      if res.statusCode is 401 then throw new Error 'Requires authentication'
       callback res.statusCode, JSON.parse(body)
 
 # Export modules

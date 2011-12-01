@@ -12,6 +12,7 @@ class Repository
   constructor: (@name, @client) ->
 
   # Get a repository
+  # `/repos/pkumar/hub`
   info: (cb) ->
     @client.get "/repos/#{@name}", (s, b) ->
       if s is 404 then throw new Error 'Repository not found' else cb b
