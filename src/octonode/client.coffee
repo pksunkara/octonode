@@ -39,6 +39,12 @@ class Client
     uri+= "?access_token=#{@token}" if @token
     return uri
 
+  errorHandle: (res, body, callback) ->
+    # TODO: Unprocessable entity
+    if res.statusCode is 422 then throw new Error body.message
+    if res.statusCode in [400, 401, 404] then throw new Error body.message
+    callback res.statusCode, body
+
   # Github api GET request
   get: (path, callback) ->
     request
@@ -46,11 +52,7 @@ class Client
       method: 'GET'
     , (err, res, body) ->
       if err then throw err
-      body = JSON.parse body
-      # TODO: Unprocessable entity
-      if res.statusCode is 422 then throw new Error body.message
-      if res.statusCode in [400, 401, 404] then throw new Error body.message
-      callback res.statusCode, body
+      @errorHandle res, JSON.parse(body), callback
 
   # Github api POST request
   post: (path, content={}, callback) ->
@@ -62,11 +64,7 @@ class Client
         'Content-Type': 'application/json'
     , (err, res, body) ->
       if err then throw err
-      body = JSON.parse body
-      # TODO: Unprocessable entity
-      if res.statusCode is 422 then throw new Error body.message
-      if res.statusCode in [400, 401, 404] then throw new Error body.message
-      callback res.statusCode, body
+      @errorHandle res, JSON.parse(body), callback
 
   # Github api PUT request
   put: (path, content={}, callback) ->
@@ -78,11 +76,7 @@ class Client
         'Content-Type': 'application/json'
     , (err, res, body) ->
       if err then throw err
-      body = JSON.parse body
-      # TODO: Unprocessable entity
-      if res.statusCode is 422 then throw new Error body.message
-      if res.statusCode in [400, 401, 404] then throw new Error body.message
-      callback res.statusCode, body
+      @errorHandle res, JSON.parse(body), callback
 
   # Github api DELETE request
   del: (path, content={}, callback) ->
@@ -94,11 +88,7 @@ class Client
         'Content-Type': 'application/json'
     , (err, res, body) ->
       if err then throw err
-      body = JSON.parse body
-      # TODO: Unprocessable entity
-      if res.statusCode is 422 then throw new Error body.message
-      if res.statusCode in [400, 401, 404] then throw new Error body.message
-      callback res.statusCode, body
+      @errorHandle res, JSON.parse(body), callback
 
 # Export modules
 module.exports = Client
