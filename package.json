@@ -11,7 +11,9 @@
   },
   "devDependencies": {
     "docco": "*",
-    "coffee-script": "~1.1.3"
+    "coffee-script": "~1.1.3",
+    "nock": "*",
+    "vows": "~0.6.0"
   },
   "keywords": ["wrapper", "api", "v3", "github"],
   "repository": {
@@ -20,6 +22,7 @@
   },
   "main": "./lib/octonode",
   "scripts": {
+    "test": "vows --spec $(find test -name '*-test.coffee')",
     "prepublish": "cake docs && cake lib"
   },
   "engines": { "node": "~0.6.1" }

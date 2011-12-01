@@ -88,6 +88,11 @@ client.get('/user', function (status, body) {
 
 If you like this project, please watch this and follow me.
 
+## Testing
+```
+npm test
+```
+
 ## Contributors
 Here is a list of [Contributors](http://github.com/pkumar/octonode/contributors)
 
