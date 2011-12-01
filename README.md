@@ -9,22 +9,89 @@ npm install octonode
 
 ## Usage
 
-__Please see the `expl` folder for examples__
-
-The module exposes the objects `User`, `Organization` and `Repository`
-for interacting with the respective github entities.
-All methods take at least a callback function as argument, which is
-called with the result data after the method is finished. The callback
-function should have the following signature:
-
 ```js
-function(status, body) {
-  if (status==404)
-    console.log(body);
-};
+var github = require('octonode');
 ```
 
-Every object provides several method to interact with the entity it represents.
+__All the below use cases need the above line__
+
+### Use cases
+
+- Authenticate to github in cli mode (desktop application)
+
+```js
+github.auth.config({
+  username: 'pkumar',
+  password: 'password'
+}).login(['user', 'repo', 'gist'], function (token) {
+  console.log(token);
+});
+```
+
+- Authenticate to github in web mode (web application)
+
+```js
+// Web application which authenticates to github
+var http = require('http');
+var url = require('url');
+var qs = require('querystring');
+
+// Build the authorization config and url
+var auth_url = github.auth.config({
+  client_id: 'mygithubclientid',
+  client_secret: 'mygithubclientsecret'
+}).login(['user', 'repo', 'gist']);
+
+// Web server
+http.createServer(function (req, res) {
+  uri = url.parse(req.url);
+  // Redirect to github login
+  if (uri.pathname=='/') {
+    res.writeHead(301, {'Content-Type': 'text/plain', 'Location': auth_url})
+    res.end('Redirecting to ' + auth_url);
+  }
+  // Callback url from github login
+  else if (uri.pathname=='/auth') {
+    github.auth.login(qs.parse(uri.query).code, function (token) {
+      console.log(token);
+    });
+    res.writeHead(200, {'Content-Type': 'text/plain'})
+    res.end('');
+  } else {
+    res.writeHead(200, {'Content-Type': 'text/plain'})
+    res.end('');
+  }
+}).listen(3000);
+
+console.log('Server started on 3000');
+```
+
+- Build a client which accesses any public information
+
+```js
+var client = new github.client();
+
+client.get('/users/pkumar', function (status, body) {
+  console.log(body); //json object
+});
+```
+
+- Build a client from an access token
+
+```js
+var client = new github.client('someaccesstoken');
+
+client.get('/user', function (status, body) {
+  console.log(body); //json object
+});
+```
+
+If you like this project, please watch this and follow me.
+
+## Contributors
+Here is a list of [Contributors](http://github.com/pkumar/octonode/contributors)
+
+### TODO
 
 ```js
 var octonode = require('octonode');
@@ -188,19 +255,6 @@ repo.get_all_references(callback);
 repo.create_reference('ref', 'sha', callback);
 repo.update_reference('ref', 'sha', force, callback);
 ```
-
-If you like this projects, please watch this and follow me.
-
-### Testing
-```
-npm test
-```
-
-## Contributors
-Here is a list of [Contributors](http://github.com/pkumar/octonode/contributors)
-
-### TODO
-- Tests for all functions
 
 __I accept pull requests and guarantee a reply back within a day__
 
