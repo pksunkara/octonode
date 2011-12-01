@@ -13,4 +13,5 @@ class Organization
 
   # Get an organization
   info: (cb) ->
-    @client.get "/orgs/#{@name}", cb
+    @client.get "/orgs/#{@name}", (s, b) ->
+      if s is 404 then throw new Error 'Organization not found' else cb b

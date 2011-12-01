@@ -11,11 +11,16 @@ npm install octonode
 
 ```js
 var github = require('octonode');
+
+var ghme  = client.me();
+var ghuser = client.user('pkumar');
+var ghrepo = client.repository('pkumar/octonode');
+var ghorg  = client.organization('flatiron');
 ```
 
-__All the below use cases need the above line__
+__Many of the below use cases use parts of the above code__
 
-### Use cases
+### Authentication
 
 - Authenticate to github in cli mode (desktop application)
 
@@ -86,6 +91,50 @@ client.get('/user', function (status, body) {
 });
 ```
 
+### Github authenticated user api
+__Token required for the following__
+
+- Get information about the user (/user)
+
+```js
+ghme.info(function (data) {
+  console.log(data); //json object
+});
+```
+
+### Github users api
+__No token required for the following__
+
+- Get information about an user (/users/pkumar)
+
+```js
+ghuser.info(function (data) {
+  console.log(data); //json object
+});
+```
+
+### Github repositories api
+__No token required for the following__
+
+- Get information about a repository (/repos/pkumar/octonode)
+
+```js
+ghrepo.info(function (data) {
+  console.log(data); //json object
+});
+```
+
+### Github organizations api
+__No token required for the following__
+
+- Get information about an organization (/orgs/flatiron)
+
+```js
+ghorg.info(function (data) {
+  console.log(data); //json object
+});
+```
+
 If you like this project, please watch this and follow me.
 
 ## Testing
@@ -99,13 +148,6 @@ Here is a list of [Contributors](http://github.com/pkumar/octonode/contributors)
 ### TODO
 
 ```js
-var octonode = require('octonode');
-
-var me = octonode.User('pkumar');
-
-// Get information
-me.info(callback);
-
 // work with email data
 me.get_email_addresses(callback);
 me.set_email_addresses(['new@mail.com', 'alsonew@mail.com'], callback);
@@ -142,7 +184,6 @@ me.get_issues(params, callback);
 // organization data
 var org = octonode.Organization('bulletjs');
 
-org.info(callback);
 org.update(dict_with_update_properties, callback);
 org.get_members(callback);
 org.get_member('user', callback);
@@ -169,8 +210,6 @@ org.remove_team_repository('team', 'name', callback);
 
 var repo = octonode.Repository('pkumar/octonode');
 
-// general repo information
-repo.info(callback);
 repo.update({name: ''}, callback);
 repo.get_contributors(callback);
 repo.get_languages(callback);

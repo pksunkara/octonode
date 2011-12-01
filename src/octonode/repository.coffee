@@ -13,4 +13,5 @@ class Repository
 
   # Get a repository
   info: (cb) ->
-    @client.get "/repos/#{@name}", cb
+    @client.get "/repos/#{@name}", (s, b) ->
+      if s is 404 then throw new Error 'Repository not found' else cb b

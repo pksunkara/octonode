@@ -6,6 +6,7 @@
 
 # Requiring modules
 request = require 'request'
+Me = require './me'
 User = require './user'
 Repository = require './repository'
 Organization = require './organization'
@@ -14,6 +15,10 @@ Organization = require './organization'
 class Client
 
   constructor: (@token) ->
+
+  # Get authenticated user instance for client
+  me: ->
+    new Me this
 
   # Get user instance for client
   user: (name) ->
