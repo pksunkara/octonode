@@ -96,13 +96,13 @@ __All the callbacks for the following will take only a data argument__
 ### Github authenticated user api
 __Token required for the following__
 
-- Get information about the user (/user)
+- Get information about the user (GET /user)
 
 ```js
 ghme.info(callback); //json
 ```
 
-- Update user profile (/user POST)
+- Update user profile (PATCH /user)
 
 ```js
 ghme.update({
@@ -116,17 +116,17 @@ ghme.update({
 }, callback);
 ```
 
-- Get emails of the user (/user/emails)
+- Get emails of the user (GET /user/emails)
 
 ```js
-ghme.emails(callback); //array
+ghme.emails(callback); //array of emails
 ```
 
 - Set emails of the user (POST /user/emails)
 
 ```js
-ghme.emails(['new1@ma.il', 'new2@ma.il'], callback); //array
-ghme.emails('new@ma.il', callback); //array
+ghme.emails(['new1@ma.il', 'new2@ma.il'], callback); //array of emails
+ghme.emails('new@ma.il', callback); //array of emails
 ```
 
 - Delete emails of the user (DELETE /user/emails)
@@ -136,19 +136,19 @@ ghme.emails(['new1@ma.il', 'new2@ma.il']);
 ghme.emails('new@ma.il');
 ```
 
-- Get the followers of the user (/user/followers)
+- Get the followers of the user (GET /user/followers)
 
 ```js
 ghme.followers(callback); //array of github users
 ```
 
-- Get users whom the user is following (/user/following)
+- Get users whom the user is following (GET /user/following)
 
 ```js
 ghme.following(callback); //array of github users
 ```
 
-- Check if the user is following a user (/user/following/marak)
+- Check if the user is following a user (GET /user/following/marak)
 
 ```js
 ghme.following('marak', callback); //boolean
@@ -166,22 +166,52 @@ ghme.follow('marak');
 ghme.unfollow('marak');
 ```
 
+- Get public keys of a user (GET /user/keys)
+
+```js
+ghme.keys(callback); //array of keys
+```
+
+- Get a single public key (GET /user/keys/1)
+
+```js
+ghme.keys(1, callback); //key
+```
+
+- Create a public key (POST /user/keys)
+
+```js
+ghme.keys({"title":"laptop", "key":"ssh-rsa AAA..."}, callback); //key
+```
+
+- Update a public key (PATCH /user/keys/1)
+
+```js
+ghme.keys(1, {"title":"desktop", "key":"ssh-rsa AAA..."}, callback); //key
+```
+
+- Delete a public key (DELETE /user/keys/1)
+
+```js
+ghme.keys(1);
+```
+
 ### Github users api
 __No token required for the following__
 
-- Get information about an user (/users/pkumar)
+- Get information about an user (GET /users/pkumar)
 
 ```js
 ghuser.info(callback); //json
 ```
 
-- Get an user followers (/users/pkumar/followers)
+- Get an user followers (GET /users/pkumar/followers)
 
 ```js
 ghuser.followers(callback); //array of github users
 ```
 
-- Get an user followings (/users/pkumar/following)
+- Get an user followings (GET /users/pkumar/following)
 
 ```js
 ghuser.following(callback); //array of github users
@@ -218,13 +248,6 @@ Here is a list of [Contributors](http://github.com/pkumar/octonode/contributors)
 ### TODO
 
 ```js
-// key data
-me.get_public_keys(callback);
-me.get_public_key('id', callback);
-me.add_public_key('title', 'key', callback);
-me.update_public_key('title', 'key', callback);
-me.delete_public_key('id', callback);
-
 // public orgs for unauthenticated, private and public for authenticated
 me.get_organizations(callback);
 

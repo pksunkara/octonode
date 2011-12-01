@@ -12,22 +12,23 @@ class Me
   constructor: (@client) ->
 
   # Get a user
-  # `/user`
+  # '/user' GET
   info: (cb) ->
     @client.get '/user', (s, b) ->
       if s is 404 then throw new Error 'User not found' else cb b
 
   # Update user
+  # '/user' PATCH
   update: (info, cb) ->
-    @client.post '/user', info, (s, b) ->
+    @client.put '/user', info, (s, b) ->
       if s isnt 200 then throw new Error 'User update error' else cb b
 
   # Get emails of the user
-  # '/user/emails'
+  # '/user/emails' GET
   emails: (cbOrEmails, cb) ->
     if cb? and typeof cbOrEmails isnt 'function'
       @setEmails cbOrEmails, cb
-    else if not cb? and typeof cbOrEmails isnt 'function'
+    else if !cb? and typeof cbOrEmails isnt 'function'
       @delEmails cbOrEmails
     else
       @client.get '/user/emails', (s, b) ->
@@ -46,13 +47,15 @@ class Me
       if s isnt 204 then throw new Error 'User delEmails error'
 
   # Get the followers of the user
-  # '/user/followers'
+  # '/user/followers' GET
+  # TODO: page, user
   followers: (cb) ->
     @client.get '/user/followers', (s, b) ->
       if s isnt 200 then throw new Error 'User followers error' else cb b
 
   # Get the followings of the user
-  # '/user/following'
+  # '/user/following' GET
+  # TODO: page, user
   following: (cbOrUser, cb) ->
     if cb? and typeof cbOrUser isnt 'function'
       @checkFollowing cbOrUser, cb
@@ -61,9 +64,9 @@ class Me
         if s isnt 200 then throw new Error 'User following error' else cbOrUser b
 
   # Check if you are following a user
-  # '/user/following/pkumar'
+  # '/user/following/pkumar' GET
   checkFollowing: (cbOrUser, cb) ->
-    @client.get "/user/following/#{cb}", (s, b) ->
+    @client.get "/user/following/#{cbOrUser}", (s, b) ->
       if s is 204 then cb(true) else cb(false)
 
   # Follow a user
@@ -77,3 +80,42 @@ class Me
   unfollow: (user) ->
     @client.del "/user/following/#{user}", {}, (s, b) ->
       if s isnt 204 then throw new Error 'User unfollow error'
+
+  # Get public keys of a user
+  # '/user/keys' GET
+  keys: (cbOrIdOrKey, cbOrKey, cb) ->
+    if !cb? and typeof cbOrIdOrKey is 'number' and typeof cbOrKey is 'function'
+      @getKey cbOrIdOrKey, cbOrKey
+    else if !cbOrKey? and !cb? and typeof cbOrIdOrKey is 'number'
+      @delKey cbOrIdOrKey
+    else if !cb? and typeof cbOrKey is 'function' and typeof cbOrIdOrKey is 'object'
+      @createKey cbOrIdOrKey, cbOrKey
+    else if typeof cb is 'function' and typeof cbOrIdOrKey is 'number' and typeof cbOrKey 'object'
+      @updateKey cbOrIdOrKey, cbOrKey, cb
+    else
+      @client.get '/user/keys', (s, b) ->
+        if s isnt 200 then throw new Error 'User keys error' else cbOrIdOrKey b
+
+  # Get a single public key
+  # '/user/keys/1' GET
+  getKey: (id, cb) ->
+    @client.get "/user/keys/#{id}", (s, b) ->
+      if s isnt 200 then throw new Error 'User getKey error' else cb b
+
+  # Create a public key
+  # '/user/keys' POST
+  createKey: (key, cb) ->
+    @client.post '/user/keys', key, (s, b) ->
+      if s isnt 201 then throw new Error 'User createKey error' else cb b
+
+  # Update a public key
+  # '/user/keys/1' PATCH
+  updateKey: (id, key, cb) ->
+    @client.put "/user/keys/#{id}", key, (s, b) ->
+      if s isnt 200 then throw new Error 'User updateKey error' else cb b
+
+  # Delete a public key
+  # '/user/keys/1' DELETE
+  delKey: (id) ->
+    @client.del "/user/keys/#{id}", (s, b) ->
+      if s isnt 204 then throw new Error 'User delKey error'

@@ -12,7 +12,7 @@ class Organization
   constructor: (@name, @client) ->
 
   # Get an organization
-  # `/orgs/flatiron`
+  # '/orgs/flatiron' GET
   info: (cb) ->
     @client.get "/orgs/#{@name}", (s, b) ->
       if s is 404 then throw new Error 'Organization not found' else cb b
