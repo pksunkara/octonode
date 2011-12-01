@@ -102,24 +102,68 @@ __Token required for the following__
 ghme.info(callback); //json
 ```
 
+- Update user profile (/user POST)
+
+```js
+ghme.update({
+  "name": "monalisa octocat",
+  "email": "octocat@github.com",
+  "blog": "https://github.com/blog",
+  "company": "GitHub",
+  "location": "San Francisco",
+  "hireable": true,
+  "bio": "There once..."
+}, callback);
+```
+
 - Get emails of the user (/user/emails)
 
 ```js
-ghme.getEmails(callback); //array
+ghme.emails(callback); //array
 ```
 
 - Set emails of the user (POST /user/emails)
 
 ```js
-ghme.setEmails(['new1@ma.il', 'new2@ma.il'], callback); //array
-ghme.setEmails('new@ma.il', callback); //array
+ghme.emails(['new1@ma.il', 'new2@ma.il'], callback); //array
+ghme.emails('new@ma.il', callback); //array
 ```
 
 - Delete emails of the user (DELETE /user/emails)
 
 ```js
-ghme.delEmails(['new1@ma.il', 'new2@ma.il'], callback); //null
-ghme.delEmails('new@ma.il', callback); //null
+ghme.emails(['new1@ma.il', 'new2@ma.il']);
+ghme.emails('new@ma.il');
+```
+
+- Get the followers of the user (/user/followers)
+
+```js
+ghme.followers(callback); //array of github users
+```
+
+- Get users whom the user is following (/user/following)
+
+```js
+ghme.following(callback); //array of github users
+```
+
+- Check if the user is following a user (/user/following/marak)
+
+```js
+ghme.following('marak', callback); //boolean
+```
+
+- Follow a user (PUT /user/following/marak)
+
+```js
+ghme.follow('marak');
+```
+
+- Unfollow a user (DELETE /user/following/marak)
+
+```js
+ghme.unfollow('marak');
 ```
 
 ### Github users api
@@ -129,6 +173,18 @@ __No token required for the following__
 
 ```js
 ghuser.info(callback); //json
+```
+
+- Get an user followers (/users/pkumar/followers)
+
+```js
+ghuser.followers(callback); //array of github users
+```
+
+- Get an user followings (/users/pkumar/following)
+
+```js
+ghuser.following(callback); //array of github users
 ```
 
 ### Github repositories api
@@ -162,13 +218,6 @@ Here is a list of [Contributors](http://github.com/pkumar/octonode/contributors)
 ### TODO
 
 ```js
-// follower data
-me.get_followers(callback);
-me.get_following(callback);
-me.is_following('user', callback);
-me.follow('user', callback);
-me.unfollow('user', callback);
-
 // key data
 me.get_public_keys(callback);
 me.get_public_key('id', callback);
