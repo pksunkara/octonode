@@ -15,4 +15,4 @@ class Organization
   # '/orgs/flatiron' GET
   info: (cb) ->
     @client.get "/orgs/#{@name}", (s, b) ->
-      if s is 404 then throw new Error 'Organization not found' else cb b
+      if s isnt 200 then throw new Error 'Organization info error' else cb b

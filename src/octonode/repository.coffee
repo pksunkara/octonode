@@ -15,4 +15,4 @@ class Repository
   # '/repos/pkumar/hub' GET
   info: (cb) ->
     @client.get "/repos/#{@name}", (s, b) ->
-      if s is 404 then throw new Error 'Repository not found' else cb b
+      if s isnt 200 then throw new Error 'Repository info error' else cb b

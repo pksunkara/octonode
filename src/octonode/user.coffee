@@ -15,7 +15,7 @@ class User
   # '/users/pkumar' GET
   info: (cb) ->
     @client.get "/users/#{@name}", (s, b) ->
-      if s is 404 then throw new Error 'User not found' else cb b
+      if s isnt 200 then throw new Error 'User info error' else cb b
 
   # Get the followers of a user
   # '/users/pkumar/followers' GET

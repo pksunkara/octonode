@@ -15,12 +15,12 @@ class Me
   # '/user' GET
   info: (cb) ->
     @client.get '/user', (s, b) ->
-      if s is 404 then throw new Error 'User not found' else cb b
+      if s isnt 200 then throw new Error 'Me info error' else cb b
 
   # Update user
   # '/user' PATCH
   update: (info, cb) ->
-    @client.put '/user', info, (s, b) ->
+    @client.post '/user', info, (s, b) ->
       if s isnt 200 then throw new Error 'User update error' else cb b
 
   # Get emails of the user
@@ -111,7 +111,7 @@ class Me
   # Update a public key
   # '/user/keys/1' PATCH
   updateKey: (id, key, cb) ->
-    @client.put "/user/keys/#{id}", key, (s, b) ->
+    @client.post "/user/keys/#{id}", key, (s, b) ->
       if s isnt 200 then throw new Error 'User updateKey error' else cb b
 
   # Delete a public key

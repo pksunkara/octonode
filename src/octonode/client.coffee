@@ -46,8 +46,11 @@ class Client
       method: 'GET'
     , (err, res, body) ->
       if err then throw err
-      if res.statusCode is 401 then throw new Error 'Requires authentication'
-      callback res.statusCode, JSON.parse(body)
+      body = JSON.parse body
+      # TODO: Unprocessable entity
+      if res.statusCode is 422 then throw new Error body.message
+      if res.statusCode in [400, 401, 404] then throw new Error body.message
+      callback res.statusCode, body
 
   # Github api POST request
   post: (path, content={}, callback) ->
@@ -59,8 +62,11 @@ class Client
         'Content-Type': 'application/json'
     , (err, res, body) ->
       if err then throw err
-      if res.statusCode is 401 then throw new Error 'Requires authentication'
-      callback res.statusCode, JSON.parse(body)
+      body = JSON.parse body
+      # TODO: Unprocessable entity
+      if res.statusCode is 422 then throw new Error body.message
+      if res.statusCode in [400, 401, 404] then throw new Error body.message
+      callback res.statusCode, body
 
   # Github api PUT request
   put: (path, content={}, callback) ->
@@ -72,8 +78,11 @@ class Client
         'Content-Type': 'application/json'
     , (err, res, body) ->
       if err then throw err
-      if res.statusCode is 401 then throw new Error 'Requires authentication'
-      callback res.statusCode, JSON.parse(body)
+      body = JSON.parse body
+      # TODO: Unprocessable entity
+      if res.statusCode is 422 then throw new Error body.message
+      if res.statusCode in [400, 401, 404] then throw new Error body.message
+      callback res.statusCode, body
 
   # Github api DELETE request
   del: (path, content={}, callback) ->
@@ -85,8 +94,11 @@ class Client
         'Content-Type': 'application/json'
     , (err, res, body) ->
       if err then throw err
-      if res.statusCode is 401 then throw new Error 'Requires authentication'
-      callback res.statusCode, JSON.parse(body)
+      body = JSON.parse body
+      # TODO: Unprocessable entity
+      if res.statusCode is 422 then throw new Error body.message
+      if res.statusCode in [400, 401, 404] then throw new Error body.message
+      callback res.statusCode, body
 
 # Export modules
 module.exports = Client
