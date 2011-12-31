@@ -5,6 +5,7 @@
 #
 
 # Requiring modules
+User = require './user'
 
 # Initiate class
 class Me
@@ -119,3 +120,6 @@ class Me
   delKey: (id) ->
     @client.del "/user/keys/#{id}", (s, b) ->
       if s isnt 204 then throw new Error 'User delKey error'
+
+# Export module
+module.exports = Me
