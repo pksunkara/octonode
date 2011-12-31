@@ -16,3 +16,6 @@ class Organization
   info: (cb) ->
     @client.get "/orgs/#{@name}", (s, b) ->
       if s isnt 200 then throw new Error 'Organization info error' else cb b
+
+# Export module
+module.exports = Organization
