@@ -16,3 +16,6 @@ class Repository
   info: (cb) ->
     @client.get "/repos/#{@name}", (s, b) ->
       if s isnt 200 then throw new Error 'Repository info error' else cb b
+
+# Export module
+module.exports = Repository
