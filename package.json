@@ -2,7 +2,7 @@
   "name": "octonode",
   "description": "nodejs wrapper for github v3 api",
   "version": "0.1.0",
-  "author": "Pavan Kumar Sunkara <pavan.sss1991@gmail.com> (http://pkumar.github.com)",
+  "author": "Pavan Kumar Sunkara <pavan.sss1991@gmail.com> (http://pksunkara.github.com)",
   "contributors": [
     { "name": "Pavan Kumar Sunkara", "email": "pavan.sss1991@gmail.com" }
   ],
@@ -10,20 +10,19 @@
     "request": "*"
   },
   "devDependencies": {
-    "docco": "*",
     "coffee-script": "~1.1.3",
-    "nock": "*",
+    "nock": "~0.6.2",
     "vows": "~0.6.0"
   },
   "keywords": ["wrapper", "api", "v3", "github"],
   "repository": {
     "type": "git",
-    "url": "git://github.com/pkumar/octonode.git"
+    "url": "git://github.com/pksunkara/octonode.git"
   },
   "main": "./lib/octonode",
   "scripts": {
-    "test": "vows --spec $(find test -name '*-test.coffee')",
-    "prepublish": "cake docs && cake lib"
+    "test": "vows --spec $(find test -name '*-test.js')",
+    "prepublish": "cake lib"
   },
-  "engines": { "node": "~0.6.1" }
+  "engines": { "node": ">0.4.11" }
 }
