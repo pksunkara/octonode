@@ -196,6 +196,12 @@ ghme.keys(1, {"title":"desktop", "key":"ssh-rsa AAA..."}, callback); //key
 ghme.keys(1);
 ```
 
+- Create a repository (POST /user/repos)
+
+```js
+ghme.createRepository({name:'RepoName'}, callback);
+```
+
 ### Github users api
 __No token required for the following__
 
@@ -253,7 +259,7 @@ me.get_organizations(callback);
 
 // public repos for unauthenticated, private and public for authenticated
 me.get_repositories(callback);
-me.create_repository({name: ''}, callback);
+me.create_repository({name: ''}, org, callback);
 me.get_watched_repositories(callback);
 me.is_watching('repo', callback);
 me.start_watching('repo', callback);
