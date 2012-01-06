@@ -50,7 +50,7 @@ class Client
     request
       uri: @query path
       method: 'GET'
-    , (err, res, body) ->
+    , (err, res, body) =>
       if err then throw err
       @errorHandle res, JSON.parse(body), callback
 
@@ -62,7 +62,7 @@ class Client
       body: JSON.stringify content
       headers:
         'Content-Type': 'application/json'
-    , (err, res, body) ->
+    , (err, res, body) =>
       if err then throw err
       @errorHandle res, JSON.parse(body), callback
 
@@ -74,7 +74,7 @@ class Client
       body: JSON.stringify content
       headers:
         'Content-Type': 'application/json'
-    , (err, res, body) ->
+    , (err, res, body) =>
       if err then throw err
       @errorHandle res, JSON.parse(body), callback
 
@@ -86,7 +86,7 @@ class Client
       body: JSON.stringify content
       headers:
         'Content-Type': 'application/json'
-    , (err, res, body) ->
+    , (err, res, body) =>
       if err then throw err
       @errorHandle res, JSON.parse(body), callback
 
