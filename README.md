@@ -1,6 +1,6 @@
 # octonode
 
-octonode is a library for nodejs to access the [github v3 api](developer.github.com)
+octonode is a library for nodejs to access the [github v3 api](http://developer.github.com)
 
 ## Installation
 ```
