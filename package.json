@@ -10,14 +10,13 @@
     "request": "*"
   },
   "devDependencies": {
-    "coffee-script": "1.1.2",
     "nock": "0.7.x",
-    "vows": "0.6.x",
-    "should": "~0.2.1",
     "mocha": "0.7.x",
     "sinon": "1.2.x",
-    "async" : "0.1.x",
-    "underscore" : "1.2.x"
+    "async": "0.1.x",
+    "should": "~0.2.1",
+    "underscore": "1.2.x",
+    "coffee-script": "1.1.2"
   },
   "keywords": ["wrapper", "api", "v3", "github"],
   "repository": {
@@ -29,9 +28,8 @@
   },
   "main": "./lib/octonode",
   "scripts": {
-    "test_vows": "vows --spec $(find test -name '*-test.coffee')",
     "prepublish": "cake lib",
-    "test": "NODE_ENV=test node_modules/.bin/mocha -R spec test/*.coffee"
+    "test": "NODE_ENV=test node_modules/.bin/mocha -R spec $(find test -name '*.coffee')"
   },
   "engines": { "node": ">0.4.11" },
   "licenses": [
