@@ -243,7 +243,7 @@ npm test
 ```
 
 ## Contributors
-Here is a list of [Contributors](http://github.com/pkumar/octonode/contributors)
+Here is a list of [Contributors](http://github.com/pksunkara/octonode/contributors)
 
 ### TODO
 
@@ -287,7 +287,7 @@ org.get_team_repository('team', 'name', callback);
 org.add_team_repository('team', 'name', callback);
 org.remove_team_repository('team', 'name', callback);
 
-var repo = octonode.Repository('pkumar/octonode');
+var repo = octonode.Repository('pksunkara/octonode');
 
 repo.update({name: ''}, callback);
 repo.get_contributors(callback);
@@ -385,9 +385,9 @@ __I accept pull requests and guarantee a reply back within a day__
 MIT/X11
 
 ## Bug Reports
-Report [here](http://github.com/pkumar/octonode/issues). __Guaranteed reply within a day__.
+Report [here](http://github.com/pksunkara/octonode/issues). __Guaranteed reply within a day__.
 
 ## Contact
 Pavan Kumar Sunkara (pavan.sss1991@gmail.com)
 
-Follow me on [github](https://github.com/users/follow?target=pkumar), [twitter](http://twitter.com/pksunkara)
+Follow me on [github](https://github.com/users/follow?target=pksunkara), [twitter](http://twitter.com/pksunkara)
