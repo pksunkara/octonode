@@ -37,8 +37,7 @@ auth = module.exports =
           'Content-Type': 'application/json'
       , (err, res, body) ->
         body = JSON.parse body
-        return callback(err,new Error(body.message) ) if res.statusCode is 401
-        callback null,body.token
+        if res.statusCode is 401 then callback(err, new Error(body.message)) else callback(null, body.token)
     else if @mode == @modes.web
       if scopes instanceof Array
         uri = 'https://github.com/login/oauth/authorize'
@@ -55,9 +54,10 @@ auth = module.exports =
           headers:
             'Content-Type': 'application/x-www-form-urlencoded'
         , (err, res, body) ->
-          return callback(new Error('Access token not found')) if res.statusCode is 404
-          body = qs.parse body
-          return callback(new Error(body.error)) if body.error
-          callback null,body.access_token
+          if res.statusCode is 404
+            callback(new Error('Access token not found'))
+          else
+            body = qs.parse body
+            if body.error then callback(new Error(body.error)) else callback(null, body.access_token)
     else
       callback new Error('No working mode defined')

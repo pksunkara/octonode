@@ -13,9 +13,9 @@ Organization = require './organization'
 
 # Initiate class
 class Client
-  
+
   constructor: (@token) ->
-    
+
   # Get authenticated user instance for client
   me: ->
     new Me @
@@ -36,15 +36,13 @@ class Client
   query: (path = '/') ->
     path = '/' + path if path[0] isnt '/'
     uri = "https://api.github.com#{path}"
-    uri+= "?access_token=#{@token}" if @token
-
-    uri
+    uri+= if @token then "?access_token=#{@token}" else ''
 
   errorHandle: (res, body, callback) ->
     # TODO: Unprocessable entity
-    return callback(new Error(body.message)) if res.statusCode is 422 
-    return callback(new Error(body.message)) if res.statusCode in [400, 401, 404] 
-    callback null,res.statusCode, body
+    return callback(new Error(body.message)) if res.statusCode is 422
+    return callback(new Error(body.message)) if res.statusCode in [400, 401, 404]
+    callback null, res.statusCode, body
 
   # Github api GET request
   get: (path, callback) ->

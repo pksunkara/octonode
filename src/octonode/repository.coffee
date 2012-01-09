@@ -14,10 +14,9 @@ class Repository
   # Get a repository
   # '/repos/pkumar/hub' GET
   info: (cb) ->
-    @client.get "/repos/#{@name}", (err,s, b)  ->
+    @client.get "/repos/#{@name}", (err, s, b)  ->
       return cb(err) if err
-      return cb(new Error( 'Repository info error')) if s isnt 200
-      cb null,b
+      if s isnt 200 then cb(new Error('Repository info error')) cb null, b
 
 # Export module
 module.exports = Repository

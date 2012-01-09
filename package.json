@@ -11,9 +11,9 @@
   },
   "devDependencies": {
     "coffee-script": "1.1.2",
-    "nock": "~0.7.0",
-    "vows": "~0.6.0",
-    "should": ">=0.2.1",
+    "nock": "0.7.x",
+    "vows": "0.6.x",
+    "should": "~0.2.1",
     "mocha": "0.7.x",
     "sinon": "1.2.x",
     "async" : "0.1.x",
@@ -27,14 +27,11 @@
   "bugs": {
     "url": "http://github.com/pksunkara/octonode/issues"
   },
-  
   "main": "./lib/octonode",
   "scripts": {
-    "test_vows": "vows --spec $(find test -name '*-test.js')",
+    "test_vows": "vows --spec $(find test -name '*-test.coffee')",
     "prepublish": "cake lib",
-    "test": "NODE_ENV=test node_modules/.bin/mocha -R spec test/*.coffee",
-    "watch": "node_modules/.bin/coffee -c -w  -o lib src"
-    
+    "test": "NODE_ENV=test node_modules/.bin/mocha -R spec test/*.coffee"
   },
   "engines": { "node": ">0.4.11" },
   "licenses": [
