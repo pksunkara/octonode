@@ -13,37 +13,38 @@ Organization = require './organization'
 
 # Initiate class
 class Client
-
+  
   constructor: (@token) ->
-
+    
   # Get authenticated user instance for client
   me: ->
-    new Me this
+    new Me @
 
   # Get user instance for client
   user: (name) ->
-    new User name, this
+    new User name, @
 
   # Get repository instance for client
   repository: (name) ->
-    new Repository name, this
+    new Repository name, @
 
   # Get organization instance for client
   organization: (name) ->
-    new Organization name, this
+    new Organization name, @
 
   # Github api URL builder
-  query: (uri) ->
-    uri = '/' + uri if uri[0] isnt '/'
-    uri = "https://api.github.com#{uri}"
+  query: (path = '/') ->
+    path = '/' + path if path[0] isnt '/'
+    uri = "https://api.github.com#{path}"
     uri+= "?access_token=#{@token}" if @token
-    return uri
+
+    uri
 
   errorHandle: (res, body, callback) ->
     # TODO: Unprocessable entity
-    if res.statusCode is 422 then throw new Error body.message
-    if res.statusCode in [400, 401, 404] then throw new Error body.message
-    callback res.statusCode, body
+    return callback(new Error(body.message)) if res.statusCode is 422 
+    return callback(new Error(body.message)) if res.statusCode in [400, 401, 404] 
+    callback null,res.statusCode, body
 
   # Github api GET request
   get: (path, callback) ->
@@ -51,7 +52,7 @@ class Client
       uri: @query path
       method: 'GET'
     , (err, res, body) =>
-      if err then throw err
+      return callback(err) if err
       @errorHandle res, JSON.parse(body), callback
 
   # Github api POST request
@@ -63,7 +64,7 @@ class Client
       headers:
         'Content-Type': 'application/json'
     , (err, res, body) =>
-      if err then throw err
+      return callback(err) if err
       @errorHandle res, JSON.parse(body), callback
 
   # Github api PUT request
@@ -75,7 +76,7 @@ class Client
       headers:
         'Content-Type': 'application/json'
     , (err, res, body) =>
-      if err then throw err
+      return callback(err) if err
       @errorHandle res, JSON.parse(body), callback
 
   # Github api DELETE request
@@ -87,7 +88,7 @@ class Client
       headers:
         'Content-Type': 'application/json'
     , (err, res, body) =>
-      if err then throw err
+      return callback(err) if err
       @errorHandle res, JSON.parse(body), callback
 
 # Export modules
