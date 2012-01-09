@@ -16,14 +16,14 @@ describe 'WHEN working with client', ->
   after ( done) ->
     helper.stop done
 
-  describe 'WHEN instantiating a client with token', ->  
+  describe 'WHEN instantiating a client with token', ->
     it 'should exist and have the token set',  ->
       client = new Client("some_token")
     
       should.exist client
       client.should.have.property('token',"some_token")
 
-    describe 'WHEN creating a query (client.query)', ->  
+    describe 'WHEN creating a query (client.query)', ->
       it 'should include the token in the query string', ->
         client = new Client("some_token")
         url = client.query('/repos')
@@ -32,14 +32,14 @@ describe 'WHEN working with client', ->
         url.should.equal('https://api.github.com/repos?access_token=some_token')
 
 
-  describe 'WHEN instantiating a client without a token', ->  
+  describe 'WHEN instantiating a client without a token', ->
     it 'should exist and have no token set',  ->
       client = new Client()
 
       should.exist client
       client.should.not.have.property('token')
       
-    describe 'WHEN creating a query (client.query)', ->  
+    describe 'WHEN creating a query (client.query)', ->
       it 'should include no token in the query string', ->
         client = new Client()
         url = client.query('/repos')
@@ -54,7 +54,7 @@ describe 'WHEN working with client', ->
         should.exist url
         url.should.equal('https://api.github.com/')
       
-  describe 'WHEN accessing a sub resource', ->  
+  describe 'WHEN accessing a sub resource', ->
     it 'should return a valid me',  ->
        client = new Client()
        me = client.me()
