@@ -23,7 +23,7 @@ module.exports =
   basic: () ->
 
   # Public API
-  viewGet: (path, code, data, headers) ->
+  viewGet: (path, code, data, headers = {}) ->
     viewNock.get(path).reply code, JSON.stringify(data), headers
 
   viewPost: (path, body={}, code, data, headers) ->
