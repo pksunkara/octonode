@@ -7,19 +7,22 @@
 octonode = module.exports =
 
   # [Authentication](octonode/auth.html) for github
-  auth: require './octonode/auth'
+  Auth: require './octonode/auth'
 
   # [Client](octonode/client.html) for github
-  client: require './octonode/client'
+  Client: require './octonode/client'
 
   # [User](octonode/user.html) class for github
-  user: require './octonode/user'
+  User: require './octonode/user'
 
   # [Repository](octonode/repository.html) class for github
-  repository: require './octonode/repository'
+  Repository: require './octonode/repository'
 
   # [Organization](octonode/organization.html) class for github
-  organization: require './octonode/organization'
+  Organization: require './octonode/organization'
 
   # [Authenticated user](octonode/me.html) class for github
-  me: require './octonode/me'
+  Me: require './octonode/me'
+
+  client: (access_token = null) ->
+    new octonode.Client(access_token)

@@ -9,8 +9,7 @@
 # Initiate class
 class User
 
-  constructor: (user, client) ->
-    @client = client
+  constructor: (user, @client) ->
     if typeof user is 'string'
       @login = user
     else
@@ -22,22 +21,29 @@ class User
   # Get a user
   # '/users/pkumar' GET
   info: (cb) ->
-    @client.get "/users/#{@login}", (s, b) ->
-      if s isnt 200 then throw new Error 'User info error' else cb b
+    @client.get "/users/#{@login}", (err,s, b)  ->
+      return cb(err) if err
+      return cb(new Error( 'User info error')) if s isnt 200
+      cb null,b
 
   # Get the followers of a user
   # '/users/pkumar/followers' GET
   # TODO: page, user
   followers: (cb) ->
-    @client.get "/users/#{@login}/followers", (s, b) ->
-      if s isnt 200 then throw new Error 'User followers error' else cb b
+    @client.get "/users/#{@login}/followers", (err,s, b)  ->
+      return cb(err) if err
+      return cb(new Error( 'User followers error')) if s isnt 200
+      cb null,b
+    
 
   # Get the followings of a user
   # '/users/pkumar/following' GET
   # TODO: page, user
   following: (cb) ->
-    @client.get "/users/#{@login}/following", (s, b) ->
-      if s isnt 200 then throw new Error 'User following error' else cb b
+    @client.get "/users/#{@login}/following", (err,s, b)  ->
+      return cb(err) if err
+      return cb(new Error( 'User following error')) if s isnt 200
+      cb null,b
 
 # Export module
 module.exports = User
