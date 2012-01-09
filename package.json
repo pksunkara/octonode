@@ -29,7 +29,8 @@
   "main": "./lib/octonode",
   "scripts": {
     "prepublish": "cake lib",
-    "test": "NODE_ENV=test node_modules/.bin/mocha -R spec $(find test -name '*.coffee')"
+    "test": "NODE_ENV=test node_modules/.bin/mocha -R spec $(find test -name '*.coffee')",
+    "watch" : "node_modules/.bin/coffee -c -w  -o lib src"
   },
   "engines": { "node": ">0.4.11" },
   "licenses": [
