@@ -20,9 +20,9 @@ var ghorg  = client.organization('flatiron');
 
 __Many of the below use cases use parts of the above code__
 
-### Authentication
+## Authentication
 
-- Authenticate to github in cli mode (desktop application)
+### Authenticate to github in cli mode (desktop application)
 
 ```js
 github.auth.config({
@@ -33,7 +33,7 @@ github.auth.config({
 });
 ```
 
-- Authenticate to github in web mode (web application)
+### Authenticate to github in web mode (web application)
 
 ```js
 // Web application which authenticates to github
@@ -71,7 +71,7 @@ http.createServer(function (req, res) {
 console.log('Server started on 3000');
 ```
 
-- Build a client which accesses any public information
+### Build a client which accesses any public information
 
 ```js
 var client = new github.client();
@@ -81,7 +81,7 @@ client.get('/users/pkumar', function (status, body) {
 });
 ```
 
-- Build a client from an access token
+### Build a client from an access token
 
 ```js
 var client = new github.client('someaccesstoken');
@@ -93,16 +93,17 @@ client.get('/user', function (status, body) {
 
 __All the callbacks for the following will take only a data argument__
 
-### Github authenticated user api
-__Token required for the following__
+## Github authenticated user api
 
-- Get information about the user (GET /user)
+Token required for the following
+
+### Get information about the user (GET /user)
 
 ```js
 ghme.info(callback); //json
 ```
 
-- Update user profile (PATCH /user)
+### Update user profile (PATCH /user)
 
 ```js
 ghme.update({
@@ -116,120 +117,123 @@ ghme.update({
 }, callback);
 ```
 
-- Get emails of the user (GET /user/emails)
+### Get emails of the user (GET /user/emails)
 
 ```js
 ghme.emails(callback); //array of emails
 ```
 
-- Set emails of the user (POST /user/emails)
+### Set emails of the user (POST /user/emails)
 
 ```js
 ghme.emails(['new1@ma.il', 'new2@ma.il'], callback); //array of emails
 ghme.emails('new@ma.il', callback); //array of emails
 ```
 
-- Delete emails of the user (DELETE /user/emails)
+### Delete emails of the user (DELETE /user/emails)
 
 ```js
 ghme.emails(['new1@ma.il', 'new2@ma.il']);
 ghme.emails('new@ma.il');
 ```
 
-- Get the followers of the user (GET /user/followers)
+### Get the followers of the user (GET /user/followers)
 
 ```js
 ghme.followers(callback); //array of github users
 ```
 
-- Get users whom the user is following (GET /user/following)
+### Get users whom the user is following (GET /user/following)
 
 ```js
 ghme.following(callback); //array of github users
 ```
 
-- Check if the user is following a user (GET /user/following/marak)
+### Check if the user is following a user (GET /user/following/marak)
 
 ```js
 ghme.following('marak', callback); //boolean
 ```
 
-- Follow a user (PUT /user/following/marak)
+### Follow a user (PUT /user/following/marak)
 
 ```js
 ghme.follow('marak');
 ```
 
-- Unfollow a user (DELETE /user/following/marak)
+### Unfollow a user (DELETE /user/following/marak)
 
 ```js
 ghme.unfollow('marak');
 ```
 
-- Get public keys of a user (GET /user/keys)
+### Get public keys of a user (GET /user/keys)
 
 ```js
 ghme.keys(callback); //array of keys
 ```
 
-- Get a single public key (GET /user/keys/1)
+### Get a single public key (GET /user/keys/1)
 
 ```js
 ghme.keys(1, callback); //key
 ```
 
-- Create a public key (POST /user/keys)
+### Create a public key (POST /user/keys)
 
 ```js
 ghme.keys({"title":"laptop", "key":"ssh-rsa AAA..."}, callback); //key
 ```
 
-- Update a public key (PATCH /user/keys/1)
+### Update a public key (PATCH /user/keys/1)
 
 ```js
 ghme.keys(1, {"title":"desktop", "key":"ssh-rsa AAA..."}, callback); //key
 ```
 
-- Delete a public key (DELETE /user/keys/1)
+### Delete a public key (DELETE /user/keys/1)
 
 ```js
 ghme.keys(1);
 ```
 
-### Github users api
-__No token required for the following__
+## Github users api
 
-- Get information about an user (GET /users/pkumar)
+No token required for the following
+
+### Get information about an user (GET /users/pkumar)
 
 ```js
 ghuser.info(callback); //json
 ```
 
-- Get an user followers (GET /users/pkumar/followers)
+### Get an user followers (GET /users/pkumar/followers)
 
 ```js
 ghuser.followers(callback); //array of github users
 ```
 
-- Get an user followings (GET /users/pkumar/following)
+### Get an user followings (GET /users/pkumar/following)
 
 ```js
 ghuser.following(callback); //array of github users
 ```
 
-### Github repositories api
-__No token required for the following__
+## Github repositories api
 
-- Get information about a repository (/repos/pkumar/octonode)
+No token required for the following
+
+### Get information about a repository (/repos/pkumar/octonode)
 
 ```js
 ghrepo.info(callback); //json
 ```
 
-### Github organizations api
-__No token required for the following__
+## Github organizations api
 
-- Get information about an organization (/orgs/flatiron)
+No token required for the following
+
+### Get information about an organization (/orgs/flatiron)
 
 ```js
 ghorg.info(callback); //json
