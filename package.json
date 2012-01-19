@@ -1,10 +1,37 @@
 {
   "name": "octonode",
-  "description": "nodejs wrapper for github v3 api",
   "version": "0.1.0",
   "author": "Pavan Kumar Sunkara <pavan.sss1991@gmail.com> (http://pksunkara.github.com)",
+  "description": "nodejs wrapper for github v3 api",
+  "main": "./lib/octonode",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/pksunkara/octonode.git"
+  },
+  "keywords": [
+    "wrapper",
+    "api",
+    "v3",
+    "github"
+  ],
+  "homepage": "http://pksunkara.github.com/octonode",
+  "scripts": {
+    "prepublish": "cake lib",
+    "test": "NODE_ENV=test node_modules/.bin/mocha --require assert --require should --globals name -R spec $(find test -name '*.coffee')"
+  },
   "contributors": [
-    { "name": "Pavan Kumar Sunkara", "email": "pavan.sss1991@gmail.com" }
+    {
+      "name": "Pavan Kumar Sunkara",
+      "email": "pavan.sss1991@gmail.com"
+    },
+    {
+      "name": "Martin Wawrusch",
+      "email": "martin@wawrusch.com"
+    },
+    {
+      "name": "Joe Frambach",
+      "email": "joe.frambach@showclix.com"
+    }
   ],
   "dependencies": {
     "request": "*"
@@ -18,20 +45,12 @@
     "underscore": "1.2.x",
     "coffee-script": "1.1.2"
   },
-  "keywords": ["wrapper", "api", "v3", "github"],
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/pksunkara/octonode.git"
+  "engines": {
+    "node": ">0.4.11"
   },
   "bugs": {
-    "url": "http://github.com/pksunkara/octonode/issues"
+    "url": "https://github.com/pksunkara/octonode/issues"
   },
-  "main": "./lib/octonode",
-  "scripts": {
-    "prepublish": "cake lib",
-    "test": "NODE_ENV=test node_modules/.bin/mocha --require assert --require should --globals name -R spec $(find test -name '*.coffee')"
-  },
-  "engines": { "node": ">0.4.11" },
   "licenses": [
     {
       "type": "MIT",
