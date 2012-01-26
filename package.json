@@ -17,7 +17,7 @@
   "homepage": "http://pksunkara.github.com/octonode",
   "scripts": {
     "prepublish": "./node_modules/.bin/cake lib",
-    "test": "./node_modules/.bin/vows --spec $(find test -name '*.coffee')"
+    "test": "./node_modules/.bin/vows --spec $(find test -name '[^nock]*.coffee')"
   },
   "contributors": [
     {
