@@ -16,8 +16,8 @@
   ],
   "homepage": "http://pksunkara.github.com/octonode",
   "scripts": {
-    "prepublish": "cake lib",
-    "test": "NODE_ENV=test node_modules/.bin/mocha --require assert --require should --globals name -R spec $(find test -name '*.coffee')"
+    "prepublish": "./node_modules/.bin/cake lib",
+    "test": "./node_modules/.bin/vows --spec $(find test -name '*.coffee')"
   },
   "contributors": [
     {
@@ -38,12 +38,8 @@
   },
   "devDependencies": {
     "nock": "0.7.x",
-    "mocha": "0.7.x",
-    "sinon": "1.2.x",
-    "async": "0.1.x",
-    "should": "~0.2.1",
-    "underscore": "1.2.x",
-    "coffee-script": "1.1.2"
+    "vows": "0.6.x",
+    "coffee-script": "1.2.x"
   },
   "engines": {
     "node": ">0.4.11"
