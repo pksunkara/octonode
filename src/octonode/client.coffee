@@ -39,9 +39,9 @@ class Client
     uri+= if @token then "?access_token=#{@token}" else ''
 
   errorHandle: (res, body, callback) ->
-    # TODO: Unprocessable entity
-    return callback(new Error(body.message)) if res.statusCode is 422
-    return callback(new Error(body.message)) if res.statusCode in [400, 401, 404]
+    body = JSON.parse(body ? 'null')
+    if res.statusCode in [400, 401, 404, 422]
+      return callback(new Error(body?.message or 'Empty'))
     callback null, res.statusCode, body
 
   # Github api GET request
@@ -51,7 +51,7 @@ class Client
       method: 'GET'
     , (err, res, body) =>
       return callback(err) if err
-      @errorHandle res, JSON.parse(body), callback
+      @errorHandle res, body, callback
 
   # Github api POST request
   post: (path, content={}, callback) ->
@@ -63,7 +63,7 @@ class Client
         'Content-Type': 'application/json'
     , (err, res, body) =>
       return callback(err) if err
-      @errorHandle res, JSON.parse(body), callback
+      @errorHandle res, body, callback
 
   # Github api PUT request
   put: (path, content={}, callback) ->
@@ -75,7 +75,7 @@ class Client
         'Content-Type': 'application/json'
     , (err, res, body) =>
       return callback(err) if err
-      @errorHandle res, JSON.parse(body), callback
+      @errorHandle res, body, callback
 
   # Github api DELETE request
   del: (path, content={}, callback) ->
@@ -87,7 +87,7 @@ class Client
         'Content-Type': 'application/json'
     , (err, res, body) =>
       return callback(err) if err
-      @errorHandle res, JSON.parse(body), callback
+      @errorHandle res, body, callback
 
 # Export modules
 module.exports = Client
