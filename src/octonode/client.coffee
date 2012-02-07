@@ -39,9 +39,10 @@ class Client
     uri+= if @token then "?access_token=#{@token}" else ''
 
   errorHandle: (res, body, callback) ->
-    body = JSON.parse(body ? 'null')
-    if res.statusCode in [400, 401, 404, 422]
-      return callback(new Error(body?.message or 'Empty'))
+    body = JSON.parse(body || '{}')
+    # TODO: Unprocessable entity
+    return callback(new Error(body.message)) if res.statusCode is 422
+    return callback(new Error(body.message)) if res.statusCode in [400, 401, 404]
     callback null, res.statusCode, body
 
   # Github api GET request
