@@ -12,6 +12,8 @@ npm install octonode
 ```js
 var github = require('octonode');
 
+// Then we instanciate a client with or without a token (as show in a later section)
+
 var ghme  = client.me();
 var ghuser = client.user('pkumar');
 var ghrepo = client.repository('pkumar/hub');
@@ -28,7 +30,7 @@ __Many of the below use cases use parts of the above code__
 github.auth.config({
   username: 'pkumar',
   password: 'password'
-}).login(['user', 'repo', 'gist'], function (token) {
+}).login(['user', 'repo', 'gist'], function (err, token) {
   console.log(token);
 });
 ```
@@ -57,7 +59,7 @@ http.createServer(function (req, res) {
   }
   // Callback url from github login
   else if (uri.pathname=='/auth') {
-    github.auth.login(qs.parse(uri.query).code, function (token) {
+    github.auth.login(qs.parse(uri.query).code, function (err, token) {
       console.log(token);
     });
     res.writeHead(200, {'Content-Type': 'text/plain'})
@@ -76,7 +78,7 @@ console.log('Server started on 3000');
 ```js
 var client = new github.client();
 
-client.get('/users/pkumar', function (status, body) {
+client.get('/users/pkumar', function (err, status, body) {
   console.log(body); //json object
 });
 ```
@@ -86,16 +88,23 @@ client.get('/users/pkumar', function (status, body) {
 ```js
 var client = new github.client('someaccesstoken');
 
-client.get('/user', function (status, body) {
+client.get('/user', function (err, status, body) {
   console.log(body); //json object
 });
 ```
 
-__All the callbacks for the following will take only a data argument__
-
 ## Github authenticated user api
 
-Token required for the following
+__All the callbacks for the following will take first an error argument, then a data argument, like this:__
+
+```js
+ghme.info(function(err, data) {
+  console.log("error: " + err);
+  console.log("data: " + data);
+});
+```
+
+Token required for the following:
 
 ### Get information about the user (GET /user)
 
