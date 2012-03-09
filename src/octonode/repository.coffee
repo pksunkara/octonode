@@ -31,6 +31,10 @@ class Repository
   getTags: (cb) -> 
     @_invokeGet "/repos/#{@name}/tags",200,"getTags",cb
 
+  # Get the languages for a repository
+  # '/repos/pkumar/hub/languages' GET
+  getLanguages: (cb) ->
+    @_invokeGet "/repos/#{@name}/languages",200,"getLanguages",cb
 
 # Export module
 module.exports = Repository
