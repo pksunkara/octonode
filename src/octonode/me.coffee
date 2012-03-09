@@ -136,5 +136,12 @@ class Me
       return cb(err) if err
       if s isnt 204 then cb(new Error('User delKey error')) else cb null, b
 
+  # Create a repository
+  # '/user/repos' POST
+  createRepo: (repo, cb) ->
+    @client.post "/user/repos", repo, (err, s, b)  ->
+      return cb(err) if err
+      if s isnt 201 then cb(new Error('User createRepo error')) else cb null, b
+
 # Export module
 module.exports = Me
