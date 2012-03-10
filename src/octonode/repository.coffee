@@ -16,6 +16,11 @@ class Repository
       return cb(err) if err
       if s isnt expectedStatus then cb(new Error("Repository.#{methodName} error")) else cb null, b
 
+  _invokePost: (path,body,expectedStatus = 202,methodName,cb) ->
+    @client.post path, body, (err, s, b)  ->
+      return cb(err) if err
+      if s isnt expectedStatus then cb(new Error("Repository.#{methodName} error")) else cb null, b
+
   # Get a repository
   # '/repos/pkumar/hub' GET
   info: (cb) ->
@@ -60,6 +65,11 @@ class Repository
   # '/repos/pkumar/hub/forks' GET
   getForks: (cb) ->
     @_invokeGet "/repos/#{@name}/forks",200,"getForks",cb
+
+  # Create a fork for a repository
+  # '/repos/pkumar/hub/forks' POST
+  createFork: (cb) ->
+    @_invokePost "/repos/#{@name}/forks",{},202,"createFork",cb
 
 # Export module
 module.exports = Repository
