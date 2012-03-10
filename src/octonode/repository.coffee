@@ -51,5 +51,10 @@ class Repository
   getBranches: (cb) ->
     @_invokeGet "/repos/#{@name}/branches",200,"getBranches",cb
 
+  # Get the issues for a repository
+  # '/repos/pkumar/hub/issues' GET
+  getIssues: (cb) ->
+    @_invokeGet "/repos/#{@name}/issues",200,"getIssues",cb
+
 # Export module
 module.exports = Repository
