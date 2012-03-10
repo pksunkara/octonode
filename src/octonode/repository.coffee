@@ -36,5 +36,10 @@ class Repository
   getLanguages: (cb) ->
     @_invokeGet "/repos/#{@name}/languages",200,"getLanguages",cb
 
+  # Get the contributors for a repository
+  # '/repos/pkumar/hub/contributors' GET
+  getContributors: (cb) ->
+    @_invokeGet "/repos/#{@name}/contributors",200,"getContributors",cb
+
 # Export module
 module.exports = Repository
