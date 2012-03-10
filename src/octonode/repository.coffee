@@ -56,5 +56,10 @@ class Repository
   getIssues: (cb) ->
     @_invokeGet "/repos/#{@name}/issues",200,"getIssues",cb
 
+  # Get the forks for a repository
+  # '/repos/pkumar/hub/forks' GET
+  getForks: (cb) ->
+    @_invokeGet "/repos/#{@name}/forks",200,"getForks",cb
+
 # Export module
 module.exports = Repository
