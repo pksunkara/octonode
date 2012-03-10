@@ -41,5 +41,10 @@ class Repository
   getContributors: (cb) ->
     @_invokeGet "/repos/#{@name}/contributors",200,"getContributors",cb
 
+  # Get the teams for a repository
+  # '/repos/pkumar/hub/teams' GEt
+  getTeams: (cb) ->
+    @_invokeGet "/repos/#{@name}/teams",200,"getTeams",cb
+
 # Export module
 module.exports = Repository
