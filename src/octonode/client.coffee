@@ -39,8 +39,12 @@ class Client
     uri+= if @token then "?access_token=#{@token}" else ''
 
   errorHandle: (res, body, callback) ->
-    body = JSON.parse(body || '{}')
-    # TODO: Unprocessable entity
+    # TODO More detailed HTTP error message
+    return callback(new Error('Error ' + res.statusCode)) if Math.floor(res.statusCode/100) is 5
+    try
+      body = JSON.parse(body || '{}')
+    catch err
+      return callback(err)
     return callback(new Error(body.message)) if res.statusCode is 422
     return callback(new Error(body.message)) if res.statusCode in [400, 401, 404]
     callback null, res.statusCode, body
