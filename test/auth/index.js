@@ -1,0 +1,73 @@
+var asrt = require('assert')
+  , vows = require('vows')
+  , sprt = require('../support')
+  , ghub = require('../../src/octonode');
+
+vows.describe('auth').addBatch({
+  'Authentication': {
+    topic: function() {
+      return ghub.auth;
+    },
+    'should have correct modes': function(auth) {
+      asrt.equal(auth.modes.cli, 0);
+      asrt.equal(auth.modes.web, 1);
+    },
+    'should throw error on misformed config': function(auth) {
+      asrt.throws(function() {
+        return auth.config({
+          usesname: 'pkumar',
+          password: 'secret'
+        }, Error);
+      });
+    },
+    'should throw error on no mode set': function(auth) {
+      asrt.throws(function() {
+        return auth.login(['repo'], function(err) {
+          throw err;
+        }, Error);
+      });
+    }
+  }
+}).addBatch({
+  'Authentication': {
+    topic: function() {
+      return ghub.auth;
+    },
+    'through cli': {
+      topic: function(auth) {
+        return auth.config({
+          username: 'pkumar',
+          password: 'password'
+        });
+      },
+      'should set the correct mode': function(auth) {
+        asrt.equal(auth.mode, 0);
+      }
+    }
+  }
+}).addBatch({
+  'Authentication': {
+    topic: function() {
+      return ghub.auth;
+    },
+    'through web': {
+      topic: function(auth) {
+        return auth.config({
+          client_id: 'clientid',
+          client_secret: 'secret'
+        });
+      },
+      'should set the correct mode': function(auth) {
+        asrt.equal(auth.mode, 1);
+      },
+      'calling login([])': {
+        topic: function(auth) {
+          return auth.login(['repo', 'user']);
+        },
+        'should give correct url': function(url) {
+          asrt.equal(url, 'https://github.com/login/oauth/authorize?client_id=clientid&scope=repo,user');
+        }
+      }
+    }
+  }
+}).export(module);
