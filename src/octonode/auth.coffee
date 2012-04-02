@@ -19,7 +19,7 @@ auth = module.exports =
   config: (options) ->
     if options.username and options.password
       @mode = @modes.cli
-    else if options.client_id and options.client_secret
+    else if options.id and options.secret
       @mode = @modes.web
     else
       throw new Error('No working mode recognized')
@@ -37,11 +37,11 @@ auth = module.exports =
           'Content-Type': 'application/json'
       , (err, res, body) ->
         body = JSON.parse body
-        if res.statusCode is 401 then callback(err, new Error(body.message)) else callback(null, body.token)
+        if res.statusCode is 401 then callback(new Error(body.message)) else callback(null, body.id, body.token)
     else if @mode == @modes.web
       if scopes instanceof Array
         uri = 'https://github.com/login/oauth/authorize'
-        uri+= '?client_id=' + @options.client_id
+        uri+= '?client_id=' + @options.id
         uri+= '&scope=' + scopes.join(',')
       else
         request
@@ -49,8 +49,8 @@ auth = module.exports =
           method: 'POST'
           body: qs.stringify
             code: scopes
-            client_id: @options.client_id
-            client_secret: @options.client_secret
+            client_id: @options.id
+            client_secret: @options.secret
           headers:
             'Content-Type': 'application/x-www-form-urlencoded'
         , (err, res, body) ->

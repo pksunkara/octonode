@@ -6,10 +6,10 @@
 
 # Requiring modules
 request = require 'request'
-Me = require './me'
+Me   = require './me'
 User = require './user'
-Repository = require './repository'
-Organization = require './organization'
+Repo = require './repo'
+Org  = require './org'
 
 # Initiate class
 class Client
@@ -25,12 +25,12 @@ class Client
     new User name, @
 
   # Get repository instance for client
-  repository: (name) ->
-    new Repository name, @
+  repo: (name) ->
+    new Repo name, @
 
   # Get organization instance for client
-  organization: (name) ->
-    new Organization name, @
+  org: (name) ->
+    new Org name, @
 
   # Github api URL builder
   query: (path = '/') ->

@@ -16,8 +16,8 @@ var github = require('octonode');
 
 var ghme  = client.me();
 var ghuser = client.user('pkumar');
-var ghrepo = client.repository('pkumar/hub');
-var ghorg  = client.organization('flatiron');
+var ghrepo = client.repo('pkumar/hub');
+var ghorg  = client.org('flatiron');
 ```
 
 __Many of the below use cases use parts of the above code__
@@ -30,8 +30,8 @@ __Many of the below use cases use parts of the above code__
 github.auth.config({
   username: 'pkumar',
   password: 'password'
-}).login(['user', 'repo', 'gist'], function (err, token) {
-  console.log(token);
+}).login(['user', 'repo', 'gist'], function (err, id, token) {
+  console.log(id, token);
 });
 ```
 
@@ -45,8 +45,8 @@ var qs = require('querystring');
 
 // Build the authorization config and url
 var auth_url = github.auth.config({
-  client_id: 'mygithubclientid',
-  client_secret: 'mygithubclientsecret'
+  id: 'mygithubclientid',
+  secret: 'mygithubclientsecret'
 }).login(['user', 'repo', 'gist']);
 
 // Web server

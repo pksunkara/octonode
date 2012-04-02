@@ -7,7 +7,7 @@
 # Requiring modules
 
 # Initiate class
-class Organization
+class Org
 
   constructor: (@name, @client) ->
 
@@ -16,29 +16,29 @@ class Organization
   info: (cb) ->
     @client.get "/orgs/#{@name}", (err, s, b)  ->
       return cb(err) if err
-      if s isnt 200 then cb(new Error('Organization info error')) else cb null, b
+      if s isnt 200 then cb(new Error('Org info error')) else cb null, b
 
   # Get an organization's teams.
   # '/orgs/flatiron/teams' GET
-  getTeams: (cb) ->
+  teams: (cb) ->
     @client.get "/orgs/#{@name}/teams", (err, s, b)  ->
       return cb(err) if err
-      if s isnt 200 then cb(new Error('Organization teams error')) else cb null, b
+      if s isnt 200 then cb(new Error('Org teams error')) else cb null, b
 
 
   # Get an organization's members.
   # '/orgs/flatiron/members' GET
-  getMembers: (cb) ->
+  members: (cb) ->
     @client.get "/orgs/#{@name}/members", (err, s, b)  ->
       return cb(err) if err
-      if s isnt 200 then cb(new Error('Organization members error')) else cb null, b
- 
+      if s isnt 200 then cb(new Error('Org members error')) else cb null, b
+
   # Get an organization's member.
   # '/orgs/flatiron/members/marak' GET
-  getMember: (user, cb) ->
+  member: (user, cb) ->
     @client.get "/orgs/#{@name}/members/#{user}", (err, s, b)  ->
       return cb(err) if err
-      if s isnt 200 then cb(new Error('Organization members error')) else cb null, b
+      if s isnt 200 then cb(new Error('Org member error')) else cb null, b
 
 # Export module
-module.exports = Organization
+module.exports = Org

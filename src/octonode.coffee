@@ -15,11 +15,11 @@ octonode = module.exports =
   # [User](octonode/user.html) class for github
   user: require './octonode/user'
 
-  # [Repository](octonode/repository.html) class for github
-  repository: require './octonode/repository'
+  # [Repo](octonode/repo.html) class for github
+  repo: require './octonode/repo'
 
-  # [Organization](octonode/organization.html) class for github
-  organization: require './octonode/organization'
+  # [Org](octonode/org.html) class for github
+  org: require './octonode/org'
 
   # [Authenticated user](octonode/me.html) class for github
   me: require './octonode/me'
