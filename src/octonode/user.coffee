@@ -16,7 +16,8 @@ class User
       @profile user
 
   profile: (data) ->
-    @login = data.login
+    Object.keys(data).forEach (e) =>
+      @[e] = data[e]
 
   # Get a user
   # '/users/pkumar' GET
