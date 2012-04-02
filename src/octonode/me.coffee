@@ -12,6 +12,10 @@ class Me
 
   constructor: (@client) ->
 
+  profile: (data) ->
+    Object.keys(data).forEach (e) =>
+      @[e] = data[e]
+
   # Get a user
   # '/user' GET
   info: (cb) ->

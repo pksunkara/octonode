@@ -9,14 +9,11 @@
 # Initiate class
 class User
 
-  constructor: (user, @client) ->
-    if typeof user is 'string'
-      @login = user
-    else
-      @profile user
+  constructor: (@login, @client) ->
 
   profile: (data) ->
-    @login = data.login
+    Object.keys(data).forEach (e) =>
+      @[e] = data[e]
 
   # Get a user
   # '/users/pkumar' GET
