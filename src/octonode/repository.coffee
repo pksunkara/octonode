@@ -10,7 +10,7 @@
 class Repository
 
   constructor: (@name, @client) ->
-    
+
   _invokeGet: (path,expectedStatus = 200,methodName,cb) ->
     @client.get path, (err, s, b)  ->
       return cb(err) if err
@@ -24,52 +24,65 @@ class Repository
   # Get a repository
   # '/repos/pkumar/hub' GET
   info: (cb) ->
-    @_invokeGet "/repos/#{@name}",200,"info",cb
+    @client.get "/repos/#{@name}", (err, s, b) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Repository info error")) else cb null, b
 
   # Get the commits for a repository
   # '/repos/pkumar/hub/commits' GET
-  getCommits: (cb) -> 
-    @_invokeGet "/repos/#{@name}/commits",200,"getCommits",cb
+  commits: (cb) ->
+    @client.get "/repos/#{@name}/commits", (err, s, b) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Repository commits error")) else cb null, b
 
   # Get the tags for a repository
-  # '/repos/pkumar/hub/commits' GET
-  getTags: (cb) -> 
-    @_invokeGet "/repos/#{@name}/tags",200,"getTags",cb
+  # '/repos/pkumar/hub/tags' GET
+  tags: (cb) ->
+    @client.get "/repos/#{@name}/tags", (err, s, b) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Repository tags error")) else cb null, b
 
   # Get the languages for a repository
   # '/repos/pkumar/hub/languages' GET
-  getLanguages: (cb) ->
-    @_invokeGet "/repos/#{@name}/languages",200,"getLanguages",cb
+  languages: (cb) ->
+    @client.get "/repos/#{@name}/languages", (err, s, b) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Repository languages error")) else cb null, b
 
   # Get the contributors for a repository
   # '/repos/pkumar/hub/contributors' GET
-  getContributors: (cb) ->
-    @_invokeGet "/repos/#{@name}/contributors",200,"getContributors",cb
+  contributors: (cb) ->
+    @client.get "/repos/#{@name}/contributors", (err, s, b) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Repository contributors error")) else cb null, b
 
   # Get the teams for a repository
   # '/repos/pkumar/hub/teams' GET
-  getTeams: (cb) ->
-    @_invokeGet "/repos/#{@name}/teams",200,"getTeams",cb
+  teams: (cb) ->
+    @client.get "/repos/#{@name}/teams", (err, s, b) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Repository teams error")) else cb null, b
 
   # Get the branches for a repository
   # '/repos/pkumar/hub/branches' GET
-  getBranches: (cb) ->
-    @_invokeGet "/repos/#{@name}/branches",200,"getBranches",cb
+  branches: (cb) ->
+    @client.get "/repos/#{@name}/branches", (err, s, b) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Repository branches error")) else cb null, b
 
   # Get the issues for a repository
   # '/repos/pkumar/hub/issues' GET
-  getIssues: (cb) ->
-    @_invokeGet "/repos/#{@name}/issues",200,"getIssues",cb
+  issues: (cb) ->
+    @client.get "/repos/#{@name}/issues", (err, s, b) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Repository issues error")) else cb null, b
 
   # Get the forks for a repository
   # '/repos/pkumar/hub/forks' GET
-  getForks: (cb) ->
-    @_invokeGet "/repos/#{@name}/forks",200,"getForks",cb
-
-  # Create a fork for a repository
-  # '/repos/pkumar/hub/forks' POST
-  createFork: (cb) ->
-    @_invokePost "/repos/#{@name}/forks",{},202,"createFork",cb
+  forks: (cb) ->
+    @client.get "/repos/#{@name}/forks", (err, s, b) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Repository forks error")) else cb null, b
 
 # Export module
 module.exports = Repository
