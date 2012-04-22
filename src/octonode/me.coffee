@@ -147,5 +147,50 @@ class Me
       return cb(err) if err
       if s isnt 201 then cb(new Error('User createRepo error')) else cb null, b
 
+  # Get authorizations of an user
+  # '/authorizations' GET
+  # TODO: page
+  authorizations: (cbOrIdOrKey, cbOrKey, cb) ->
+    if !cb? and typeof cbOrIdOrKey is 'number' and typeof cbOrKey is 'function'
+      @getAuthorization cbOrIdOrKey, cbOrKey
+    else if !cbOrKey? and !cb? and typeof cbOrIdOrKey is 'number'
+      @delAuthorization cbOrIdOrKey
+    else if !cb? and typeof cbOrKey is 'function' and typeof cbOrIdOrKey is 'object'
+      @createAuthorization cbOrIdOrKey, cbOrKey
+    else if typeof cb is 'function' and typeof cbOrIdOrKey is 'number' and typeof cbOrKey 'object'
+      @updateAuthorization cbOrIdOrKey, cbOrKey, cb
+    else
+      @client.get '/authorizations', (err, s, b)  ->
+        return cb(err) if err
+        if s isnt 200 then cb(new Error('User authorizations error')) else cb null, b
+
+  # Get a single public key
+  # '/authorizations/1' GET
+  getAuthorization: (id, cb) ->
+    @client.get "/authorizations/#{id}", (err, s, b) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error('User getAuthorization error')) else cb null, b
+
+  # Create a public key
+  # '/authorizations' POST
+  createAuthorization: (key, cb) ->
+    @client.post '/authorizations', key, (err, s, b)  ->
+      return cb(err) if err
+      if s isnt 201 then cb(new Error('User createAuthorization error')) else cb null, b
+
+  # Update a public key
+  # '/authorizations/1' PATCH
+  updateAuthorization: (id, key, cb) ->
+    @client.post "/authorizations/#{id}", key, (err, s, b)  ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error('User updateAuthorization error')) else cb null, b
+
+  # Delete a public key
+  # '/authorizations/1' DELETE
+  delAuthorization: (id) ->
+    @client.del "/authorizations/#{id}", (err, s, b)  ->
+      return cb(err) if err
+      if s isnt 204 then cb(new Error('User delAuthorization error')) else cb null, b
+
 # Export module
 module.exports = Me

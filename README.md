@@ -206,6 +206,36 @@ ghme.keys(1, {"title":"desktop", "key":"ssh-rsa AAA..."}, callback); //key
 ghme.keys(1);
 ```
 
+### Get authorizations of a user (GET /authorizations)
+
+```js
+ghme.authorizations(callback); //array of authorizations
+```
+
+### Get a single authorization (GET /authorizations/1)
+
+```js
+ghme.authorizations(1, callback); //authorization
+```
+
+### Create an authorization (POST /authorizations)
+
+```js
+ghme.authorizations({"scopes": ["public_repo"], "note": "admin script"}, callback); //authorization
+```
+
+### Update an authorization (PATCH /authorizations/1)
+
+```js
+ghme.authorizations(1, {"add_scopes": ["repo"], "note": "admin script"}, callback); //authorization
+```
+
+### Delete an authorization (DELETE /authorizations/1)
+
+```js
+ghme.authorizations(1);
+```
+
 ## Github users api
 
 No token required for the following
