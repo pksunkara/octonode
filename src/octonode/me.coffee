@@ -36,7 +36,7 @@ class Me
     if cb? and typeof cbOrEmails isnt 'function'
       @setEmails cbOrEmails, cb
     else if !cb? and typeof cbOrEmails isnt 'function'
-      @delEmails cbOrEmails
+      @deleteEmails cbOrEmails
     else
       @client.get '/user/emails', (err, s, b)  ->
         return cb(err) if err
@@ -51,10 +51,9 @@ class Me
 
   # Delete emails of the user
   # '/user/emails' DELETE
-  delEmails: (emails) ->
-    @client.del '/user/emails', emails, (err, s, b)  ->
-      return cb(err) if err
-      if s isnt 204 then cb(new Error('User delEmails error')) else cb null, b
+  deleteEmails: (emails) ->
+    @client.del '/user/emails', emails, (err, s, b)  =>
+      @deleteEmails(emails) if err? or s isnt 204
 
   # Get the followers of the user
   # '/user/followers' GET
@@ -77,24 +76,22 @@ class Me
 
   # Check if you are following a user
   # '/user/following/pkumar' GET
-  checkFollowing: (cbOrUser, cb) ->
-    @client.get "/user/following/#{cbOrUser}", (err, s, b)  ->
+  checkFollowing: (user, cb) ->
+    @client.get "/user/following/#{user}", (err, s, b)  ->
       return cb(err) if err
       cb null, s is 204
 
   # Follow a user
   # '/user/following/pkumar' PUT
   follow: (user) ->
-    @client.put "/user/following/#{user}", {}, (err, s, b)  ->
-      return cb(err) if err
-      if s isnt 204 then cb(new Error('User follow error')) else cb null, b
+    @client.put "/user/following/#{user}", {}, (err, s, b)  =>
+      @follow(user) if err? or s isnt 204
 
   # Unfollow a user
   # '/user/following/pkumar' DELETE
   unfollow: (user) ->
-    @client.del "/user/following/#{user}", {}, (err, s, b)  ->
-      return cb(err) if err
-      if s isnt 204 then cb(new Error('User unfollow error')) else cb null, b
+    @client.del "/user/following/#{user}", {}, (err, s, b)  =>
+      @unfollow(user) if err? or s isnt 204
 
   # Get public keys of a user
   # '/user/keys' GET
@@ -102,7 +99,7 @@ class Me
     if !cb? and typeof cbOrIdOrKey is 'number' and typeof cbOrKey is 'function'
       @getKey cbOrIdOrKey, cbOrKey
     else if !cbOrKey? and !cb? and typeof cbOrIdOrKey is 'number'
-      @delKey cbOrIdOrKey
+      @deleteKey cbOrIdOrKey
     else if !cb? and typeof cbOrKey is 'function' and typeof cbOrIdOrKey is 'object'
       @createKey cbOrIdOrKey, cbOrKey
     else if typeof cb is 'function' and typeof cbOrIdOrKey is 'number' and typeof cbOrKey 'object'
@@ -135,10 +132,9 @@ class Me
 
   # Delete a public key
   # '/user/keys/1' DELETE
-  delKey: (id) ->
-    @client.del "/user/keys/#{id}", (err, s, b)  ->
-      return cb(err) if err
-      if s isnt 204 then cb(new Error('User delKey error')) else cb null, b
+  deleteKey: (id) ->
+    @client.del "/user/keys/#{id}", {}, (err, s, b)  =>
+      @deleteKey(id) if err? or s isnt 204
 
   # Create a repository
   # '/user/repos' POST
@@ -154,7 +150,7 @@ class Me
     if !cb? and typeof cbOrIdOrKey is 'number' and typeof cbOrKey is 'function'
       @getAuthorization cbOrIdOrKey, cbOrKey
     else if !cbOrKey? and !cb? and typeof cbOrIdOrKey is 'number'
-      @delAuthorization cbOrIdOrKey
+      @deleteAuthorization cbOrIdOrKey
     else if !cb? and typeof cbOrKey is 'function' and typeof cbOrIdOrKey is 'object'
       @createAuthorization cbOrIdOrKey, cbOrKey
     else if typeof cb is 'function' and typeof cbOrIdOrKey is 'number' and typeof cbOrKey 'object'
@@ -187,10 +183,9 @@ class Me
 
   # Delete a public key
   # '/authorizations/1' DELETE
-  delAuthorization: (id) ->
-    @client.del "/authorizations/#{id}", (err, s, b)  ->
-      return cb(err) if err
-      if s isnt 204 then cb(new Error('User delAuthorization error')) else cb null, b
+  deleteAuthorization: (id) ->
+    @client.del "/authorizations/#{id}", {}, (err, s, b)  =>
+      @deleteAuthorization(id) if err? or s isnt 204
 
 # Export module
 module.exports = Me
