@@ -26,13 +26,26 @@ auth = module.exports =
     @options = options
     return this
 
+  revoke: (id, callback) ->
+    if @mode == @modes.cli
+      request
+        url: "https://#{@options.username}:#{@options.password}@api.github.com/authorizations/#{id}"
+        method: 'DELETE'
+      , (err, res, body) ->
+        if err? or res.statusCode isnt 204 then callback(err or new Error(JSON.parse(body).message)) else callback(null)
+    else
+      callback new Error('Cannot revoke authorization in web mode')
+
   login: (scopes, callback) ->
     if @mode == @modes.cli
+      if scopes instanceof Array
+        scopes = JSON.stringify scopes: scopes
+      else
+        scopes = JSON.stringify scopes
       request
         url: "https://#{@options.username}:#{@options.password}@api.github.com/authorizations"
         method: 'POST'
-        body: JSON.stringify
-          "scopes": scopes
+        body: scopes
         headers:
           'Content-Type': 'application/json'
       , (err, res, body) ->
