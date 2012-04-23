@@ -95,4 +95,5 @@ class Client
       @errorHandle res, body, callback
 
 # Export modules
-module.exports = Client
+module.exports = (token) ->
+  new Client(token)

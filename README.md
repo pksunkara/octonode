@@ -76,7 +76,7 @@ console.log('Server started on 3000');
 ### Build a client which accesses any public information
 
 ```js
-var client = new github.client();
+var client = github.client();
 
 client.get('/users/pkumar', function (err, status, body) {
   console.log(body); //json object
@@ -86,7 +86,7 @@ client.get('/users/pkumar', function (err, status, body) {
 ### Build a client from an access token
 
 ```js
-var client = new github.client('someaccesstoken');
+var client = github.client('someaccesstoken');
 
 client.get('/user', function (err, status, body) {
   console.log(body); //json object

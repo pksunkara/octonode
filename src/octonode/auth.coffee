@@ -36,7 +36,10 @@ auth = module.exports =
         headers:
           'Content-Type': 'application/json'
       , (err, res, body) ->
-        body = JSON.parse body
+        try
+          body = JSON.parse body
+        catch err
+          callback new Error('Unable to parse body')
         if res.statusCode is 401 then callback(new Error(body.message)) else callback(null, body.id, body.token)
     else if @mode == @modes.web
       if scopes instanceof Array
