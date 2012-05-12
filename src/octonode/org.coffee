@@ -1,5 +1,5 @@
 #
-# organization.coffee: Github organization class
+# org.coffee: Github organization class
 #
 # Copyright © 2011 Pavan Kumar Sunkara. All rights reserved
 #
@@ -38,7 +38,7 @@ class Org
   member: (user, cb) ->
     @client.get "/orgs/#{@name}/members/#{user}", (err, s, b)  ->
       return cb(err) if err
-      if s isnt 200 then cb(new Error('Org member error')) else cb null, b
+      cb null, s is 204
 
 # Export module
 module.exports = Org

@@ -21,5 +21,8 @@ octonode = module.exports =
   # [Org](octonode/org.html) class for github
   org: require './octonode/org'
 
+  # [Team](octonode/team.html) class for github
+  team: require './octonode/team'
+
   # [Authenticated user](octonode/me.html) class for github
   me: require './octonode/me'
