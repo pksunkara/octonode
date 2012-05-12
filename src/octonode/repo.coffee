@@ -74,5 +74,14 @@ class Repo
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo forks error")) else cb null, b
 
+  # Get the blob for a repository
+  # '/repos/pkumar/hub/git/blobs/SHA' GET
+  blob: (sha, cb) ->
+    @client.get "/repos/#{@name}/git/blobs/#{sha}",
+      Accept: 'application/vnd.github.raw'
+    , (err, s, b) ->
+      return cb(err) if (err)
+      if s isnt 200 then cb(new Error("Repo blob error")) else cb null, b
+
 # Export module
 module.exports = Repo

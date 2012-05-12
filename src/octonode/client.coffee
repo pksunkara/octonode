@@ -50,10 +50,14 @@ class Client
     callback null, res.statusCode, body
 
   # Github api GET request
-  get: (path, callback) ->
+  get: (path, headers, callback) ->
+    if (!callback or typeof headers is 'function')
+      callback = headers
+      headers = {}
     request
       uri: @query path
       method: 'GET'
+      headers: headers
     , (err, res, body) =>
       return callback(err) if err
       @errorHandle res, body, callback
