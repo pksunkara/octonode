@@ -85,5 +85,55 @@ class Gist
       return cb(err) if err
       cb null, s is 204
 
+  # List comments on a gist
+  # '/gists/37/comments' GET
+  listComments: (id, cb) ->
+    @client.get "/gists/#{id}/comments", (err, s, b) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error('Gist comments error')) else cb null, b
+
+  # Get a single comment
+  # '/gists/comments/1' GET
+  getComment: (id, cb) ->
+    @client.get "/gists/comments/#{id}", (err, s, b) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error('Gist getComment error')) else cb null, b
+
+  # Create a comment
+  # '/gists/37/comments' POST
+  createComment: (id, comment, cb) ->
+    @client.post "/gists/#{id}/comments", comment, (err, s, b) ->
+      return cb(err) if err
+      if s isnt 201 then cb(new Error('Gist createComment error')) else cb null, b
+
+  # Edit a comment
+  # '/gists/comments/1' POST
+  updateComment: (id, comment, cb) ->
+    @client.post "/gists/comments/#{id}", comment, (err, s, b) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error('Gist updateComment error')) else cb null, b
+
+  # Delete a comment
+  # '/gists/comments/1' DELETE
+  deleteComment: (id) ->
+    @client.del "/gists/comments/#{id}", {}, (err, s, b) =>
+      @deleteComment(id) if err? or s isnt 204
+
+  comments: (id, cbOrCmnt, cb) ->
+    if !cb? and typeof cbOrCmnt is 'function'
+      @listComments id, cbOrCmnt
+    else
+      @createComment id, cbOrCmnt, cb
+
+  comment: (cbOrIdOrCmnt, cbOrCmnt, cb) ->
+    if !cb? and typeof cbOrIdOrCmnt is 'number' and typeof cbOrCmnt is 'function'
+      @getComment cbOrIdOrCmnt, cbOrCmnt
+    else if !cbOrCmnt? and !cb? and typeof cbOrIdOrCmnt is 'number'
+      @deleteComment cbOrIdOrCmnt
+    else if typeof cb is 'function' and typeof cbOrIdOrCmnt is 'number' and typeof cbOrCmnt 'object'
+      @updateComment cbOrIdOrCmnt, cbOrCmnt, cb
+    else
+      cb(new Error('Gist comment error'))
+
 # Export module
 module.exports = Gist
