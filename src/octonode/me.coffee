@@ -143,5 +143,12 @@ class Me
       return cb(err) if err
       if s isnt 201 then cb(new Error('User createRepo error')) else cb null, b
 
+  # Fork a repo
+  # '/repos/pkumar/hub/forks' POST
+  fork: (repo, cb) ->
+    @client.post "/repos/#{repo}/forks", {}, (err, s, b) ->
+      return cb(err) if err
+      if s isnt 202 then cb(new Error('User fork error')) else cb null, b
+
 # Export module
 module.exports = Me
