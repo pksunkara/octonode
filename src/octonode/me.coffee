@@ -6,6 +6,7 @@
 
 # Requiring modules
 User = require './user'
+Org = require './org'
 
 # Initiate class
 class Me
@@ -135,6 +136,20 @@ class Me
   deleteKey: (id) ->
     @client.del "/user/keys/#{id}", {}, (err, s, b)  =>
       @deleteKey(id) if err? or s isnt 204
+
+  # Get an organisation
+  org: (name) ->
+    new Org name, @client
+
+  # List your repositories
+  # '/user/repos' GET
+  repos: (cbOrRepo, cb) ->
+    if typeof cb is 'function' and typeof cbOrRepo is 'object'
+      @createRepo cbOrRepo, cb
+    else
+      @client.get "/user/repos", (err, s, b) ->
+        return cb(err) if err
+        if s isnt 200 then cb(new Error('User repos error')) else cb null, b
 
   # Create a repository
   # '/user/repos' POST
