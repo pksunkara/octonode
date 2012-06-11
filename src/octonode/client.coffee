@@ -35,8 +35,10 @@ class Client
   # Github api URL builder
   query: (path = '/') ->
     path = '/' + path if path[0] isnt '/'
-    uri = "https://api.github.com#{path}"
-    uri+= if @token then "?access_token=#{@token}" else ''
+    uri = "https://"
+    uri+= if typeof @token == 'object' then "#{@token.username}@#{@token.password}" else ''
+    uri+= "api.github.com#{path}"
+    uri+= if typeof @token == 'string' then "?access_token=#{@token}" else ''
 
   errorHandle: (res, body, callback) ->
     # TODO More detailed HTTP error message
