@@ -48,8 +48,9 @@ class Org
     @client.get "/orgs/#{@name}/members", (err, s, b)  ->
       return cb(err) if err
       if s isnt 200 then cb(new Error('Org members error')) else cb null, b
-  # Get an organization's member.
-  # '/orgs/flatiron/members/marak' GET
+
+  # Check an organization's member.
+  # '/orgs/flatiron/members/pksunkara' GET
   member: (user, cb) ->
     @client.get "/orgs/#{@name}/members/#{user}", (err, s, b)  ->
       return cb(err) if err

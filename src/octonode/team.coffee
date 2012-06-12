@@ -18,15 +18,15 @@ class Team
       return cb(err) if err
       if s isnt 200 then cb(new Error('Team info error')) else cb null, b
 
-  # Get a teams's members.
+  # Get a teams's members
   # '/teams/37/members' GET
   members: (cb) ->
     @client.get "/teams/#{@id}/members", (err, s, b)  ->
       return cb(err) if err
       if s isnt 200 then cb(new Error('Team members error')) else cb null, b
 
-  # Get a team's member.
-  # '/teams/37/members/marak' GET
+  # Check a team's member
+  # '/teams/37/members/pksunkara' GET
   member: (user, cb) ->
     @client.get "/teams/#{@id}/members/#{user}", (err, s, b)  ->
       return cb(err) if err

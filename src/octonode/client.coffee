@@ -10,6 +10,8 @@ Me   = require './me'
 User = require './user'
 Repo = require './repo'
 Org  = require './org'
+Gist = require './gist'
+Team = require './team'
 
 # Initiate class
 class Client
@@ -32,11 +34,19 @@ class Client
   org: (name) ->
     new Org name, @
 
+  # Get gist instance for client
+  gist: ->
+    new Gist @
+
+  # Get team instance for client
+  team: (id) ->
+    new Team id, @
+
   # Github api URL builder
   query: (path = '/') ->
     path = '/' + path if path[0] isnt '/'
     uri = "https://"
-    uri+= if typeof @token == 'object' then "#{@token.username}@#{@token.password}" else ''
+    uri+= if typeof @token == 'object' then "#{@token.username}:#{@token.password}@" else ''
     uri+= "api.github.com#{path}"
     uri+= if typeof @token == 'string' then "?access_token=#{@token}" else ''
 

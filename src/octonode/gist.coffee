@@ -9,7 +9,7 @@
 # Initiate class
 class Gist
 
-  constructor: (@login, @client) ->
+  constructor: (@client) ->
 
   # List authenticated user's gists
   # '/gists' GET
@@ -33,7 +33,7 @@ class Gist
       if s isnt 200 then cb(new Error('Gist starred error')) else cb null, b
 
   # List a user's public gists
-  # '/users/marak/gists' GET
+  # '/users/pksunkara/gists' GET
   user: (user, cb) ->
     @client.get "/users/#{user}/gists", (err, s, b) ->
       return cb(err) if err

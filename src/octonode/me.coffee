@@ -76,20 +76,20 @@ class Me
         if s isnt 200 then cb(new Error('User following error')) else cb null, b
 
   # Check if you are following a user
-  # '/user/following/pkumar' GET
+  # '/user/following/pksunkara' GET
   checkFollowing: (user, cb) ->
     @client.get "/user/following/#{user}", (err, s, b)  ->
       return cb(err) if err
       cb null, s is 204
 
   # Follow a user
-  # '/user/following/pkumar' PUT
+  # '/user/following/pksunkara' PUT
   follow: (user) ->
     @client.put "/user/following/#{user}", {}, (err, s, b)  =>
       @follow(user) if err? or s isnt 204
 
   # Unfollow a user
-  # '/user/following/pkumar' DELETE
+  # '/user/following/pksunkara' DELETE
   unfollow: (user) ->
     @client.del "/user/following/#{user}", {}, (err, s, b)  =>
       @unfollow(user) if err? or s isnt 204
@@ -159,7 +159,7 @@ class Me
       if s isnt 201 then cb(new Error('User createRepo error')) else cb null, b
 
   # Fork a repo
-  # '/repos/pkumar/hub/forks' POST
+  # '/repos/pksunkara/hub/forks' POST
   fork: (repo, cb) ->
     @client.post "/repos/#{repo}/forks", {}, (err, s, b) ->
       return cb(err) if err

@@ -14,10 +14,12 @@ var github = require('octonode');
 
 // Then we instanciate a client with or without a token (as show in a later section)
 
-var ghme  = client.me();
-var ghuser = client.user('pkumar');
-var ghrepo = client.repo('pkumar/hub');
+var ghme   = client.me();
+var ghuser = client.user('pksunkara');
+var ghrepo = client.repo('pksunkara/hub');
 var ghorg  = client.org('flatiron');
+var ghgist = client.gist();
+var ghteam = client.team(37);
 ```
 
 __Many of the below use cases use parts of the above code__
@@ -28,10 +30,21 @@ __Many of the below use cases use parts of the above code__
 
 ```js
 github.auth.config({
-  username: 'pkumar',
+  username: 'pksunkara',
   password: 'password'
 }).login(['user', 'repo', 'gist'], function (err, id, token) {
   console.log(id, token);
+});
+```
+
+### Revoke authentication to github in cli mode (desktop application)
+
+```js
+github.auth.config({
+  username: 'pksunkara',
+  password: 'password'
+}).revoke(id, function (err) {
+  if (err) throw err;
 });
 ```
 
@@ -39,9 +52,10 @@ github.auth.config({
 
 ```js
 // Web application which authenticates to github
-var http = require('http');
-var url = require('url');
-var qs = require('querystring');
+var http = require('http')
+  , url = require('url')
+  , qs = require('querystring')
+  , github = require('octonode');
 
 // Build the authorization config and url
 var auth_url = github.auth.config({
@@ -53,7 +67,7 @@ var auth_url = github.auth.config({
 http.createServer(function (req, res) {
   uri = url.parse(req.url);
   // Redirect to github login
-  if (uri.pathname=='/') {
+  if (uri.pathname=='/login') {
     res.writeHead(301, {'Content-Type': 'text/plain', 'Location': auth_url})
     res.end('Redirecting to ' + auth_url);
   }
@@ -78,7 +92,7 @@ console.log('Server started on 3000');
 ```js
 var client = github.client();
 
-client.get('/users/pkumar', function (err, status, body) {
+client.get('/users/pksunkara', function (err, status, body) {
   console.log(body); //json object
 });
 ```
@@ -93,7 +107,20 @@ client.get('/user', function (err, status, body) {
 });
 ```
 
-## Github authenticated user api
+### Build a client from credentials
+
+```js
+var client = github.client({
+  username: 'pksunkara',
+  password: 'password'
+});
+
+client.get('/user', function (err, status, body) {
+  console.log(body); //json object
+});
+```
+
+## API Callback Structure
 
 __All the callbacks for the following will take first an error argument, then a data argument, like this:__
 
@@ -104,7 +131,9 @@ ghme.info(function(err, data) {
 });
 ```
 
-Token required for the following:
+## Github authenticated user api
+
+Token/Credentials required for the following:
 
 ### Get information about the user (GET /user)
 
@@ -118,11 +147,6 @@ ghme.info(callback); //json
 ghme.update({
   "name": "monalisa octocat",
   "email": "octocat@github.com",
-  "blog": "https://github.com/blog",
-  "company": "GitHub",
-  "location": "San Francisco",
-  "hireable": true,
-  "bio": "There once..."
 }, callback);
 ```
 
@@ -206,23 +230,44 @@ ghme.keys(1, {"title":"desktop", "key":"ssh-rsa AAA..."}, callback); //key
 ghme.keys(1);
 ```
 
+### List your repositories (GET /user/repos)
+
+```js
+ghme.repos(callback); //array of repos
+```
+
+### Create a repository (POST /user/respos)
+
+```js
+ghme.repos({
+  "name": "Hello-World",
+  "description": "This is your first repo",
+}, callback); //repo
+```
+
+### Fork a repository (POST /repos/pksunkara/hub/forks)
+
+```js
+ghme.fork('pksunkara/hub', callback); //forked repo
+```
+
 ## Github users api
 
 No token required for the following
 
-### Get information about an user (GET /users/pkumar)
+### Get information about an user (GET /users/pksunkara)
 
 ```js
 ghuser.info(callback); //json
 ```
 
-### Get an user followers (GET /users/pkumar/followers)
+### Get an user followers (GET /users/pksunkara/followers)
 
 ```js
 ghuser.followers(callback); //array of github users
 ```
 
-### Get an user followings (GET /users/pkumar/following)
+### Get an user followings (GET /users/pksunkara/following)
 
 ```js
 ghuser.following(callback); //array of github users
@@ -230,43 +275,247 @@ ghuser.following(callback); //array of github users
 
 ## Github repositories api
 
-No token required for the following
-
-### Get information about a repository (/repos/pkumar/octonode)
+### Get information about a repository (GET /repos/pksunkara/octonode)
 
 ```js
 ghrepo.info(callback); //json
 ```
 
+### Get the commits for a repository (GET /repos/pkumar/hub/commits)
+
+```js
+ghrepo.commits(callback); //array of commits
+```
+
+### Get the tags for a repository (GET /repos/pksunkara/hub/tags)
+
+```js
+ghrepo.tags(callback); //array of tags
+```
+
+### Get the languages for a repository (GET /repos/pksunkara/hub/languages)
+
+```js
+ghrepo.languages(callback); //array of languages
+```
+
+### Get the contributors for a repository (GET /repos/pksunkara/hub/contributors)
+
+```js
+ghrepo.contributors(callback); //array of github users
+```
+
+### Get the branches for a repository (GET /repos/pksunkara/hub/branches)
+
+```js
+ghrepo.branches(callback); //array of branches
+```
+
+### Get the issues for a repository (GET /repos/pksunkara/hub/issues)
+
+```js
+ghrepo.issues(callback); //array of issues
+```
+
+### Get the blob for a repository (GET /repos/pksunkara/hub/git/blobs/SHA)
+
+```js
+ghrepo.blob('18293abcd72', callback); //blob
+```
+
+### Get the teams for a repository (GET /repos/pksunkara/hub/teams)
+
+```js
+ghrepo.teams(callback); //array of teams
+```
+
 ## Github organizations api
 
-No token required for the following
-
-### Get information about an organization (/orgs/flatiron)
+### Get information about an organization (GET /orgs/flatiron)
 
 ```js
 ghorg.info(callback); //json
 ```
 
-If you like this project, please watch this and follow me.
+### List organization repositories (GET /orgs/flatiron/repos)
+
+```js
+ghorg.repos(callback); //array of repos
+```
+
+### Create an organization repository (POST /orgs/flatiron/repos)
+
+```js
+ghorg.repos({
+  name: 'Hello-world',
+  description: 'My first world program'
+}, callback); //repo
+```
+
+### Get an organization's teams (GET /orgs/flatiron/teams)
+
+```js
+ghorg.teams(callback); //array of teams
+```
+
+### Get an organization's members (GET /orgs/flatiron/members)
+
+```js
+ghorg.members(callback); //array of github users
+```
+
+### Check an organization member (GET /orgs/flatiron/members/pksunkara)
+
+```js
+ghorg.member('pksunkara', callback); //boolean
+```
+
+## Github gists api
+
+### List authenticated user's gists (GET /gists)
+
+```js
+ghgist.list(callback); //array of gists
+```
+
+### List authenticated user's public gists (GET /gists/public)
+
+```js
+ghgist.public(callback); //array of gists
+```
+
+### List authenticated user's starred gists (GET /gists/starred)
+
+```js
+ghgist.starred(callback); //array of gists
+```
+
+### List a user's public gists (GET /users/pksunkara/gists)
+
+```js
+ghgist.user('pksunkara', callback); //array of gists
+```
+
+### Get a single gist (GET /gists/37)
+
+```js
+ghgist.get(37, callback); //gist
+```js
+
+### Create a gist (POST /gists)
+
+```js
+ghgist.create({
+  description: "the description",
+  files: { ... }
+}), callback); //gist
+```js
+
+### Edit a gist (PATCH /gists/37)
+
+```js
+ghgist.edit(37, {
+  description: "hello gist"
+}, callback); //gist
+```js
+
+### Delete a gist (DELETE /gists/37)
+
+```js
+ghgist.delete(37);
+```js
+
+### Star a gist (PUT /gists/37/star)
+
+```js
+ghgist.star(37);
+```js
+
+### Unstar a gist (DELETE /gists/37/unstar)
+
+```js
+ghgist.unstar(37);
+```js
+
+### Check if a gist is starred (GET /gists/37/star)
+
+```js
+ghgist.check(37); //boolean
+```js
+
+### List comments on a gist (GET /gists/37/comments)
+
+```js
+ghgist.comments(37, callback); //array of comments
+```js
+
+### Create a comment (POST /gists/37/comments)
+
+```js
+ghgist.comments(37, {
+  body: "Just commenting"
+}, callback); //comment
+```js
+
+### Get a single comment (GET /gists/comments/1)
+
+```js
+ghgist.comment(1, callback); //comment
+```js
+
+### Edit a comment (POST /gists/comments/1)
+
+```js
+ghgist.comment(1, {
+  body: "lol at commenting"
+}, callback); //comment
+```js
+
+### Delete a comment (DELETE /gists/comments/1)
+
+```js
+ghgist.comment(1);
+```js
+
+## Github teams api
+
+### Get a team (GET /team/37)
+
+```js
+ghteam.info(callback); //json
+```
+
+### Get the team members (GET /team/37/members)
+
+```js
+ghteam.members(callback); //array of github users
+```
+
+### Check if a user is part of the team (GET /team/37/members/pksunkara)
+
+```js
+ghteam.member('pksunkara'); //boolean
+```
 
 ## Testing
 ```
 npm test
 ```
 
+If you like this project, please watch this and follow me.
+
 ## Contributors
 Here is a list of [Contributors](http://github.com/pksunkara/octonode/contributors)
 
 ### TODO
+
+The following method names use underscore as an example. The library contains camel cased method names.
 
 ```js
 // public orgs for unauthenticated, private and public for authenticated
 me.get_organizations(callback);
 
 // public repos for unauthenticated, private and public for authenticated
-me.get_repositories(callback);
-me.create_repository({name: ''}, callback);
 me.get_watched_repositories(callback);
 me.is_watching('repo', callback);
 me.start_watching('repo', callback);
@@ -277,15 +526,13 @@ me.get_issues(params, callback);
 var org = octonode.Organization('bulletjs');
 
 org.update(dict_with_update_properties, callback);
-org.get_members(callback);
-org.get_member('user', callback);
 org.add_member('user', 'team', callback);
 org.remove_member('user', callback);
 org.get_public_members(callback);
 org.is_public_member('user', callback);
 org.make_member_public('user', callback);
 org.conceal_member('user', callback);
-org.get_teams(callback);
+
 org.get_team('team', callback);
 org.create_team({name:'', repo_names:'', permission:''}, callback);
 org.edit_team({name:'', permission:''}, callback);
@@ -303,11 +550,6 @@ org.remove_team_repository('team', 'name', callback);
 var repo = octonode.Repository('pksunkara/octonode');
 
 repo.update({name: ''}, callback);
-repo.get_contributors(callback);
-repo.get_languages(callback);
-repo.get_teams(callback);
-repo.get_tags(callback);
-repo.get_branches(callback);
 
 // collaborator information
 repo.get_collaborators(callback);
@@ -316,7 +558,6 @@ repo.add_collaborator('name', callback);
 repo.remove_collaborator('name', callback);
 
 // commit data
-repo.get_commits(callback);
 repo.get_commit('sha-id', callback);
 repo.get_all_comments(callback);
 repo.get_commit_comments('SHA ID', callback);
@@ -330,10 +571,6 @@ repo.get_downloads(callback);
 repo.get_download(callback);
 repo.create_download({name: ''}, 'filepath', callback);
 repo.delete_download(callback);
-
-// fork data
-repo.get_forks(callback);
-repo.create_fork(callback);
 
 // keys
 repo.get_deploy_keys(callback);
@@ -382,7 +619,6 @@ repo.edit_milestone('title', callback);
 repo.delete_milestone('id', callback);
 
 // raw git access
-repo.get_blob('sha-id', callback);
 repo.create_blob('content', 'encoding', callback);
 repo.get_commit('sha-id', callback);
 repo.create_commit('message', 'tree', [parents], callback);
