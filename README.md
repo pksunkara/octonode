@@ -400,7 +400,7 @@ ghgist.user('pksunkara', callback); //array of gists
 
 ```js
 ghgist.get(37, callback); //gist
-```js
+```
 
 ### Create a gist (POST /gists)
 
@@ -409,7 +409,7 @@ ghgist.create({
   description: "the description",
   files: { ... }
 }), callback); //gist
-```js
+```
 
 ### Edit a gist (PATCH /gists/37)
 
@@ -417,37 +417,37 @@ ghgist.create({
 ghgist.edit(37, {
   description: "hello gist"
 }, callback); //gist
-```js
+```
 
 ### Delete a gist (DELETE /gists/37)
 
 ```js
 ghgist.delete(37);
-```js
+```
 
 ### Star a gist (PUT /gists/37/star)
 
 ```js
 ghgist.star(37);
-```js
+```
 
 ### Unstar a gist (DELETE /gists/37/unstar)
 
 ```js
 ghgist.unstar(37);
-```js
+```
 
 ### Check if a gist is starred (GET /gists/37/star)
 
 ```js
 ghgist.check(37); //boolean
-```js
+```
 
 ### List comments on a gist (GET /gists/37/comments)
 
 ```js
 ghgist.comments(37, callback); //array of comments
-```js
+```
 
 ### Create a comment (POST /gists/37/comments)
 
@@ -455,13 +455,13 @@ ghgist.comments(37, callback); //array of comments
 ghgist.comments(37, {
   body: "Just commenting"
 }, callback); //comment
-```js
+```
 
 ### Get a single comment (GET /gists/comments/1)
 
 ```js
 ghgist.comment(1, callback); //comment
-```js
+```
 
 ### Edit a comment (POST /gists/comments/1)
 
@@ -469,13 +469,13 @@ ghgist.comment(1, callback); //comment
 ghgist.comment(1, {
   body: "lol at commenting"
 }, callback); //comment
-```js
+```
 
 ### Delete a comment (DELETE /gists/comments/1)
 
 ```js
 ghgist.comment(1);
-```js
+```
 
 ## Github teams api
 
