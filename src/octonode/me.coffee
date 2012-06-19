@@ -148,8 +148,8 @@ class Me
       @createRepo cbOrRepo, cb
     else
       @client.get "/user/repos", (err, s, b) ->
-        return cb(err) if err
-        if s isnt 200 then cb(new Error('User repos error')) else cb null, b
+        return cbOrRepo(err) if err
+        if s isnt 200 then cbOrRepo(new Error('User repos error')) else cbOrRepo null, b
 
   # Create a repository
   # '/user/repos' POST
