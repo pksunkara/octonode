@@ -133,7 +133,7 @@ class Gist
     else if typeof cb is 'function' and typeof cbOrIdOrCmnt is 'number' and typeof cbOrCmnt 'object'
       @updateComment cbOrIdOrCmnt, cbOrCmnt, cb
     else
-      cb(new Error('Gist comment error'))
+      cbOrIdOrCmnt(new Error('Gist comment error'))
 
 # Export module
 module.exports = Gist

@@ -24,6 +24,7 @@ class Org
     if typeof cb is 'function' and typeof cbOrRepo is 'object'
       @createRepo cbOrRepo, cb
     else
+      cb = cbOrRepo
       @client.get "/orgs/#{@name}/repos", (err, s, b) ->
         return cb(err) if err
         if s isnt 200 then cb(new Error('Org repos error')) else cb null, b

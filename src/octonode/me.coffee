@@ -39,6 +39,7 @@ class Me
     else if !cb? and typeof cbOrEmails isnt 'function'
       @deleteEmails cbOrEmails
     else
+      cb = cbOrEmails
       @client.get '/user/emails', (err, s, b)  ->
         return cb(err) if err
         if s isnt 200 then cb(new Error('User emails error')) else cb null, b
@@ -71,6 +72,7 @@ class Me
     if cb? and typeof cbOrUser isnt 'function'
       @checkFollowing cbOrUser, cb
     else
+      cb = cbOrUser
       @client.get '/user/following', (err, s, b)  ->
         return cb(err) if err
         if s isnt 200 then cb(new Error('User following error')) else cb null, b
@@ -106,6 +108,7 @@ class Me
     else if typeof cb is 'function' and typeof cbOrIdOrKey is 'number' and typeof cbOrKey 'object'
       @updateKey cbOrIdOrKey, cbOrKey, cb
     else
+      cb = cbOrIdOrKey
       @client.get '/user/keys', (err, s, b)  ->
         return cb(err) if err
         if s isnt 200 then cb(new Error('User keys error')) else cb null, b
@@ -147,9 +150,10 @@ class Me
     if typeof cb is 'function' and typeof cbOrRepo is 'object'
       @createRepo cbOrRepo, cb
     else
+      cb = cbOrRepo
       @client.get "/user/repos", (err, s, b) ->
-        return cbOrRepo(err) if err
-        if s isnt 200 then cbOrRepo(new Error('User repos error')) else cbOrRepo null, b
+        return cb(err) if err
+        if s isnt 200 then cb(new Error('User repos error')) else cb null, b
 
   # Create a repository
   # '/user/repos' POST
