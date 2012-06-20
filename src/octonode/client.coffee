@@ -59,7 +59,7 @@ class Client
       return callback(err)
     return callback(new Error(body.message)) if body.message and res.statusCode is 422
     return callback(new Error(body.message)) if body.message and res.statusCode in [400, 401, 404]
-    callback null, res.statusCode, body
+    callback null, res.statusCode, body, res.headers
 
   # Github api GET request
   get: (path, headers, callback) ->

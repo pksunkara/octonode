@@ -317,6 +317,27 @@ ghrepo.branches(callback); //array of branches
 ghrepo.issues(callback); //array of issues
 ```
 
+### Get the README for a repository (GET /repos/pksunkara/hub/readme)
+
+```js
+ghrepo.readme(callback); //file
+ghrepo.readme('v0.1.0', callback); //file
+```
+
+### Get the contents of a path in repository
+
+```js
+ghrepo.contents('lib/index.js', callback); //path
+ghrepo.contents('lib/index.js', 'v0.1.0', callback); //path
+```
+
+### Get archive link for a repository
+
+```js
+ghrepo.archive('tarball', callback); //link to archive
+ghrepo.archive('zipball', 'v0.1.0', callback); //link to archive
+```
+
 ### Get the blob for a repository (GET /repos/pksunkara/hub/git/blobs/SHA)
 
 ```js

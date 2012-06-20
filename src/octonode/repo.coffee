@@ -67,6 +67,36 @@ class Repo
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo issues error")) else cb null, b
 
+  # Get the README for a repository
+  # '/repos/pksunkara/hub/readme' GET
+  readme: (cbOrRef, cb) ->
+    if !cb? and cbOrRef
+      cb = cbOrRef
+      cbOrRef = 'master'
+    @client.get "/repos/#{@name}/readme?ref=#{cbOrRef}", (err, s, b) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Repo readme error")) else cb null, b
+
+  # Get the contents of a path in repository
+  # '/repos/pksunkara/hub/contents/lib/index.js' GET
+  contents: (path, cbOrRef, cb) ->
+    if !cb? and cbOrRef
+      cb = cbOrRef
+      cbOrRef = 'master'
+    @client.get "/repos/#{@name}/contents/#{path}?ref=#{cbOrRef}", (err, s, b) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Repo contents error")) else cb null, b
+
+  # Get archive link for a repository
+  # '/repos/pksunkara/hub/tarball/v0.1.0' GET
+  archive: (format, cbOrRef, cb) ->
+    if !cb? and cbOrRef
+      cb = cbOrRef
+      cbOrRef = 'master'
+    @client.get "/repos/#{@name}/#{format}/#{cbOrRef}", (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 302 then cb(new Error("Repo archive error")) else cb null, h['Location']
+
   # Get the forks for a repository
   # '/repos/pksunkara/hub/forks' GET
   forks: (cb) ->
