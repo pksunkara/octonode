@@ -16,7 +16,6 @@
   ],
   "homepage": "http://pksunkara.github.com/octonode",
   "scripts": {
-    "prepublish": "./node_modules/.bin/cake lib",
     "test": "./node_modules/.bin/vows --spec $(find test -name '*.js')"
   },
   "contributors": [
