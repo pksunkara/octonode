@@ -113,5 +113,11 @@ class Repo
       return cb(err) if (err)
       if s isnt 200 then cb(new Error("Repo blob error")) else cb null, b
 
+  # Delete the repository
+  # '/repos/pksunkara/hub' DELETE
+  destroy: ->
+    @client.del "/repos/#{@name}", (err, s, b) =>
+      @destroy() if err? or s isnt 204
+
 # Export module
 module.exports = Repo

@@ -356,6 +356,12 @@ ghrepo.blob('18293abcd72', callback); //blob
 ghrepo.teams(callback); //array of teams
 ```
 
+### Delete the repository (DELETE /repos/pksunkara/hub)
+
+```js
+ghrepo.destroy();
+```
+
 ## Github organizations api
 
 ### Get information about an organization (GET /orgs/flatiron)
