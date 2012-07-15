@@ -230,13 +230,19 @@ ghme.keys(1, {"title":"desktop", "key":"ssh-rsa AAA..."}, callback); //key
 ghme.keys(1);
 ```
 
+### List your public and private organizations (GET /user/orgs)
+
+```js
+ghme.orgs(callback); // array of orgs
+```
+
 ### List your repositories (GET /user/repos)
 
 ```js
 ghme.repos(callback); //array of repos
 ```
 
-### Create a repository (POST /user/respos)
+### Create a repository (POST /user/repos)
 
 ```js
 ghme.repos({

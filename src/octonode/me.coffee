@@ -140,9 +140,16 @@ class Me
     @client.del "/user/keys/#{id}", {}, (err, s, b)  =>
       @deleteKey(id) if err? or s isnt 204
 
-  # Get an organisation
+  # Get an organization
   org: (name) ->
     new Org name, @client
+
+  # List your public and private organizations
+  # '/user/orgs' GET
+  orgs: (cb) ->
+    @client.get "/user/orgs", (err, s, b) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error('User orgs error')) else cb null, b
 
   # List your repositories
   # '/user/repos' GET
