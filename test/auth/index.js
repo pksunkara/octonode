@@ -53,8 +53,8 @@ vows.describe('auth').addBatch({
     'through web': {
       topic: function(auth) {
         return auth.config({
-          client_id: 'clientid',
-          client_secret: 'secret'
+          id: 'clientid',
+          secret: 'secret'
         });
       },
       'should set the correct mode': function(auth) {
