@@ -38,5 +38,22 @@ class User
       return cb(err) if err
       if s isnt 200 then cb(new Error('User following error')) else cb null, b
 
+  # Get events performed by a user
+  # '/users/pksunkara/events' GET
+  # TODO: page
+  events: (events, cb) ->
+    if !cb and typeof events == 'function'
+      cb = events
+      events = null
+    else if !Array.isArray events
+      events = [events]
+
+    @client.get "/users/#{@login}/events", (err, s, b)  ->
+      return cb(err) if err
+      return cb(new Error('User events error')) if s isnt 200
+
+      cb null, b.filter (event) ->
+        return events.indexOf(event.type) != -1
+
 # Export module
 module.exports = User
