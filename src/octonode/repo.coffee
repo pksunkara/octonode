@@ -25,6 +25,13 @@ class Repo
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo commits error")) else cb null, b
 
+  # Get the commits for a repository
+  # '/repos/pksunkara/hub/commits/SHA' GET
+  commit: (sha, cb) ->
+    @client.get "/repos/#{@name}/commits/#{sha}", (err, s, b) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Repo commits error")) else cb null, b
+
   # Get the tags for a repository
   # '/repos/pksunkara/hub/tags' GET
   tags: (cb) ->
