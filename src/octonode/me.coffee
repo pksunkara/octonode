@@ -4,10 +4,6 @@
 # Copyright © 2011 Pavan Kumar Sunkara. All rights reserved
 #
 
-# Requiring modules
-User = require './user'
-Org = require './org'
-
 # Initiate class
 class Me
 
@@ -140,9 +136,9 @@ class Me
     @client.del "/user/keys/#{id}", {}, (err, s, b)  =>
       @deleteKey(id) if err? or s isnt 204
 
-  # Get an organization
+  # Get organization instance for client
   org: (name) ->
-    new Org name, @client
+    @client.org name
 
   # List your public and private organizations
   # '/user/orgs' GET
@@ -151,9 +147,9 @@ class Me
       return cb(err) if err
       if s isnt 200 then cb(new Error('User orgs error')) else cb null, b
 
-  # Get a repository
+  # Get repository instance for client
   repo: (name) ->
-    new Repo name, @client
+    @client.repo name
 
   # List your repositories
   # '/user/repos' GET
@@ -179,6 +175,10 @@ class Me
     @client.post "/repos/#{repo}/forks", {}, (err, s, b) ->
       return cb(err) if err
       if s isnt 202 then cb(new Error('User fork error')) else cb null, b
+
+  # Get pull-request instance for client
+  pr: (repo, number) ->
+    @client.pr repo, number
 
 # Export module
 module.exports = Me

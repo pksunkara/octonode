@@ -126,5 +126,27 @@ class Repo
     @client.del "/repos/#{@name}", (err, s, b) =>
       @destroy() if err? or s isnt 204
 
+  # Get pull-request instance for client
+  pr: (number) ->
+    @client.pr @name, number
+
+  # List pull requests
+  # '/repos/pksunkara/hub/pulls' GET
+  prs: (cbOrPr, cb) ->
+    if typeof cb is 'function' and typeof cbOrPr is 'object'
+      @createPr cbOrPr, cb
+    else
+      cb = cbOrPr
+      @client.get "/repos/#{@name}/pulls", (err, s, b) ->
+        return cb(err) if (err)
+        if s isnt 200 then cb(new Error("Repo prs error")) else cb null, b
+
+  # Create a pull request
+  # '/repos/pksunkara/hub/pulls' POST
+  createPr: (pr, cb) ->
+    @client.post "/repos/#{@name}/pulls", pr, (err, s, b) ->
+      return cb(err) if err
+      if s isnt 201 then cb(new Error("Repo createPr error")) else cb null, b
+
 # Export module
 module.exports = Repo

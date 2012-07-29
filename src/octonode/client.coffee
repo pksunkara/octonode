@@ -12,6 +12,7 @@ Repo = require './repo'
 Org  = require './org'
 Gist = require './gist'
 Team = require './team'
+Pr   = require './pr'
 
 # Initiate class
 class Client
@@ -41,6 +42,10 @@ class Client
   # Get team instance for client
   team: (id) ->
     new Team id, @
+
+  # Get pull request instance for client
+  pr: (repo, number) ->
+    new Pr repo, number, @
 
   # Github api URL builder
   query: (path = '/') ->
