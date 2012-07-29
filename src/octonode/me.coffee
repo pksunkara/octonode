@@ -151,6 +151,10 @@ class Me
       return cb(err) if err
       if s isnt 200 then cb(new Error('User orgs error')) else cb null, b
 
+  # Get a repository
+  repo: (name) ->
+    new Repo name, @client
+
   # List your repositories
   # '/user/repos' GET
   repos: (cbOrRepo, cb) ->
