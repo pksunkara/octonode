@@ -6,6 +6,7 @@
 
 # Requiring modules
 request = require 'request'
+url = require 'url'
 qs = require 'querystring'
 
 # Authentication module
@@ -28,10 +29,11 @@ auth = module.exports =
 
   revoke: (id, callback) ->
     if @mode == @modes.cli
-      request
-        url: "https://#{@options.username}:#{@options.password}@api.github.com/authorizations/#{id}"
+      options =
+        url: url.parse "https://api.github.com/authorizations/#{id}"
         method: 'DELETE'
-      , (err, res, body) ->
+      options.url.auth = "#{@options.username}:#{@options.password}"
+      request options, (err, res, body) ->
         if err? or res.statusCode isnt 204 then callback(err or new Error(JSON.parse(body).message)) else callback(null)
     else
       callback new Error('Cannot revoke authorization in web mode')
@@ -42,18 +44,22 @@ auth = module.exports =
         scopes = JSON.stringify scopes: scopes
       else
         scopes = JSON.stringify scopes
-      request
-        url: "https://#{@options.username}:#{@options.password}@api.github.com/authorizations"
+      options =
+        url: url.parse "https://api.github.com/authorizations"
         method: 'POST'
         body: scopes
         headers:
           'Content-Type': 'application/json'
-      , (err, res, body) ->
-        try
-          body = JSON.parse body
-        catch err
-          callback new Error('Unable to parse body')
-        if res.statusCode is 401 then callback(new Error(body.message)) else callback(null, body.id, body.token)
+      options.url.auth = "#{@options.username}:#{@options.password}"
+      request options, (err, res, body) ->
+        if err?
+          callback err
+        else
+          try
+            body = JSON.parse body
+          catch err
+            callback new Error('Unable to parse body')
+          if res.statusCode is 401 then callback(new Error(body.message)) else callback(null, body.id, body.token)
     else if @mode == @modes.web
       if scopes instanceof Array
         uri = 'https://github.com/login/oauth/authorize'
