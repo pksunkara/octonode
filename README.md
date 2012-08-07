@@ -22,6 +22,39 @@ var ghgist = client.gist();
 var ghteam = client.team(37);
 ```
 
+### Build a client which accesses any public information
+
+```js
+var client = github.client();
+
+client.get('/users/pksunkara', function (err, status, body) {
+  console.log(body); //json object
+});
+```
+
+### Build a client from an access token
+
+```js
+var client = github.client('someaccesstoken');
+
+client.get('/user', function (err, status, body) {
+  console.log(body); //json object
+});
+```
+
+### Build a client from credentials
+
+```js
+var client = github.client({
+  username: 'pksunkara',
+  password: 'password'
+});
+
+client.get('/user', function (err, status, body) {
+  console.log(body); //json object
+});
+```
+
 __Many of the below use cases use parts of the above code__
 
 ## Authentication
@@ -85,39 +118,6 @@ http.createServer(function (req, res) {
 }).listen(3000);
 
 console.log('Server started on 3000');
-```
-
-### Build a client which accesses any public information
-
-```js
-var client = github.client();
-
-client.get('/users/pksunkara', function (err, status, body) {
-  console.log(body); //json object
-});
-```
-
-### Build a client from an access token
-
-```js
-var client = github.client('someaccesstoken');
-
-client.get('/user', function (err, status, body) {
-  console.log(body); //json object
-});
-```
-
-### Build a client from credentials
-
-```js
-var client = github.client({
-  username: 'pksunkara',
-  password: 'password'
-});
-
-client.get('/user', function (err, status, body) {
-  console.log(body); //json object
-});
 ```
 
 ## API Callback Structure
