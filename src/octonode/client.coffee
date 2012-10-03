@@ -77,7 +77,7 @@ class Client
       callback = headers
       headers = {}
     request
-      uri: @query path params
+      uri: @query path, params
       method: 'GET'
       headers: headers
     , (err, res, body) =>
@@ -87,7 +87,7 @@ class Client
   # Github api POST request
   post: (path, params, content={}, callback) ->
     request
-      uri: @query path params
+      uri: @query path, params
       method: 'POST'
       body: JSON.stringify content
       headers:
@@ -99,7 +99,7 @@ class Client
   # Github api PUT request
   put: (path, params, content={}, callback) ->
     request
-      uri: @query path params
+      uri: @query path, params
       method: 'PUT'
       body: JSON.stringify content
       headers:
@@ -111,7 +111,7 @@ class Client
   # Github api DELETE request
   del: (path, params, content={}, callback) ->
     request
-      uri: @query path params
+      uri: @query path, params
       method: 'DELETE'
       body: JSON.stringify content
       headers:
