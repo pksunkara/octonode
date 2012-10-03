@@ -48,12 +48,17 @@ class Client
     new Pr repo, number, @
 
   # Github api URL builder
-  query: (path = '/') ->
+  query: (path = '/', params = { }) ->
+    if (!params)
+        params = { }
     path = '/' + path if path[0] isnt '/'
     uri = "https://"
     uri+= if typeof @token == 'object' then "#{@token.username}:#{@token.password}@" else ''
-    uri+= "api.github.com#{path}"
-    uri+= if typeof @token == 'string' then "?access_token=#{@token}" else ''
+    uri+= "api.github.com#{path}"        
+    if typeof @token == 'string' then
+        params['access_token'] = @token
+    query_string = ['#{key}=#{value}' for key, value in params].join('&')
+    uri += query_string if query_string and query_string != ''
 
   errorHandle: (res, body, callback) ->
     # TODO More detailed HTTP error message
@@ -67,12 +72,12 @@ class Client
     callback null, res.statusCode, body, res.headers
 
   # Github api GET request
-  get: (path, headers, callback) ->
+  get: (path, params, headers, callback) ->        
     if (!callback or typeof headers is 'function')
       callback = headers
       headers = {}
     request
-      uri: @query path
+      uri: @query path params
       method: 'GET'
       headers: headers
     , (err, res, body) =>
@@ -80,9 +85,9 @@ class Client
       @errorHandle res, body, callback
 
   # Github api POST request
-  post: (path, content={}, callback) ->
+  post: (path, params, content={}, callback) ->
     request
-      uri: @query path
+      uri: @query path params
       method: 'POST'
       body: JSON.stringify content
       headers:
@@ -92,9 +97,9 @@ class Client
       @errorHandle res, body, callback
 
   # Github api PUT request
-  put: (path, content={}, callback) ->
+  put: (path, params, content={}, callback) ->
     request
-      uri: @query path
+      uri: @query path params
       method: 'PUT'
       body: JSON.stringify content
       headers:
@@ -104,9 +109,9 @@ class Client
       @errorHandle res, body, callback
 
   # Github api DELETE request
-  del: (path, content={}, callback) ->
+  del: (path, params, content={}, callback) ->
     request
-      uri: @query path
+      uri: @query path params
       method: 'DELETE'
       body: JSON.stringify content
       headers:
