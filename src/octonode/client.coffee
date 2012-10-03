@@ -58,7 +58,7 @@ class Client
     if typeof @token == 'string' then
         params['access_token'] = @token
     query_string = ['#{key}=#{value}' for key, value in params].join('&')
-    uri += query_string if query_string and query_string != ''
+    uri += '?' + query_string if query_string and query_string != ''
 
   errorHandle: (res, body, callback) ->
     # TODO More detailed HTTP error message
