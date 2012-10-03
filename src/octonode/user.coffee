@@ -18,7 +18,7 @@ class User
   # Get a user
   # '/users/pkumar' GET
   info: (cb) ->
-    @client.get "/users/#{@login}", (err, s, b)  ->
+    @client.get "/users/#{@login}", null, (err, s, b)  ->
       return cb(err) if err
       if s isnt 200 then cb(new Error('User info error')) else cb null, b
 
@@ -26,7 +26,7 @@ class User
   # '/users/pkumar/followers' GET
   # TODO: page, user
   followers: (cb) ->
-    @client.get "/users/#{@login}/followers", (err, s, b)  ->
+    @client.get "/users/#{@login}/followers", null, (err, s, b)  ->
       return cb(err) if err
       if s isnt 200 then cb(new Error('User followers error')) else cb null, b
 
@@ -34,7 +34,7 @@ class User
   # '/users/pkumar/following' GET
   # TODO: page, user
   following: (cb) ->
-    @client.get "/users/#{@login}/following", (err, s, b)  ->
+    @client.get "/users/#{@login}/following", null, (err, s, b)  ->
       return cb(err) if err
       if s isnt 200 then cb(new Error('User following error')) else cb null, b
 
@@ -48,7 +48,7 @@ class User
     else if !Array.isArray events
       events = [events]
 
-    @client.get "/users/#{@login}/events", (err, s, b)  ->
+    @client.get "/users/#{@login}/events", null, (err, s, b)  ->
       return cb(err) if err
       return cb(new Error('User events error')) if s isnt 200
 

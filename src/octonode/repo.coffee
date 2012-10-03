@@ -14,63 +14,63 @@ class Repo
   # Get a repository
   # '/repos/pksunkara/hub' GET
   info: (cb) ->
-    @client.get "/repos/#{@name}", (err, s, b) ->
+    @client.get "/repos/#{@name}", null, (err, s, b) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo info error")) else cb null, b
 
   # Get the commits for a repository
   # '/repos/pksunkara/hub/commits' GET
   commits: (cb) ->
-    @client.get "/repos/#{@name}/commits", (err, s, b) ->
+    @client.get "/repos/#{@name}/commits", null, (err, s, b) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo commits error")) else cb null, b
 
   # Get the commits for a repository
   # '/repos/pksunkara/hub/commits/SHA' GET
   commit: (sha, cb) ->
-    @client.get "/repos/#{@name}/commits/#{sha}", (err, s, b) ->
+    @client.get "/repos/#{@name}/commits/#{sha}", null, (err, s, b) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo commits error")) else cb null, b
 
   # Get the tags for a repository
   # '/repos/pksunkara/hub/tags' GET
   tags: (cb) ->
-    @client.get "/repos/#{@name}/tags", (err, s, b) ->
+    @client.get "/repos/#{@name}/tags", null, (err, s, b) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo tags error")) else cb null, b
 
   # Get the languages for a repository
   # '/repos/pksunkara/hub/languages' GET
   languages: (cb) ->
-    @client.get "/repos/#{@name}/languages", (err, s, b) ->
+    @client.get "/repos/#{@name}/languages", null, (err, s, b) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo languages error")) else cb null, b
 
   # Get the contributors for a repository
   # '/repos/pksunkara/hub/contributors' GET
   contributors: (cb) ->
-    @client.get "/repos/#{@name}/contributors", (err, s, b) ->
+    @client.get "/repos/#{@name}/contributors", null, (err, s, b) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo contributors error")) else cb null, b
 
   # Get the teams for a repository
   # '/repos/pksunkara/hub/teams' GET
   teams: (cb) ->
-    @client.get "/repos/#{@name}/teams", (err, s, b) ->
+    @client.get "/repos/#{@name}/teams", null, (err, s, b) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo teams error")) else cb null, b
 
   # Get the branches for a repository
   # '/repos/pksunkara/hub/branches' GET
   branches: (cb) ->
-    @client.get "/repos/#{@name}/branches", (err, s, b) ->
+    @client.get "/repos/#{@name}/branches", null, (err, s, b) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo branches error")) else cb null, b
 
   # Get the issues for a repository
   # '/repos/pksunkara/hub/issues' GET
   issues: (cb) ->
-    @client.get "/repos/#{@name}/issues", (err, s, b) ->
+    @client.get "/repos/#{@name}/issues", null, (err, s, b) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo issues error")) else cb null, b
 
@@ -80,7 +80,7 @@ class Repo
     if !cb? and cbOrRef
       cb = cbOrRef
       cbOrRef = 'master'
-    @client.get "/repos/#{@name}/readme?ref=#{cbOrRef}", (err, s, b) ->
+    @client.get "/repos/#{@name}/readme?ref=#{cbOrRef}", null, (err, s, b) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo readme error")) else cb null, b
 
@@ -90,7 +90,7 @@ class Repo
     if !cb? and cbOrRef
       cb = cbOrRef
       cbOrRef = 'master'
-    @client.get "/repos/#{@name}/contents/#{path}?ref=#{cbOrRef}", (err, s, b) ->
+    @client.get "/repos/#{@name}/contents/#{path}", { ref : cbOrRef }, (err, s, b) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo contents error")) else cb null, b
 
@@ -100,21 +100,21 @@ class Repo
     if !cb? and cbOrRef
       cb = cbOrRef
       cbOrRef = 'master'
-    @client.get "/repos/#{@name}/#{format}/#{cbOrRef}", (err, s, b, h) ->
+    @client.get "/repos/#{@name}/#{format}/#{cbOrRef}", null, (err, s, b, h) ->
       return cb(err) if err
       if s isnt 302 then cb(new Error("Repo archive error")) else cb null, h['Location']
 
   # Get the forks for a repository
   # '/repos/pksunkara/hub/forks' GET
   forks: (cb) ->
-    @client.get "/repos/#{@name}/forks", (err, s, b) ->
+    @client.get "/repos/#{@name}/forks", null, (err, s, b) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo forks error")) else cb null, b
 
   # Get the blob for a repository
   # '/repos/pksunkara/hub/git/blobs/SHA' GET
   blob: (sha, cb) ->
-    @client.get "/repos/#{@name}/git/blobs/#{sha}",
+    @client.get "/repos/#{@name}/git/blobs/#{sha}", null,
       Accept: 'application/vnd.github.raw'
     , (err, s, b) ->
       return cb(err) if (err)
@@ -123,7 +123,7 @@ class Repo
   # Delete the repository
   # '/repos/pksunkara/hub' DELETE
   destroy: ->
-    @client.del "/repos/#{@name}", (err, s, b) =>
+    @client.del "/repos/#{@name}", null, (err, s, b) =>
       @destroy() if err? or s isnt 204
 
   # Get pull-request instance for client
@@ -137,14 +137,14 @@ class Repo
       @createPr cbOrPr, cb
     else
       cb = cbOrPr
-      @client.get "/repos/#{@name}/pulls", (err, s, b) ->
+      @client.get "/repos/#{@name}/pulls", null, (err, s, b) ->
         return cb(err) if (err)
         if s isnt 200 then cb(new Error("Repo prs error")) else cb null, b
 
   # Create a pull request
   # '/repos/pksunkara/hub/pulls' POST
   createPr: (pr, cb) ->
-    @client.post "/repos/#{@name}/pulls", pr, (err, s, b) ->
+    @client.post "/repos/#{@name}/pulls", null, pr, (err, s, b) ->
       return cb(err) if err
       if s isnt 201 then cb(new Error("Repo createPr error")) else cb null, b
 
