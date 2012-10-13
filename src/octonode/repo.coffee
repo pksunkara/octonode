@@ -50,6 +50,13 @@ class Repo
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo commits error")) else cb null, b, h
 
+  # Create a commit
+  # '/repos/pksunkara/hub/git/commits' POST
+  createCommit: (message, tree, parents, cb) ->
+    @client.post "/repos/#{@name}/git/commits", {message: message, parents: parents, tree: tree}, (err, s, b) ->
+      return cb(err) if err
+      if s isnt 201 then cb(new Error("Repo createCommit error")) else cb null, b
+
   # Get the tags for a repository
   # '/repos/pksunkara/hub/tags' GET
   tags: (cb) ->
@@ -193,6 +200,13 @@ class Repo
       return cb(err) if (err)
       if s isnt 200 then cb(new Error("Repo blob error")) else cb null, b, h
 
+  # Create a blob (for a future commit)
+  # '/repos/pksunkara/hub/git/blobs' POST
+  createBlob: (content, encoding, cb) ->
+    @client.post "/repos/#{@name}/git/blobs", {content: content, encoding: encoding}, (err, s, b) ->
+      return cb(err) if err
+      if s isnt 201 then cb(new Error("Repo createBlob error")) else cb null, b
+
   # Get a git tree
   # '/repos/pksunkara/hub/git/trees/SHA' GET
   # '/repos/pksunkara/hub/git/trees/SHA?recursive=1' GET
@@ -204,6 +218,30 @@ class Repo
     @client.get "/repos/#{@name}/git/trees/#{sha}", param, (err, s, b, h) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo tree error")) else cb null, b, h
+
+  # Create a tree object
+  # '/repos/pksunkara/hub/git/trees' POST
+  createTree: (tree, cbOrBase, cb) ->
+    if !cb? and cbOrBase
+      cb = cbOrBase
+      cbOrBase = null
+    @client.post "/repos/#{@name}/git/trees", {tree: tree, base_tree: cbOrBase}, (err, s, b) ->
+      return cb(err) if err
+      if s isnt 201 then cb(new Error("Repo createTree error")) else cb null, b
+
+  # Get a reference
+  # '/repos/pksunkara/hub/git/refs/REF' GET
+  ref: (ref, cb) ->
+    @client.get "/repos/#{@name}/git/refs/#{ref}", (err, s, b) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Repo ref error")) else cb null, b
+
+  # Update a reference
+  # '/repos/pksunkara/hub/git/refs/REF' PATCH
+  updateRef: (ref, sha, cb) ->
+    @client.post "/repos/#{@name}/git/refs/#{ref}", {sha: sha}, (err, s, b) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Repo updateRef error")) else cb null, b
 
   # Delete the repository
   # '/repos/pksunkara/hub' DELETE
