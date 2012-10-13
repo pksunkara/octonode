@@ -103,6 +103,18 @@ class Client
       return callback(err) if err
       @errorHandle res, body, callback
 
+  # Github api PATCH request
+  patch: (path, content={}, callback) ->
+    request
+      uri: @query path
+      method: 'PATCH'
+      body: JSON.stringify content
+      headers:
+        'Content-Type': 'application/json'
+    , (err, res, body) =>
+      return callback(err) if err
+      @errorHandle res, body, callback
+
   # Github api DELETE request
   del: (path, content={}, callback) ->
     request

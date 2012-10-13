@@ -32,6 +32,17 @@ class Repo
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo commits error")) else cb null, b
 
+  # Create a commit
+  # '/repos/pksunkara/hub/git/commits' POST
+  create_commit: (message, tree_sha, parents, cb) ->
+    input =
+      message: message
+      parents: parents
+      tree: tree_sha
+    @client.post "/repos/#{@name}/git/commits", input, (err, s, b) ->
+      return cb(err) if err
+      if s isnt 201 then cb(new Error("Repo create_commit error")) else cb null, b
+
   # Get the tags for a repository
   # '/repos/pksunkara/hub/tags' GET
   tags: (cb) ->
@@ -114,11 +125,49 @@ class Repo
   # Get the blob for a repository
   # '/repos/pksunkara/hub/git/blobs/SHA' GET
   blob: (sha, cb) ->
-    @client.get "/repos/#{@name}/git/blobs/#{sha}",
-      Accept: 'application/vnd.github.raw'
-    , (err, s, b) ->
+    @client.get "/repos/#{@name}/git/blobs/#{sha}", (err, s, b) ->
       return cb(err) if (err)
       if s isnt 200 then cb(new Error("Repo blob error")) else cb null, b
+
+  # Create a blob (for a future commit)
+  # '/repos/pksunkara/hub/git/blobs' POST
+  create_blob: (content, encoding, cb) ->
+    input =
+     content: content
+     encoding: encoding
+    @client.post "/repos/#{@name}/git/blobs", input, (err, s, b) ->
+      return cb(err) if err
+      if s isnt 201 then cb(new Error("Repo create_blob")) else cb null, b
+
+  # Get a tree object (for fetching a particular blob)
+  # '/repos/pksunkara/hub/git/trees/SHA' GET
+  tree: (sha, cb) ->
+    @client.get "/repos/#{@name}/git/trees/#{sha}", (err, s, b) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Repo tree error")) else cb null, b
+
+  # Create a tree object
+  # '/repos/pksunkara/hub/git/trees' POST
+  create_tree: (tree, cb) ->
+    @client.post "/repos/#{@name}/git/trees", tree, (err, s, b) ->
+      return cb(err) if err
+      if s isnt 201 then cb(new Error("Repo create_tree error")) else cb null, b
+
+  # Get a reference
+  # '/repos/pksunkara/hub/git/refs/REF' GET
+  ref: (ref, cb) ->
+    @client.get "/repos/#{@name}/git/refs/#{ref}", (err, s, b) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Repo ref error")) else cb null, b
+
+  # Update a reference
+  # '/repos/pksunkara/hub/git/refs/REF' PATCH
+  update_ref: (ref, sha, cb) ->
+    input =
+      sha: sha
+    @client.patch "/repos/#{@name}/git/refs/#{ref}", input, (err, s, b) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Repo update_ref error")) else cb null, b
 
   # Delete the repository
   # '/repos/pksunkara/hub' DELETE
