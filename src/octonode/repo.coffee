@@ -162,9 +162,14 @@ class Repo
 
   # Update a reference
   # '/repos/pksunkara/hub/git/refs/REF' PATCH
-  update_ref: (ref, sha, cb) ->
+  update_reference: (ref, sha, force, cb) ->
+    if (!cb)
+      cb = force
+      force = false
     input =
       sha: sha
+      force: force
+
     @client.patch "/repos/#{@name}/git/refs/#{ref}", input, (err, s, b) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo update_ref error")) else cb null, b
