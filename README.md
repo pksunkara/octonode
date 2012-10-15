@@ -652,13 +652,8 @@ repo.edit_milestone('title', callback);
 repo.delete_milestone('id', callback);
 
 // raw git access
-repo.create_blob('content', 'encoding', callback);
-repo.get_commit('sha-id', callback);
-repo.create_commit('message', 'tree', [parents], callback);
-repo.get_reference('ref', callback);
 repo.get_all_references(callback);
 repo.create_reference('ref', 'sha', callback);
-repo.update_reference('ref', 'sha', force, callback);
 ```
 
 __I accept pull requests and guarantee a reply back within a day__
