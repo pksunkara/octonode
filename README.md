@@ -120,6 +120,17 @@ http.createServer(function (req, res) {
 console.log('Server started on 3000');
 ```
 
+## Rate Limiting
+
+You can also check your rate limit status by calling the following.
+
+```js
+client.limit(function (err, left, max) {
+  console.log(left); // 4999
+  console.log(max);  // 5000
+});
+```
+
 ## API Callback Structure
 
 __All the callbacks for the following will take first an error argument, then a data argument, like this:__

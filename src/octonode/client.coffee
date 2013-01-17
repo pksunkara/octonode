@@ -68,7 +68,7 @@ class Client
 
   # Github api GET request
   get: (path, headers, callback) ->
-    if (!callback or typeof headers is 'function')
+    if (!callback and typeof headers is 'function')
       callback = headers
       headers = {}
     request
@@ -80,7 +80,7 @@ class Client
       @errorHandle res, body, callback
 
   # Github api POST request
-  post: (path, content={}, callback) ->
+  post: (path, content, callback) ->
     request
       uri: @query path
       method: 'POST'
@@ -92,7 +92,7 @@ class Client
       @errorHandle res, body, callback
 
   # Github api PUT request
-  put: (path, content={}, callback) ->
+  put: (path, content, callback) ->
     request
       uri: @query path
       method: 'PUT'
@@ -104,7 +104,7 @@ class Client
       @errorHandle res, body, callback
 
   # Github api DELETE request
-  del: (path, content={}, callback) ->
+  del: (path, content, callback) ->
     request
       uri: @query path
       method: 'DELETE'
@@ -114,6 +114,11 @@ class Client
     , (err, res, body) =>
       return callback(err) if err
       @errorHandle res, body, callback
+
+  limit: (callback) =>
+    @get '/rate_limit', (err, s, b) ->
+      return callback(err) if err
+      if s isnt 200 then new Error('Client rate_limit error') else callback null, b.rate.remaining, b.rate.limit
 
 # Export modules
 module.exports = (token) ->
