@@ -458,6 +458,12 @@ ghgist.edit(37, {
 ghgist.delete(37);
 ```
 
+### Fork a gist (POST /gists/37/forks)
+
+```js
+ghgist.fork(37, callback); //gist
+```
+
 ### Star a gist (PUT /gists/37/star)
 
 ```js

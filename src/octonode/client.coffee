@@ -56,7 +56,7 @@ class Client
     uri+= if typeof @token == 'string' then "?access_token=#{@token}" else ''
 
   errorHandle: (res, body, callback) ->
-    # TODO More detailed HTTP error message
+    # TODO: More detailed HTTP error message
     return callback(new Error('Error ' + res.statusCode)) if Math.floor(res.statusCode/100) is 5
     try
       body = JSON.parse(body || '{}')

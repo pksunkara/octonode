@@ -66,6 +66,13 @@ class Gist
     @client.del "/gists/#{id}", {}, (err, s, b) =>
       @delete(id) if err? or s isnt 204
 
+  # Fork a gist
+  # '/gists/37/forks' POST
+  fork: (id) ->
+    @client.post "/gists/#{id}/forks", {}, (err, s, b) ->
+      return cb(err) if err
+      if s isnt 201 then cb(new Error('Gist fork error')) else cb null, b
+
   # Star a gist
   # '/gists/37/star' PUT
   star: (id) ->
