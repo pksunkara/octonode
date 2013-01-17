@@ -20,6 +20,8 @@ var ghrepo = client.repo('pksunkara/hub');
 var ghorg  = client.org('flatiron');
 var ghgist = client.gist();
 var ghteam = client.team(37);
+
+var ghsearch = client.search();
 ```
 
 ### Build a client which accesses any public information
@@ -545,6 +547,32 @@ ghteam.members(callback); //array of github users
 
 ```js
 ghteam.member('pksunkara'); //boolean
+```
+
+## Github search api
+
+### Search issues
+
+```js
+ghsearch.issues('pksunkara/hub', 'open', 'git', callback); //array of issues
+```
+
+### Search repositories
+
+```js
+ghsearch.repos('git', 'javascript', callback); //array of repositories
+```
+
+### Search users
+
+```js
+ghsearch.users('git', callback); //array of users
+```
+
+### Search emails
+
+```js
+ghsearch.emails('pavan.sss1991@gmail.com', callback); //user
 ```
 
 ## Testing

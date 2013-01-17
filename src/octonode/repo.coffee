@@ -126,7 +126,7 @@ class Repo
     @client.del "/repos/#{@name}", {}, (err, s, b) =>
       @destroy() if err? or s isnt 204
 
-  # Get pull-request instance for client
+  # Get pull-request instance for repo
   pr: (number) ->
     @client.pr @name, number
 

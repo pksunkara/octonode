@@ -6,6 +6,7 @@
 
 # Requiring modules
 request = require 'request'
+
 Me   = require './me'
 User = require './user'
 Repo = require './repo'
@@ -13,6 +14,8 @@ Org  = require './org'
 Gist = require './gist'
 Team = require './team'
 Pr   = require './pr'
+
+Search = require './search'
 
 # Initiate class
 class Client
@@ -46,6 +49,10 @@ class Client
   # Get pull request instance for client
   pr: (repo, number) ->
     new Pr repo, number, @
+
+  # Get search instance for client
+  search: ->
+    new Search @
 
   # Github api URL builder
   query: (path = '/') ->
@@ -118,7 +125,7 @@ class Client
   limit: (callback) =>
     @get '/rate_limit', (err, s, b) ->
       return callback(err) if err
-      if s isnt 200 then new Error('Client rate_limit error') else callback null, b.rate.remaining, b.rate.limit
+      if s isnt 200 then callback(new Error('Client rate_limit error')) else callback null, b.rate.remaining, b.rate.limit
 
 # Export modules
 module.exports = (token) ->
