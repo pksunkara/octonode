@@ -74,14 +74,12 @@ class Client
     callback null, res.statusCode, body, res.headers
 
   # Github api GET request
-  get: (path, headers, callback) ->
-    if (!callback and typeof headers is 'function')
-      callback = headers
-      headers = {}
+  get: (path, callback) ->
     request
       uri: @query path
       method: 'GET'
-      headers: headers
+      headers:
+        'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
     , (err, res, body) =>
       return callback(err) if err
       @errorHandle res, body, callback
@@ -94,6 +92,7 @@ class Client
       body: JSON.stringify content
       headers:
         'Content-Type': 'application/json'
+        'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
     , (err, res, body) =>
       return callback(err) if err
       @errorHandle res, body, callback
@@ -106,6 +105,7 @@ class Client
       body: JSON.stringify content
       headers:
         'Content-Type': 'application/json'
+        'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
     , (err, res, body) =>
       return callback(err) if err
       @errorHandle res, body, callback
@@ -118,6 +118,7 @@ class Client
       body: JSON.stringify content
       headers:
         'Content-Type': 'application/json'
+        'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
     , (err, res, body) =>
       return callback(err) if err
       @errorHandle res, body, callback

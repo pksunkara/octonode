@@ -32,6 +32,8 @@ auth = module.exports =
       options =
         url: url.parse "https://api.github.com/authorizations/#{id}"
         method: 'DELETE'
+        headers:
+          'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
       options.url.auth = "#{@options.username}:#{@options.password}"
       request options, (err, res, body) ->
         if err? or res.statusCode isnt 204 then callback(err or new Error(JSON.parse(body).message)) else callback(null)
@@ -50,6 +52,7 @@ auth = module.exports =
         body: scopes
         headers:
           'Content-Type': 'application/json'
+          'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
       options.url.auth = "#{@options.username}:#{@options.password}"
       request options, (err, res, body) ->
         if err?
@@ -75,6 +78,7 @@ auth = module.exports =
             client_secret: @options.secret
           headers:
             'Content-Type': 'application/x-www-form-urlencoded'
+            'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
         , (err, res, body) ->
           if res.statusCode is 404
             callback(new Error('Access token not found'))
