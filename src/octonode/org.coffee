@@ -18,6 +18,13 @@ class Org
       return cb(err) if err
       if s isnt 200 then cb(new Error('Org info error')) else cb null, b
 
+  # Edit an organization
+  # '/orgs/flatiron' POST
+  update: (info, cb) ->
+    @client.post "/orgs/#{@name}", info, (err, s, b) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error('Org update error')) else cb null, b
+
   # List organization repositories
   # '/orgs/flatiron/repos' GET
   repos: (cbOrRepo, cb) ->

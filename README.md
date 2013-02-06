@@ -383,6 +383,14 @@ ghrepo.destroy();
 ghorg.info(callback); //json
 ```
 
+### Update an organization (POST /orgs/flatiron)
+
+```js
+ghorg.update({
+  blog: 'https://blog.com'
+}, callback); // org
+```
+
 ### List organization repositories (GET /orgs/flatiron/repos)
 
 ```js
