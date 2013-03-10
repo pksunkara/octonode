@@ -57,6 +57,19 @@ client.get('/user', function (err, status, body) {
 });
 ```
 
+### Build a client from client keys
+
+```js
+var client = github.client({
+  id: 'abcdefghijklmno',
+  secret: 'abcdefghijk'
+});
+
+client.get('/user', function (err, status, body) {
+  console.log(body); //json object
+});
+```
+
 __Many of the below use cases use parts of the above code__
 
 ## Authentication
