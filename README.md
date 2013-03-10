@@ -363,6 +363,14 @@ ghrepo.archive('zipball', 'v0.1.0', callback); //link to archive
 ghrepo.blob('18293abcd72', callback); //blob
 ```
 
+### Get users who starred a repository (GET /repos/pksunkara/hub/stargazers)
+
+```
+ghrepo.stargazers(1, 100, callback); //array of users
+ghrepo.stargazers(10, callback);     //array of users
+ghrepo.stargazers(callback);         //array of users
+```
+
 ### Get the teams for a repository (GET /repos/pksunkara/hub/teams)
 
 ```js
