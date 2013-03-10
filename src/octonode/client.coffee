@@ -57,14 +57,15 @@ class Client
     new Search @
 
   # Github api URL builder
-  query: (path = '/') ->
+  query: (path = '/', page = null, per_page = null) ->
     path = '/' + path if path[0] isnt '/'
     uri = "https://"
     uri+= if typeof @token == 'object' then "#{@token.username}:#{@token.password}@" else ''
-    uri+= "api.github.com#{path}"
-    uri+= if typeof @token == 'string' and @token isnt 'client' then "?access_token=#{@token}" else ''
-    uri+= if @token is 'client' then "?client_id=#{@clientID}&client_secret=#{@clientSecrect}" else ''
-
+    uri+= "api.github.com#{path}?"
+    uri+= if typeof @token == 'string' and @token isnt 'client' then "access_token=#{@token}" else ''
+    uri+= if @token is 'client' then "client_id=#{@clientID}&client_secret=#{@clientSecrect}" else ''
+    uri+= "&page=#{page}" if page?
+    uri+= "&per_page=#{per_page}" if per_page?
 
   errorHandle: (res, body, callback) ->
     # TODO: More detailed HTTP error message
@@ -78,9 +79,9 @@ class Client
     callback null, res.statusCode, body, res.headers
 
   # Github api GET request
-  get: (path, callback) ->
+  get: (path, params..., callback) ->
     request
-      uri: @query path
+      uri: @query path, params...
       method: 'GET'
       headers:
         'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
