@@ -1,6 +1,6 @@
 {
   "name": "octonode",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "author": "Pavan Kumar Sunkara <pavan.sss1991@gmail.com> (http://pksunkara.github.com)",
   "description": "nodejs wrapper for github v3 api",
   "main": "./lib/octonode",
