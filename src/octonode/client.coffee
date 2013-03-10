@@ -20,7 +20,9 @@ Search = require './search'
 # Initiate class
 class Client
 
-  constructor: (@token) ->
+  constructor: (@token, credentials...) ->
+    # set for server to server communication    
+    [ @clientID, @clientSecret ] = credentials if @token is 'client'
 
   # Get authenticated user instance for client
   me: ->
@@ -60,7 +62,9 @@ class Client
     uri = "https://"
     uri+= if typeof @token == 'object' then "#{@token.username}:#{@token.password}@" else ''
     uri+= "api.github.com#{path}"
-    uri+= if typeof @token == 'string' then "?access_token=#{@token}" else ''
+    uri+= if typeof @token == 'string' and @token isnt 'client' then "?access_token=#{@token}" else ''
+    uri+= if @token is 'client' then "?client_id=#{@clientID}&client_secret=#{@clientSecrect}" else ''
+
 
   errorHandle: (res, body, callback) ->
     # TODO: More detailed HTTP error message
