@@ -148,5 +148,17 @@ class Repo
       return cb(err) if err
       if s isnt 201 then cb(new Error("Repo createPr error")) else cb null, b
 
+  # List Stargazers 
+  # '/repos/:owner/:repo/stargazers' GET
+  # - page, optional     - params[0]
+  # - per_page, optional - params[1]
+  stargazers: (params..., cb)->
+    page = params[0] || 1
+    per_page = params[1] || 30
+    @client.get "/repos/#{@name}/stargazers", page, per_page, (err, s, b, headers) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Repo stargazers error")) else cb null, b, headers
+    
+
 # Export module
 module.exports = Repo
