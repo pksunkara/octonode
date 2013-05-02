@@ -111,6 +111,9 @@ var auth_url = github.auth.config({
   secret: 'mygithubclientsecret'
 }).login(['user', 'repo', 'gist']);
 
+// Store info to verify against CSRF
+var state = auth_url.match(/&state=([0-9a-z]{32})/i);
+
 // Web server
 http.createServer(function (req, res) {
   uri = url.parse(req.url);
@@ -121,11 +124,17 @@ http.createServer(function (req, res) {
   }
   // Callback url from github login
   else if (uri.pathname=='/auth') {
-    github.auth.login(qs.parse(uri.query).code, function (err, token) {
-      console.log(token);
-    });
-    res.writeHead(200, {'Content-Type': 'text/plain'})
-    res.end('');
+    var values = qs.parse(uri.query);
+    // Check against CSRF attacks
+    if (!state || state[1] != values.state) {
+      res.writeHead(403, {'Content-Type': 'text/plain'});
+      res.end('');
+    } else {
+      github.auth.login(values.code, function (err, token) {
+        res.writeHead(200, {'Content-Type': 'text/plain'});
+        res.end(token);
+      });
+    }
   } else {
     res.writeHead(200, {'Content-Type': 'text/plain'})
     res.end('');

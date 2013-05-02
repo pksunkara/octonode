@@ -8,6 +8,7 @@
 request = require 'request'
 url = require 'url'
 qs = require 'querystring'
+randomstring = require 'randomstring'
 
 # Authentication module
 auth = module.exports =
@@ -66,8 +67,9 @@ auth = module.exports =
     else if @mode == @modes.web
       if scopes instanceof Array
         uri = 'https://github.com/login/oauth/authorize'
-        uri+= '?client_id=' + @options.id
-        uri+= '&scope=' + scopes.join(',')
+        uri+= "?client_id=#{@options.id}"
+        uri+= "&state=#{randomstring.generate()}"
+        uri+= "&scope=#{scopes.join(',')}"
       else
         request
           url: 'https://github.com/login/oauth/access_token'

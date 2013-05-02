@@ -33,7 +33,8 @@
     }
   ],
   "dependencies": {
-    "request": "2.9.x"
+    "request": "2.9.x",
+    "randomstring": "1.x.x"
   },
   "devDependencies": {
     "nock": "0.7.x",
