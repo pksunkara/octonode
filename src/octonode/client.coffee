@@ -59,9 +59,9 @@ class Client
     path = '/' + path if path[0] isnt '/'
     uri = "https://"
     uri+= if typeof @token == 'object' and @token.username then "#{@token.username}:#{@token.password}@" else ''
-    uri+= "api.github.com#{path}?"
-    uri+= if typeof @token == 'string' then "access_token=#{@token}" else ''
-    uri+= if typeof @token == 'object' and @token.id then "client_id=#{@token.id}&client_secret=#{@token.secret}" else ''
+    uri+= "api.github.com#{path}"
+    uri+= if typeof @token == 'string' then "?access_token=#{@token}" else ''
+    uri+= if typeof @token == 'object' and @token.id then "?client_id=#{@token.id}&client_secret=#{@token.secret}" else ''
     uri+= "&page=#{page}" if page?
     uri+= "&per_page=#{per_page}" if per_page?
     uri
