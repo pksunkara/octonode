@@ -399,6 +399,13 @@ ghrepo.stargazers(callback);         //array of users
 ghrepo.teams(callback); //array of teams
 ```
 
+### Get a git tree (GET /repos/pksunkara/hub/teams)
+
+```js
+ghrepo.tree('18293abcd72', callback); //tree
+ghrepo.tree('18293abcd72', true, callback); //recursive tree
+```
+
 ### Delete the repository (DELETE /repos/pksunkara/hub)
 
 ```js
