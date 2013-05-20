@@ -120,6 +120,19 @@ class Repo
       return cb(err) if (err)
       if s isnt 200 then cb(new Error("Repo blob error")) else cb null, b
 
+  # Get a git tree
+  # '/repos/pksunkara/hub/git/trees/SHA' GET
+  # '/repos/pksunkara/hub/git/trees/SHA?recursive=1' GET
+  tree: (sha, cbOrRecursive, cb) ->
+    if !cb? and cbOrRecursive
+      cb = cbOrRecursive
+      cbOrRecursive = false
+    url = "/repos/#{@name}/git/trees/#{sha}"
+    url += "?recursive=1" if cbOrRecursive
+    @client.get url, (err, s, b) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Repo tree error")) else cb null, b
+
   # Delete the repository
   # '/repos/pksunkara/hub' DELETE
   destroy: ->
