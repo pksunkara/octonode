@@ -399,7 +399,7 @@ ghrepo.stargazers(callback);         //array of users
 ghrepo.teams(callback); //array of teams
 ```
 
-### Get a git tree (GET /repos/pksunkara/hub/teams)
+### Get a git tree (GET /repos/pksunkara/hub/git/trees/18293abcd72)
 
 ```js
 ghrepo.tree('18293abcd72', callback); //tree
