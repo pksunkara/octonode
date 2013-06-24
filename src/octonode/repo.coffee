@@ -161,7 +161,21 @@ class Repo
       return cb(err) if err
       if s isnt 201 then cb(new Error("Repo createPr error")) else cb null, b
 
-  # List Stargazers 
+  # List statuses for a specific ref (SHA, branch name, tag name)
+  # '/repos/pksunkara/hub/statuses/master' GET
+  statuses: (ref, cb) ->
+    @client.get "/repos/#{@name}/statuses/#{ref}", (err, s, b) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Repo statuses error")) else cb null, b
+
+  # Create a status for a specific SHA
+  # '/repos/pksunkara/hub/statuses/18e129c213848c7f239b93fe5c67971a64f183ff' POST
+  createStatus: (sha, obj, cb) ->
+    @client.post "/repos/#{@name}/statuses/#{sha}", obj, (err, s, b) ->
+      return cb(err) if err
+      if s isnt 201 then cb(new Error("Repo createStatus error")) else cb null, b
+
+  # List Stargazers
   # '/repos/:owner/:repo/stargazers' GET
   # - page, optional     - params[0]
   # - per_page, optional - params[1]
@@ -171,7 +185,7 @@ class Repo
     @client.get "/repos/#{@name}/stargazers", page, per_page, (err, s, b, headers) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo stargazers error")) else cb null, b, headers
-    
+
 
 # Export module
 module.exports = Repo
