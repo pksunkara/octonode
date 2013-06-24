@@ -161,19 +161,19 @@ class Repo
       return cb(err) if err
       if s isnt 201 then cb(new Error("Repo createPr error")) else cb null, b
 
-  # List statuses for a specific ref (SHA, branch name, tag name)
+  # List statuses for a specific ref
   # '/repos/pksunkara/hub/statuses/master' GET
   statuses: (ref, cb) ->
     @client.get "/repos/#{@name}/statuses/#{ref}", (err, s, b) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo statuses error")) else cb null, b
 
-  # Create a status for a specific SHA
+  # Create a status
   # '/repos/pksunkara/hub/statuses/18e129c213848c7f239b93fe5c67971a64f183ff' POST
-  createStatus: (sha, obj, cb) ->
+  status: (sha, obj, cb) ->
     @client.post "/repos/#{@name}/statuses/#{sha}", obj, (err, s, b) ->
       return cb(err) if err
-      if s isnt 201 then cb(new Error("Repo createStatus error")) else cb null, b
+      if s isnt 201 then cb(new Error("Repo status error")) else cb null, b
 
   # List Stargazers
   # '/repos/:owner/:repo/stargazers' GET

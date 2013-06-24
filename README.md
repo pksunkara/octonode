@@ -412,16 +412,16 @@ ghrepo.tree('18293abcd72', true, callback); //recursive tree
 ghrepo.destroy();
 ```
 
-### List statuses for a specific ref (SHA, branch name, tag name) (GET /repos/pksunkara/hub/statuses/master)
+### List statuses for a specific ref (GET /repos/pksunkara/hub/statuses/master)
 
 ```js
 ghrepo.statuses('master', callback); // array of statuses
 ```
 
-### Create status for a specific SHA (POST /repos/pksunkara/hub/statuses/18e129c213848c7f239b93fe5c67971a64f183ff)
+### Create status (POST /repos/pksunkara/hub/statuses/18e129c213848c7f239b93fe5c67971a64f183ff)
 
 ```js
-ghrepo.createStatus('18e129c213848c7f239b93fe5c67971a64f183ff', {
+ghrepo.status('18e129c213848c7f239b93fe5c67971a64f183ff', {
   "state": "success",
   "target_url": "http://ci.mycompany.com/job/hub/3",
   "description": "Build success."
