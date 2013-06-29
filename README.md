@@ -24,7 +24,7 @@ var ghteam = client.team(37);
 var ghsearch = client.search();
 ```
 
-### Build a client which accesses any public information
+#### Build a client which accesses any public information
 
 ```js
 var client = github.client();
@@ -34,7 +34,7 @@ client.get('/users/pksunkara', function (err, status, body) {
 });
 ```
 
-### Build a client from an access token
+#### Build a client from an access token
 
 ```js
 var client = github.client('someaccesstoken');
@@ -44,7 +44,7 @@ client.get('/user', function (err, status, body) {
 });
 ```
 
-### Build a client from credentials
+#### Build a client from credentials
 
 ```js
 var client = github.client({
@@ -57,7 +57,7 @@ client.get('/user', function (err, status, body) {
 });
 ```
 
-### Build a client from client keys
+#### Build a client from client keys
 
 ```js
 var client = github.client({
@@ -74,7 +74,7 @@ __Many of the below use cases use parts of the above code__
 
 ## Authentication
 
-### Authenticate to github in cli mode (desktop application)
+#### Authenticate to github in cli mode (desktop application)
 
 ```js
 github.auth.config({
@@ -85,7 +85,7 @@ github.auth.config({
 });
 ```
 
-### Revoke authentication to github in cli mode (desktop application)
+#### Revoke authentication to github in cli mode (desktop application)
 
 ```js
 github.auth.config({
@@ -96,7 +96,7 @@ github.auth.config({
 });
 ```
 
-### Authenticate to github in web mode (web application)
+#### Authenticate to github in web mode (web application)
 
 ```js
 // Web application which authenticates to github
@@ -170,13 +170,13 @@ ghme.info(function(err, data) {
 
 Token/Credentials required for the following:
 
-### Get information about the user (GET /user)
+#### Get information about the user (GET /user)
 
 ```js
 ghme.info(callback); //json
 ```
 
-### Update user profile (PATCH /user)
+#### Update user profile (PATCH /user)
 
 ```js
 ghme.update({
@@ -185,99 +185,99 @@ ghme.update({
 }, callback);
 ```
 
-### Get emails of the user (GET /user/emails)
+#### Get emails of the user (GET /user/emails)
 
 ```js
 ghme.emails(callback); //array of emails
 ```
 
-### Set emails of the user (POST /user/emails)
+#### Set emails of the user (POST /user/emails)
 
 ```js
 ghme.emails(['new1@ma.il', 'new2@ma.il'], callback); //array of emails
 ghme.emails('new@ma.il', callback); //array of emails
 ```
 
-### Delete emails of the user (DELETE /user/emails)
+#### Delete emails of the user (DELETE /user/emails)
 
 ```js
 ghme.emails(['new1@ma.il', 'new2@ma.il']);
 ghme.emails('new@ma.il');
 ```
 
-### Get the followers of the user (GET /user/followers)
+#### Get the followers of the user (GET /user/followers)
 
 ```js
 ghme.followers(callback); //array of github users
 ```
 
-### Get users whom the user is following (GET /user/following)
+#### Get users whom the user is following (GET /user/following)
 
 ```js
 ghme.following(callback); //array of github users
 ```
 
-### Check if the user is following a user (GET /user/following/marak)
+#### Check if the user is following a user (GET /user/following/marak)
 
 ```js
 ghme.following('marak', callback); //boolean
 ```
 
-### Follow a user (PUT /user/following/marak)
+#### Follow a user (PUT /user/following/marak)
 
 ```js
 ghme.follow('marak');
 ```
 
-### Unfollow a user (DELETE /user/following/marak)
+#### Unfollow a user (DELETE /user/following/marak)
 
 ```js
 ghme.unfollow('marak');
 ```
 
-### Get public keys of a user (GET /user/keys)
+#### Get public keys of a user (GET /user/keys)
 
 ```js
 ghme.keys(callback); //array of keys
 ```
 
-### Get a single public key (GET /user/keys/1)
+#### Get a single public key (GET /user/keys/1)
 
 ```js
 ghme.keys(1, callback); //key
 ```
 
-### Create a public key (POST /user/keys)
+#### Create a public key (POST /user/keys)
 
 ```js
 ghme.keys({"title":"laptop", "key":"ssh-rsa AAA..."}, callback); //key
 ```
 
-### Update a public key (PATCH /user/keys/1)
+#### Update a public key (PATCH /user/keys/1)
 
 ```js
 ghme.keys(1, {"title":"desktop", "key":"ssh-rsa AAA..."}, callback); //key
 ```
 
-### Delete a public key (DELETE /user/keys/1)
+#### Delete a public key (DELETE /user/keys/1)
 
 ```js
 ghme.keys(1);
 ```
 
-### List your public and private organizations (GET /user/orgs)
+#### List your public and private organizations (GET /user/orgs)
 
 ```js
 ghme.orgs(callback); // array of orgs
 ```
 
-### List your repositories (GET /user/repos)
+#### List your repositories (GET /user/repos)
 
 ```js
 ghme.repos(callback); //array of repos
 ```
 
-### Create a repository (POST /user/repos)
+#### Create a repository (POST /user/repos)
 
 ```js
 ghme.repos({
@@ -286,7 +286,7 @@ ghme.repos({
 }, callback); //repo
 ```
 
-### Fork a repository (POST /repos/pksunkara/hub/forks)
+#### Fork a repository (POST /repos/pksunkara/hub/forks)
 
 ```js
 ghme.fork('pksunkara/hub', callback); //forked repo
@@ -296,19 +296,19 @@ ghme.fork('pksunkara/hub', callback); //forked repo
 
 No token required for the following
 
-### Get information about an user (GET /users/pksunkara)
+#### Get information about an user (GET /users/pksunkara)
 
 ```js
 ghuser.info(callback); //json
 ```
 
-### Get an user followers (GET /users/pksunkara/followers)
+#### Get an user followers (GET /users/pksunkara/followers)
 
 ```js
 ghuser.followers(callback); //array of github users
 ```
 
-### Get an user followings (GET /users/pksunkara/following)
+#### Get an user followings (GET /users/pksunkara/following)
 
 ```js
 ghuser.following(callback); //array of github users
@@ -316,109 +316,109 @@ ghuser.following(callback); //array of github users
 
 ## Github repositories api
 
-### Get information about a repository (GET /repos/pksunkara/octonode)
+#### Get information about a repository (GET /repos/pksunkara/hub)
 
 ```js
 ghrepo.info(callback); //json
 ```
 
-### Get the commits for a repository (GET /repos/pkumar/hub/commits)
+#### Get the commits for a repository (GET /repos/pkumar/hub/commits)
 
 ```js
 ghrepo.commits(callback); //array of commits
 ```
 
-### Get the tags for a repository (GET /repos/pksunkara/hub/tags)
+#### Get the tags for a repository (GET /repos/pksunkara/hub/tags)
 
 ```js
 ghrepo.tags(callback); //array of tags
 ```
 
-### Get the languages for a repository (GET /repos/pksunkara/hub/languages)
+#### Get the languages for a repository (GET /repos/pksunkara/hub/languages)
 
 ```js
 ghrepo.languages(callback); //array of languages
 ```
 
-### Get the contributors for a repository (GET /repos/pksunkara/hub/contributors)
+#### Get the contributors for a repository (GET /repos/pksunkara/hub/contributors)
 
 ```js
 ghrepo.contributors(callback); //array of github users
 ```
 
-### Get the branches for a repository (GET /repos/pksunkara/hub/branches)
+#### Get the branches for a repository (GET /repos/pksunkara/hub/branches)
 
 ```js
 ghrepo.branches(callback); //array of branches
 ```
 
-### Get the issues for a repository (GET /repos/pksunkara/hub/issues)
+#### Get the issues for a repository (GET /repos/pksunkara/hub/issues)
 
 ```js
 ghrepo.issues(callback); //array of issues
 ```
 
-### Get the README for a repository (GET /repos/pksunkara/hub/readme)
+#### Get the README for a repository (GET /repos/pksunkara/hub/readme)
 
 ```js
 ghrepo.readme(callback); //file
 ghrepo.readme('v0.1.0', callback); //file
 ```
 
-### Get the contents of a path in repository
+#### Get the contents of a path in repository
 
 ```js
 ghrepo.contents('lib/index.js', callback); //path
 ghrepo.contents('lib/index.js', 'v0.1.0', callback); //path
 ```
 
-### Get archive link for a repository
+#### Get archive link for a repository
 
 ```js
 ghrepo.archive('tarball', callback); //link to archive
 ghrepo.archive('zipball', 'v0.1.0', callback); //link to archive
 ```
 
-### Get the blob for a repository (GET /repos/pksunkara/hub/git/blobs/SHA)
+#### Get the blob for a repository (GET /repos/pksunkara/hub/git/blobs/SHA)
 
 ```js
 ghrepo.blob('18293abcd72', callback); //blob
 ```
 
-### Get users who starred a repository (GET /repos/pksunkara/hub/stargazers)
+#### Get users who starred a repository (GET /repos/pksunkara/hub/stargazers)
 
-```
+```js
 ghrepo.stargazers(1, 100, callback); //array of users
 ghrepo.stargazers(10, callback);     //array of users
 ghrepo.stargazers(callback);         //array of users
 ```
 
-### Get the teams for a repository (GET /repos/pksunkara/hub/teams)
+#### Get the teams for a repository (GET /repos/pksunkara/hub/teams)
 
 ```js
 ghrepo.teams(callback); //array of teams
 ```
 
-### Get a git tree (GET /repos/pksunkara/hub/git/trees/18293abcd72)
+#### Get a git tree (GET /repos/pksunkara/hub/git/trees/18293abcd72)
 
 ```js
 ghrepo.tree('18293abcd72', callback); //tree
 ghrepo.tree('18293abcd72', true, callback); //recursive tree
 ```
 
-### Delete the repository (DELETE /repos/pksunkara/hub)
+#### Delete the repository (DELETE /repos/pksunkara/hub)
 
 ```js
 ghrepo.destroy();
 ```
 
-### List statuses for a specific ref (GET /repos/pksunkara/hub/statuses/master)
+#### List statuses for a specific ref (GET /repos/pksunkara/hub/statuses/master)
 
 ```js
 ghrepo.statuses('master', callback); // array of statuses
 ```
 
-### Create status (POST /repos/pksunkara/hub/statuses/18e129c213848c7f239b93fe5c67971a64f183ff)
+#### Create status (POST /repos/pksunkara/hub/statuses/SHA)
 
 ```js
 ghrepo.status('18e129c213848c7f239b93fe5c67971a64f183ff', {
@@ -430,13 +430,13 @@ ghrepo.status('18e129c213848c7f239b93fe5c67971a64f183ff', {
 
 ## Github organizations api
 
-### Get information about an organization (GET /orgs/flatiron)
+#### Get information about an organization (GET /orgs/flatiron)
 
 ```js
 ghorg.info(callback); //json
 ```
 
-### Update an organization (POST /orgs/flatiron)
+#### Update an organization (POST /orgs/flatiron)
 
 ```js
 ghorg.update({
@@ -444,13 +444,13 @@ ghorg.update({
 }, callback); // org
 ```
 
-### List organization repositories (GET /orgs/flatiron/repos)
+#### List organization repositories (GET /orgs/flatiron/repos)
 
 ```js
 ghorg.repos(callback); //array of repos
 ```
 
-### Create an organization repository (POST /orgs/flatiron/repos)
+#### Create an organization repository (POST /orgs/flatiron/repos)
 
 ```js
 ghorg.repos({
@@ -459,19 +459,19 @@ ghorg.repos({
 }, callback); //repo
 ```
 
-### Get an organization's teams (GET /orgs/flatiron/teams)
+#### Get an organization's teams (GET /orgs/flatiron/teams)
 
 ```js
 ghorg.teams(callback); //array of teams
 ```
 
-### Get an organization's members (GET /orgs/flatiron/members)
+#### Get an organization's members (GET /orgs/flatiron/members)
 
 ```js
 ghorg.members(callback); //array of github users
 ```
 
-### Check an organization member (GET /orgs/flatiron/members/pksunkara)
+#### Check an organization member (GET /orgs/flatiron/members/pksunkara)
 
 ```js
 ghorg.member('pksunkara', callback); //boolean
@@ -479,37 +479,37 @@ ghorg.member('pksunkara', callback); //boolean
 
 ## Github gists api
 
-### List authenticated user's gists (GET /gists)
+#### List authenticated user's gists (GET /gists)
 
 ```js
 ghgist.list(callback); //array of gists
 ```
 
-### List authenticated user's public gists (GET /gists/public)
+#### List authenticated user's public gists (GET /gists/public)
 
 ```js
 ghgist.public(callback); //array of gists
 ```
 
-### List authenticated user's starred gists (GET /gists/starred)
+#### List authenticated user's starred gists (GET /gists/starred)
 
 ```js
 ghgist.starred(callback); //array of gists
 ```
 
-### List a user's public gists (GET /users/pksunkara/gists)
+#### List a user's public gists (GET /users/pksunkara/gists)
 
 ```js
 ghgist.user('pksunkara', callback); //array of gists
 ```
 
-### Get a single gist (GET /gists/37)
+#### Get a single gist (GET /gists/37)
 
 ```js
 ghgist.get(37, callback); //gist
 ```
 
-### Create a gist (POST /gists)
+#### Create a gist (POST /gists)
 
 ```js
 ghgist.create({
@@ -518,7 +518,7 @@ ghgist.create({
 }), callback); //gist
 ```
 
-### Edit a gist (PATCH /gists/37)
+#### Edit a gist (PATCH /gists/37)
 
 ```js
 ghgist.edit(37, {
@@ -526,43 +526,43 @@ ghgist.edit(37, {
 }, callback); //gist
 ```
 
-### Delete a gist (DELETE /gists/37)
+#### Delete a gist (DELETE /gists/37)
 
 ```js
 ghgist.delete(37);
 ```
 
-### Fork a gist (POST /gists/37/forks)
+#### Fork a gist (POST /gists/37/forks)
 
 ```js
 ghgist.fork(37, callback); //gist
 ```
 
-### Star a gist (PUT /gists/37/star)
+#### Star a gist (PUT /gists/37/star)
 
 ```js
 ghgist.star(37);
 ```
 
-### Unstar a gist (DELETE /gists/37/unstar)
+#### Unstar a gist (DELETE /gists/37/unstar)
 
 ```js
 ghgist.unstar(37);
 ```
 
-### Check if a gist is starred (GET /gists/37/star)
+#### Check if a gist is starred (GET /gists/37/star)
 
 ```js
 ghgist.check(37); //boolean
 ```
 
-### List comments on a gist (GET /gists/37/comments)
+#### List comments on a gist (GET /gists/37/comments)
 
 ```js
 ghgist.comments(37, callback); //array of comments
 ```
 
-### Create a comment (POST /gists/37/comments)
+#### Create a comment (POST /gists/37/comments)
 
 ```js
 ghgist.comments(37, {
@@ -570,13 +570,13 @@ ghgist.comments(37, {
 }, callback); //comment
 ```
 
-### Get a single comment (GET /gists/comments/1)
+#### Get a single comment (GET /gists/comments/1)
 
 ```js
 ghgist.comment(1, callback); //comment
 ```
 
-### Edit a comment (POST /gists/comments/1)
+#### Edit a comment (POST /gists/comments/1)
 
 ```js
 ghgist.comment(1, {
@@ -584,7 +584,7 @@ ghgist.comment(1, {
 }, callback); //comment
 ```
 
-### Delete a comment (DELETE /gists/comments/1)
+#### Delete a comment (DELETE /gists/comments/1)
 
 ```js
 ghgist.comment(1);
@@ -592,19 +592,19 @@ ghgist.comment(1);
 
 ## Github teams api
 
-### Get a team (GET /team/37)
+#### Get a team (GET /team/37)
 
 ```js
 ghteam.info(callback); //json
 ```
 
-### Get the team members (GET /team/37/members)
+#### Get the team members (GET /team/37/members)
 
 ```js
 ghteam.members(callback); //array of github users
 ```
 
-### Check if a user is part of the team (GET /team/37/members/pksunkara)
+#### Check if a user is part of the team (GET /team/37/members/pksunkara)
 
 ```js
 ghteam.member('pksunkara'); //boolean
@@ -612,25 +612,25 @@ ghteam.member('pksunkara'); //boolean
 
 ## Github search api
 
-### Search issues
+#### Search issues
 
 ```js
 ghsearch.issues('pksunkara/hub', 'open', 'git', callback); //array of issues
 ```
 
-### Search repositories
+#### Search repositories
 
 ```js
 ghsearch.repos('git', 'javascript', callback); //array of repositories
 ```
 
-### Search users
+#### Search users
 
 ```js
 ghsearch.users('git', callback); //array of users
 ```
 
-### Search emails
+#### Search emails
 
 ```js
 ghsearch.emails('pavan.sss1991@gmail.com', callback); //user
@@ -651,8 +651,6 @@ Here is a list of [Contributors](http://github.com/pksunkara/octonode/contributo
 The following method names use underscore as an example. The library contains camel cased method names.
 
 ```js
-// public orgs for unauthenticated, private and public for authenticated
-me.get_organizations(callback);
 
 // public repos for unauthenticated, private and public for authenticated
 me.get_watched_repositories(callback);
@@ -691,7 +689,6 @@ var repo = octonode.Repository('pksunkara/octonode');
 repo.update({name: ''}, callback);
 
 // collaborator information
-repo.get_collaborators(callback);
 repo.has_collaborator('name', callback);
 repo.add_collaborator('name', callback);
 repo.remove_collaborator('name', callback);
