@@ -27,5 +27,8 @@ octonode = module.exports =
   # [Gist](octonode/gist.html) class for github
   gist: require './octonode/gist'
 
+  # [Search](octonode/search.html) class for github
+  search: require './octonode/search'
+
   # [Authenticated user](octonode/me.html) class for github
   me: require './octonode/me'

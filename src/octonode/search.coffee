@@ -42,3 +42,6 @@ class Search
     @client.get "/legacy/user/email/#{email}", (err, s, b) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error('Search email error')) else cb null, b.user
+
+# Export module
+module.exports = Search
