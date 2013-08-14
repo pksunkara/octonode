@@ -621,7 +621,7 @@ ghsearch.issues('pksunkara/hub', 'open', 'git', callback); //array of issues
 #### Search repositories
 
 ```js
-ghsearch.repos('git', 'javascript', callback); //array of repositories
+ghsearch.repos('git', 'javascript', 1, callback); //array of repositories
 ```
 
 #### Search users
