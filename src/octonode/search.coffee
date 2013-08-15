@@ -21,8 +21,8 @@ class Search
   # Search repositories
   repos: (keyword, language, start_page, cb) ->
     param = ''
-    param+= 'language=#{language}&' if language
-    param+= 'start_page=#{start_page}&' if start_page
+    param+= "language=#{language}&" if language
+    param+= "start_page=#{start_page}&" if start_page
 
     @client.get "/legacy/repos/search/#{keyword}?#{param}", (err, s, b) ->
       return cb(err) if err
@@ -31,7 +31,7 @@ class Search
   # Search users
   users: (keyword, start_page, cb) ->
     param = ''
-    param+= 'start_page=#{start_page}&' if start_page
+    param+= "start_page=#{start_page}&" if start_page
 
     @client.get "/legacy/user/search/#{keyword}?#{param}", (err, s, b) ->
       return cb(err) if err
