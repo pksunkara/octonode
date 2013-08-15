@@ -627,7 +627,7 @@ ghsearch.repos('git', 'javascript', 1, callback); //array of repositories
 #### Search users
 
 ```js
-ghsearch.users('git', callback); //array of users
+ghsearch.users('git', 1, callback); //array of users
 ```
 
 #### Search emails
