@@ -5,7 +5,7 @@
 #
 
 # Requiring modules
-request = require 'request'
+@request = request = require 'request'
 
 Me   = require './me'
 User = require './user'
