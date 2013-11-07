@@ -69,8 +69,8 @@ class Repo
 
   # Get the issues for a repository
   # '/repos/pksunkara/hub/issues' GET
-  issues: (cb) ->
-    @client.get "/repos/#{@name}/issues", (err, s, b) ->
+  issues: (page, cb) ->
+    @client.get "/repos/#{@name}/issues?page=#{page}", (err, s, b) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo issues error")) else cb null, b
 
