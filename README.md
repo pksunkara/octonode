@@ -322,7 +322,19 @@ ghuser.following(callback); //array of github users
 ghrepo.info(callback); //json
 ```
 
-#### Get the commits for a repository (GET /repos/pkumar/hub/commits)
+#### Get the collaborators for a repository (GET /repos/pksunkara/hub/collaborators)
+
+```js
+ghrepo.collaborators(callback); //array of github users
+```
+
+#### Check if a user is collaborator for a repository (GET /repos/pksunkara/hub/collaborators/marak)
+
+```js
+ghrepo.collaborators('marak', callback); //boolean
+```
+
+#### Get the commits for a repository (GET /repos/pksunkara/hub/commits)
 
 ```js
 ghrepo.commits(callback); //array of commits
@@ -692,7 +704,6 @@ var repo = octonode.Repository('pksunkara/octonode');
 repo.update({name: ''}, callback);
 
 // collaborator information
-repo.has_collaborator('name', callback);
 repo.add_collaborator('name', callback);
 repo.remove_collaborator('name', callback);
 
