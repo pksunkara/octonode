@@ -65,7 +65,9 @@ vows.describe('auth').addBatch({
           return auth.login(['repo', 'user']);
         },
         'should give correct url': function(url) {
-          asrt.equal(url, 'https://github.com/login/oauth/authorize?client_id=clientid&scope=repo,user');
+          url = url.split('&');
+          asrt.equal(url[0], 'https://github.com/login/oauth/authorize?client_id=clientid');
+          asrt.equal(url[2], 'scope=repo,user');
         }
       }
     }
