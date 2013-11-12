@@ -18,6 +18,20 @@ class Repo
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo info error")) else cb null, b
 
+  # Get the collaborators for a repository
+  # '/repos/pksunkara/hub/collaborators
+  collaborators: (cb) ->
+    @client.get "repos/#{@name}/collaborators", (err, s, b) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Repo collaborators error")) else cb null, b
+
+  # Get the collaborators for a repository
+  # '/repos/pksunkara/hub/collaborators/pksunkara
+  hasCollaborator: (collabUser, cb) ->
+    @client.get "repos/#{@name}/collaborators/#{collabUser}", (err, s, b) ->
+      return cb(err) if err
+      if s isnt 204 and s isnt 404 then cb(new Error("Repo Collaborators error")) else cb null, b
+
   # Get the commits for a repository
   # '/repos/pksunkara/hub/commits' GET
   commits: (cb) ->
