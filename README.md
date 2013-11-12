@@ -354,8 +354,11 @@ ghrepo.branches(callback); //array of branches
 
 #### Get the issues for a repository (GET /repos/pksunkara/hub/issues)
 
+Issues are arranged in [pages](http://developer.github.com/v3/#pagination).
+The page argument is used to specify which page of issues to retrieve.
+
 ```js
-ghrepo.issues(callback); //array of issues
+ghrepo.issues(page, callback); //array of issues
 ```
 
 #### Get the README for a repository (GET /repos/pksunkara/hub/readme)
