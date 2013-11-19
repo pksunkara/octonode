@@ -50,6 +50,13 @@ class Pr
       return cb(err) if err
       if s isnt 200 then cb(new Error("Pr commits error")) else cb null, b
 
+  # List comments on a pull request
+  # '/repos/pksunkara/hub/pulls/37/comments' GET
+  comments: (cb) ->
+    @client.get "/repos/#{@repo}/pulls/#{@number}/comments", (err, s, b) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Pr comments error")) else cb null, b
+
   # List pull request's files
   # '/repos/pksunkara/hub/pulls/37/files' GET
   files: (cb) ->
