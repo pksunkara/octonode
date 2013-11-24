@@ -14,7 +14,7 @@ class Search
   # Search issues
   issues: (repo, state, keyword, cb) ->
     state = 'open' if state isnt 'closed'
-    @client.get "/legacy/issues/search/#{repo}/#{state}/#{keyword}", (err, s, b, h) ->
+    @client.get "/search/issues/#{repo}/#{state}/#{keyword}", (err, s, b, h) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error('Search issues error')) else cb null, b.issues, h
 
@@ -24,7 +24,7 @@ class Search
     param['language'] = language if language
     param['start_page'] = start_page if start_page
 
-    @client.get "/legacy/repos/search/#{keyword}", param, (err, s, b, h) ->
+    @client.get "/search/repositories/#{keyword}", param, (err, s, b, h) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error('Search repos error')) else cb null, b.repositories, h
 
@@ -33,7 +33,7 @@ class Search
     param = {}
     param['start_page'] = start_page if start_page
 
-    @client.get "/legacy/user/search/#{keyword}", param, (err, s, b, h) ->
+    @client.get "/search/users/#{keyword}", param, (err, s, b, h) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error('Search users error')) else cb null, b.users, h
 
