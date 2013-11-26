@@ -64,10 +64,13 @@ class Client
     new Issue repo, number, @
 
   # Github api URL builder
-  buildUrl: (path = '/', page = null, per_page = null) ->
-    query =
-      page: page if page?
-      per_page: per_page if per_page?
+  buildUrl: (path = '/', pageOrQuery = null, per_page = null) ->
+    if typeof pageOrQuery == 'object'
+      query = pageOrQuery
+    else
+      query =
+        page: pageOrQuery if pageOrQuery?
+        per_page: per_page if per_page?
     if typeof @token == 'string'
       query.access_token = @token
     else if typeof @token == 'object' and @token.id
