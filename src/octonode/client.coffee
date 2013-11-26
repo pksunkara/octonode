@@ -64,7 +64,7 @@ class Client
     new Issue repo, number, @
 
   # Github api URL builder
-  query: (path = '/', page = null, per_page = null) ->
+  buildUrl: (path = '/', page = null, per_page = null) ->
     query =
       page: page if page?
       per_page: per_page if per_page?
@@ -95,7 +95,7 @@ class Client
   # Github api GET request
   get: (path, params..., callback) ->
     request
-      uri: @query path, params...
+      uri: @buildUrl path, params...
       method: 'GET'
       headers:
         'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
@@ -106,7 +106,7 @@ class Client
   # Github api POST request
   post: (path, content, callback) ->
     request
-      uri: @query path
+      uri: @buildUrl path
       method: 'POST'
       body: JSON.stringify content
       headers:
@@ -119,7 +119,7 @@ class Client
   # Github api PUT request
   put: (path, content, callback) ->
     request
-      uri: @query path
+      uri: @buildUrl path
       method: 'PUT'
       body: JSON.stringify content
       headers:
@@ -132,7 +132,7 @@ class Client
   # Github api DELETE request
   del: (path, content, callback) ->
     request
-      uri: @query path
+      uri: @buildUrl path
       method: 'DELETE'
       body: JSON.stringify content
       headers:
