@@ -6,6 +6,7 @@
 
 # Requiring modules
 @request = request = require 'request'
+@url = url = require 'url'
 
 Me    = require './me'
 User  = require './user'
@@ -63,20 +64,25 @@ class Client
     new Issue repo, number, @
 
   # Github api URL builder
-  query: (path = '/', page = null, per_page = null) ->
-    path = '/' + path if path[0] isnt '/'
-    uri = "https://"
-    uri+= if typeof @token == 'object' and @token.username then "#{@token.username}:#{@token.password}@" else ''
-    uri+= "api.github.com#{path}"
+  buildUrl: (path = '/', pageOrQuery = null, per_page = null) ->
+    if typeof pageOrQuery == 'object'
+      query = pageOrQuery
+    else
+      query =
+        page: pageOrQuery if pageOrQuery?
+        per_page: per_page if per_page?
     if typeof @token == 'string'
-      uri+= "?access_token=#{@token}&"
+      query.access_token = @token
     else if typeof @token == 'object' and @token.id
-      uri+= "?client_id=#{@token.id}&client_secret=#{@token.secret}&"
-    else if page? or per_page?
-      uri+= "?"
-    uri+= "page=#{page}&" if page?
-    uri+= "per_page=#{per_page}&" if per_page?
-    uri
+      query.client_id = @token.id
+      query.client_secret = @token.secret
+
+    url.format
+      protocol: "https:"
+      auth: if typeof @token == 'object' and @token.username then "#{@token.username}:#{@token.password}" else ''
+      hostname: "api.github.com"
+      pathname: path
+      query: query
 
   errorHandle: (res, body, callback) ->
     # TODO: More detailed HTTP error message
@@ -92,7 +98,7 @@ class Client
   # Github api GET request
   get: (path, params..., callback) ->
     request
-      uri: @query path, params...
+      uri: @buildUrl path, params...
       method: 'GET'
       headers:
         'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
@@ -103,7 +109,7 @@ class Client
   # Github api POST request
   post: (path, content, callback) ->
     request
-      uri: @query path
+      uri: @buildUrl path
       method: 'POST'
       body: JSON.stringify content
       headers:
@@ -116,7 +122,7 @@ class Client
   # Github api PUT request
   put: (path, content, callback) ->
     request
-      uri: @query path
+      uri: @buildUrl path
       method: 'PUT'
       body: JSON.stringify content
       headers:
@@ -129,7 +135,7 @@ class Client
   # Github api DELETE request
   del: (path, content, callback) ->
     request
-      uri: @query path
+      uri: @buildUrl path
       method: 'DELETE'
       body: JSON.stringify content
       headers:

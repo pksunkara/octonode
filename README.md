@@ -369,12 +369,18 @@ ghrepo.branches(callback); //array of branches
 Issues are arranged in [pages](http://developer.github.com/v3/#pagination).
 The page argument is optional and is used to specify which page of issues to retrieve.
 The perPage argument is also optional and is used to specify how many issues per page.
+Alternatively, you can pass in [parameters](http://developer.github.com/v3/issues/#parameters-1) as an object.
 
 ```js
 ghrepo.issues(page, perPage, callback); //array of issues
-ghrepo.issues(1, 100, callback);        //array of users
-ghrepo.issues(10, callback);            //array of users
-ghrepo.issues(callback);                //array of users
+ghrepo.issues(1, 100, callback);        //array of first 100 issues
+ghrepo.issues(10, callback);            //array of 30 issues from page 10
+ghrepo.issues(callback);                //array of first 30 issues
+ghrepo.issues({
+  page: 2,
+  per_page: 100,
+  state: 'closed'
+}, callback);                           //array of issues from page 2 of all closed issues
 ```
 
 #### Get the README for a repository (GET /repos/pksunkara/hub/readme)

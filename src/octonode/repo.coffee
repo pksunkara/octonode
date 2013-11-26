@@ -87,12 +87,10 @@ class Repo
 
   # Get the issues for a repository
   # '/repos/pksunkara/hub/issues' GET
-  # - page, optional     - params[0]
-  # - per_page, optional - params[1]
+  # - page or query object, optional - params[0]
+  # - per_page, optional             - params[1]
   issues: (params..., cb) ->
-    page = params[0] || 1
-    per_page = params[1] || 30
-    @client.get "/repos/#{@name}/issues", page, per_page, (err, s, b, headers) ->
+    @client.get "/repos/#{@name}/issues", params..., (err, s, b, headers) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo issues error")) else cb null, b, headers
 
