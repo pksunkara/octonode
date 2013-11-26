@@ -6,6 +6,7 @@
 
 # Requiring modules
 @request = request = require 'request'
+@url = url = require 'url'
 
 Me    = require './me'
 User  = require './user'
@@ -64,19 +65,21 @@ class Client
 
   # Github api URL builder
   query: (path = '/', page = null, per_page = null) ->
-    path = '/' + path if path[0] isnt '/'
-    uri = "https://"
-    uri+= if typeof @token == 'object' and @token.username then "#{@token.username}:#{@token.password}@" else ''
-    uri+= "api.github.com#{path}"
+    query =
+      page: page if page?
+      per_page: per_page if per_page?
     if typeof @token == 'string'
-      uri+= "?access_token=#{@token}&"
+      query.access_token = @token
     else if typeof @token == 'object' and @token.id
-      uri+= "?client_id=#{@token.id}&client_secret=#{@token.secret}&"
-    else if page? or per_page?
-      uri+= "?"
-    uri+= "page=#{page}&" if page?
-    uri+= "per_page=#{per_page}&" if per_page?
-    uri
+      query.client_id = @token.id
+      query.client_secret = @token.secret
+
+    url.format
+      protocol: "https:"
+      auth: if typeof @token == 'object' and @token.username then "#{@token.username}:#{@token.password}" else ''
+      hostname: "api.github.com"
+      pathname: path
+      query: query
 
   errorHandle: (res, body, callback) ->
     # TODO: More detailed HTTP error message
