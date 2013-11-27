@@ -65,7 +65,7 @@ class Client
 
   # Github api URL builder
   buildUrl: (path = '/', pageOrQuery = null, per_page = null) ->
-    if typeof pageOrQuery == 'object'
+    if pageOrQuery? and typeof pageOrQuery == 'object'
       query = pageOrQuery
     else
       query =
