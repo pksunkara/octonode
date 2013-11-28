@@ -92,6 +92,37 @@ class Me
     @client.del "/user/following/#{user}", {}, (err, s, b)  =>
       @unfollow(user) if err? or s isnt 204
 
+  # Get the followings of the user
+  # '/user/starred' GET
+  # TODO: page, user
+  starred: (cbOrUser, cb) ->
+    if cb? and typeof cbOrUser isnt 'function'
+      @checkStarred cbOrUser, cb
+    else
+      cb = cbOrUser
+      @client.get '/user/starred', (err, s, b)  ->
+        return cb(err) if err
+        if s isnt 200 then cb(new Error('User starred error')) else cb null, b
+
+  # Check if you have starred a repository
+  # '/user/starred/pksunkara/octonode' GET
+  checkStarred: (repo, cb) ->
+    @client.get "/user/starred/#{repo}", (err, s, b)  ->
+      return cb(err) if err
+      cb null, s is 204
+
+  # Star a repository
+  # '/user/starred/pksunkara/octonode' PUT
+  star: (repo) ->
+    @client.put "/user/starred/#{repo}", {}, (err, s, b)  =>
+      @star(repo) if err? or s isnt 204
+
+  # Unstar a repository
+  # '/user/starred/pksunkara/octonode' DELETE
+  unstar: (repo) ->
+    @client.del "/user/starred/#{repo}", {}, (err, s, b)  =>
+      @unstar(repo) if err? or s isnt 204
+
   # Get public keys of a user
   # '/user/keys' GET
   keys: (cbOrIdOrKey, cbOrKey, cb) ->
