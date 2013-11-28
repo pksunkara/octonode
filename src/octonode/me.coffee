@@ -92,7 +92,7 @@ class Me
     @client.del "/user/following/#{user}", {}, (err, s, b)  =>
       @unfollow(user) if err? or s isnt 204
 
-  # Get the followings of the user
+  # Get the starred repos for the user
   # '/user/starred' GET
   # TODO: page, user
   starred: (cbOrUser, cb) ->
@@ -122,6 +122,15 @@ class Me
   unstar: (repo) ->
     @client.del "/user/starred/#{repo}", {}, (err, s, b)  =>
       @unstar(repo) if err? or s isnt 204
+
+
+  # Get the subscriptions of the user (what she watches)
+  # '/user/subscriptions' GET
+  # TODO: page, user
+  watched: (cb) ->
+    @client.get '/user/subscriptions', (err, s, b)  ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error('User subscription error')) else cb null, b
 
   # Get public keys of a user
   # '/user/keys' GET
