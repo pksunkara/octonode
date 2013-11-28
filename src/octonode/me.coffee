@@ -121,7 +121,7 @@ class Me
   # '/user/starred/pksunkara/octonode' DELETE
   unstar: (repo) ->
     @client.del "/user/starred/#{repo}", {}, (err, s, b)  =>
-      @unfollow(repo) if err? or s isnt 204
+      @unstar(repo) if err? or s isnt 204
 
   # Get public keys of a user
   # '/user/keys' GET
