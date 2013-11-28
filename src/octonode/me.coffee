@@ -123,7 +123,6 @@ class Me
     @client.del "/user/starred/#{repo}", {}, (err, s, b)  =>
       @unstar(repo) if err? or s isnt 204
 
-
   # Get the subscriptions of the user (what she watches)
   # '/user/subscriptions' GET
   # TODO: page, user
