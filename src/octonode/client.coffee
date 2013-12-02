@@ -68,9 +68,12 @@ class Client
     if pageOrQuery? and typeof pageOrQuery == 'object'
       query = pageOrQuery
     else
-      query =
-        page: pageOrQuery if pageOrQuery?
-        per_page: per_page if per_page?
+      query = {}
+      query.page     = pageOrQuery if pageOrQuery?
+      query.per_page = per_page if per_page?
+      #query =
+      #  page: pageOrQuery if pageOrQuery?
+      #  per_page: per_page if per_page?
     if typeof @token == 'string'
       query.access_token = @token
     else if typeof @token == 'object' and @token.id

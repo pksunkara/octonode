@@ -296,23 +296,30 @@ ghme.fork('pksunkara/hub', callback); //forked repo
 
 No token required for the following
 
-#### Get information about an user (GET /users/pksunkara)
+#### Get information about a user (GET /users/pksunkara)
 
 ```js
 ghuser.info(callback); //json
 ```
 
-#### Get an user followers (GET /users/pksunkara/followers)
+#### Get user followers (GET /users/pksunkara/followers)
 
 ```js
 ghuser.followers(callback); //array of github users
 ```
 
-#### Get an user followings (GET /users/pksunkara/following)
+#### Get user followings (GET /users/pksunkara/following)
 
 ```js
 ghuser.following(callback); //array of github users
 ```
+
+#### Get user organizations (GET /users/pksunkara/orgs)
+
+```js
+ghuser.orgs(callback); //array of organizations
+```
+
 
 ## Github repositories api
 
