@@ -55,5 +55,12 @@ class User
       cb null, b.filter (event) ->
         return events.indexOf(event.type) != -1
 
+  # Get a list of organizations a user belongs to and has publicized membership.
+  # '/users/pksunkara/orgs' GET
+  orgs: (cb) ->
+    @client.get "/users/#{@login}/orgs", (err, s, b)  ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error('User organizations error')) else cb null, b
+
 # Export module
 module.exports = User
