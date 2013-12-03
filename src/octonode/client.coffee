@@ -114,7 +114,9 @@ class Client
       followRedirect: false
       headers:
         'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
-    , @handleResponse(callback)
+    , (err, res, body) =>
+      return callback(err) if err
+      @errorHandle res, body, callback
 
   # Github api POST request
   post: (path, content, callback) ->
