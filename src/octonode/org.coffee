@@ -60,9 +60,9 @@ class Org
   # Check an organization's member.
   # '/orgs/flatiron/members/pksunkara' GET
   member: (user, cb) ->
-    @client.get "/orgs/#{@name}/members/#{user}", (err, s, b)  ->
+    @client.getNoFollow "/orgs/#{@name}/members/#{user}", (err, s, b)  ->
       return cb(err) if err
-      cb null, s is 204
+      cb null, s is 204 or s is 302
 
 # Export module
 module.exports = Org
