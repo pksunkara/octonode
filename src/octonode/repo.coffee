@@ -94,6 +94,32 @@ class Repo
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo issues error")) else cb null, b, headers
 
+  # Create a comment for an issue in a repository
+  # '/repos/pksunkara/hub/issues/1/comments' POST
+  # - issue number - number
+  # - comment details - comment
+  create_issue_comment: (number, comment, cb) ->
+    @client.post "/repos/#{@name}/issues/#{number}/comments", comment, (err, s, b) ->
+      return cb(err) if err
+      if s isnt 201 then cb(new Error("Repo create_issue_comment error")) else cb null, b
+
+  # Create an issue for a repository
+  # '/repos/pksunkara/hub/issues' POST
+  # - issue details - params
+  create_issue: (issue, cb) ->
+    @client.post "/repos/#{@name}/issues", issue, (err, s, b) ->
+      return cb(err) if err
+      if s isnt 201 then cb(new Error("Repo create_issue error")) else cb null, b
+
+  # Edit an issue for a repository
+  # '/repos/pksunkara/hub/issues/1' PATCH
+  # - issue number - number
+  # - issue details - issue
+  edit_issue: (number, issue, cb) ->
+    @client.patch "/repos/#{@name}/issues/#{number}", issue, (err, s, b) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Repo edit_issue error")) else cb null, b
+
   # Get the README for a repository
   # '/repos/pksunkara/hub/readme' GET
   readme: (cbOrRef, cb) ->
