@@ -187,19 +187,20 @@ class Me
       if s isnt 200 then cb(new Error('User orgs error')) else cb null, b
 
   # Get repository instance for client
-  repo: (name) ->
-    @client.repo name
+  repo: (name, cb) ->
+    if typeof cb is 'function' and typeof nameOrRepo is 'object'
+      @createRepo nameOrRepo, cb
+    else
+      @client.repo name
 
   # List your repositories
   # '/user/repos' GET
-  repos: (cbOrRepo, cb) ->
-    if typeof cb is 'function' and typeof cbOrRepo is 'object'
-      @createRepo cbOrRepo, cb
-    else
-      cb = cbOrRepo
-      @client.get "/user/repos", (err, s, b) ->
-        return cb(err) if err
-        if s isnt 200 then cb(new Error('User repos error')) else cb null, b
+  # - page or query object, optional - params[0]
+  # - per_page, optional             - params[1]
+  repos: (params..., cb) ->
+    @client.get "/user/repos", params..., (err, s, b) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error('User repos error')) else cb null, b
 
   # Create a repository
   # '/user/repos' POST

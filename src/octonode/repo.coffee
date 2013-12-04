@@ -85,7 +85,14 @@ class Repo
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo branches error")) else cb null, b
 
-  # Get the issues for a repository
+  # Get issue instance for a repo
+  issue: (numberOrIssue, cb) ->
+    if typeof cb is 'function' and typeof numberOrIssue is 'object'
+      @createIssue numberOrIssue, cb
+    else
+      @client.issue @name, numberOrIssue
+
+  # List issues for a repository
   # '/repos/pksunkara/hub/issues' GET
   # - page or query object, optional - params[0]
   # - per_page, optional             - params[1]
@@ -93,6 +100,12 @@ class Repo
     @client.get "/repos/#{@name}/issues", params..., (err, s, b, headers) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo issues error")) else cb null, b, headers
+
+  # Create an issue for a repository
+  # '/repos/pksunkara/hub/issues' POST
+  createIssue: (issue, cb) ->
+    @client.post "/repos/#{@name}/issues", issue, (err, s, b) ->
+      if s isnt 201 then cb(new Error("Repo createIssue error")) else cb null, b
 
   # Get the README for a repository
   # '/repos/pksunkara/hub/readme' GET
@@ -160,19 +173,20 @@ class Repo
       @destroy() if err? or s isnt 204
 
   # Get pull-request instance for repo
-  pr: (number) ->
-    @client.pr @name, number
+  pr: (numberOrPr, cb) ->
+    if typeof cb is 'function' and typeof numberOrPr is 'object'
+      @createPr numberOrPr, cb
+    else
+      @client.pr @name, numberOrPr
 
   # List pull requests
   # '/repos/pksunkara/hub/pulls' GET
-  prs: (cbOrPr, cb) ->
-    if typeof cb is 'function' and typeof cbOrPr is 'object'
-      @createPr cbOrPr, cb
-    else
-      cb = cbOrPr
-      @client.get "/repos/#{@name}/pulls", (err, s, b) ->
-        return cb(err) if (err)
-        if s isnt 200 then cb(new Error("Repo prs error")) else cb null, b
+  # - page or query object, optional - params[0]
+  # - per_page, optional             - params[1]
+  prs: (params..., cb) ->
+    @client.get "/repos/#{@name}/pulls", params..., (err, s, b) ->
+      return cb(err) if (err)
+      if s isnt 200 then cb(new Error("Repo prs error")) else cb null, b
 
   # Create a pull request
   # '/repos/pksunkara/hub/pulls' POST
