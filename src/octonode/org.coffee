@@ -62,7 +62,7 @@ class Org
   member: (user, cb) ->
     @client.getNoFollow "/orgs/#{@name}/members/#{user}", (err, s, b)  ->
       return cb(err) if err
-      cb null, s is 204 or s is 302
+      cb null, s is 204
 
 # Export module
 module.exports = Org
