@@ -18,6 +18,8 @@ var ghme   = client.me();
 var ghuser = client.user('pksunkara');
 var ghrepo = client.repo('pksunkara/hub');
 var ghorg  = client.org('flatiron');
+var ghissue = client.issue('pksunkara/hub', 37);
+var ghpr = client.pr('pksunkara/hub', 37);
 var ghgist = client.gist();
 var ghteam = client.team(37);
 
@@ -166,6 +168,29 @@ ghme.info(function(err, data) {
 });
 ```
 
+## Pagination
+
+If a function is said to be supporting pagination, then that function can be used in many ways as shown below. Results from the function are arranged in [pages](http://developer.github.com/v3/#pagination).
+
+The page argument is optional and is used to specify which page of issues to retrieve.
+The perPage argument is also optional and is used to specify how many issues per page.
+
+```js
+// Normal usage of function
+ghrepo.issues(callback); //array of first 30 issues
+
+// Using pagination parameters
+ghrepo.issues(2, 100, callback); //array of second 100 issues
+ghrepo.issues(10, callback); //array of 30 issues from page 10
+
+// Pagination parameters can be set with query object too
+ghrepo.issues({
+  page: 2,
+  per_page: 100,
+  state: 'closed'
+}, callback); //array of second 100 issues which are closed
+```
+
 ## Github authenticated user api
 
 Token/Credentials required for the following:
@@ -212,6 +237,8 @@ ghme.followers(callback); //array of github users
 ```
 
 #### Get users whom the user is following (GET /user/following)
+
+This query supports [pagination](#pagination).
 
 ```js
 ghme.following(callback); //array of github users
@@ -265,13 +292,51 @@ ghme.keys(1, {"title":"desktop", "key":"ssh-rsa AAA..."}, callback); //key
 ghme.keys(1);
 ```
 
-#### List your public and private organizations (GET /user/orgs)
+#### Get the starred repos for the user (GET /user/starred)
+
+This query supports [pagination](#pagination).
 
 ```js
-ghme.orgs(callback); // array of orgs
+ghme.starred(callback); //array of repos 
+```
+
+#### Check if you have starred a repository (GET /user/starred/pksunkara/octonode)
+
+```js
+ghme.starred('flatiron/flatiron', callback); //boolean
+```
+
+#### Star a repository (PUT /user/starred/pksunkara/octonode)
+
+```js
+ghme.star('flatiron/flatiron');
+```
+
+#### Unstar a repository (DELETE /user/starred/pksunkara/octonode)
+
+```js
+ghme.unstar('flatiron/flatiron');
+```
+
+#### Get the subscriptions of the user (GET /user/subscriptions)
+
+This query supports [pagination](#pagination).
+
+```js
+ghme.watched(callback); //array of repos
+```
+
+#### List your public and private organizations (GET /user/orgs)
+
+This query supports [pagination](#pagination).
+
+```js
+ghme.orgs(callback); //array of orgs
 ```
 
 #### List your repositories (GET /user/repos)
+
+This query supports [pagination](#pagination).
 
 ```js
 ghme.repos(callback); //array of repos
@@ -280,7 +345,7 @@ ghme.repos(callback); //array of repos
 #### Create a repository (POST /user/repos)
 
 ```js
-ghme.repos({
+ghme.repo({
   "name": "Hello-World",
   "description": "This is your first repo",
 }, callback); //repo
@@ -304,22 +369,35 @@ ghuser.info(callback); //json
 
 #### Get user followers (GET /users/pksunkara/followers)
 
+This query supports [pagination](#pagination).
+
 ```js
 ghuser.followers(callback); //array of github users
 ```
 
 #### Get user followings (GET /users/pksunkara/following)
 
+This query supports [pagination](#pagination).
+
 ```js
 ghuser.following(callback); //array of github users
 ```
 
-#### Get user organizations (GET /users/pksunkara/orgs)
+#### Get events performed by a user (GET /users/pksunkara/events)
+
+This query supports [pagination](#pagination).
+
+```js
+ghuser.events(['commit_comment'], callback); //array of events
+```
+
+#### Get user public organizations (GET /users/pksunkara/orgs)
+
+This query supports [pagination](#pagination).
 
 ```js
 ghuser.orgs(callback); //array of organizations
 ```
-
 
 ## Github repositories api
 
@@ -345,6 +423,11 @@ ghrepo.collaborators('marak', callback); //boolean
 
 ```js
 ghrepo.commits(callback); //array of commits
+```
+
+#### Get a certain commit for a repository (GET /repos/pksunkara/hub/commits/18293abcd72)
+```js
+ghrepo.commit('18293abcd72', callback); //commit
 ```
 
 #### Get the tags for a repository (GET /repos/pksunkara/hub/tags)
@@ -373,21 +456,41 @@ ghrepo.branches(callback); //array of branches
 
 #### Get the issues for a repository (GET /repos/pksunkara/hub/issues)
 
-Issues are arranged in [pages](http://developer.github.com/v3/#pagination).
-The page argument is optional and is used to specify which page of issues to retrieve.
-The perPage argument is also optional and is used to specify how many issues per page.
-Alternatively, you can pass in [parameters](http://developer.github.com/v3/issues/#parameters-1) as an object.
+This query supports [pagination](#pagination).
 
 ```js
-ghrepo.issues(page, perPage, callback); //array of issues
-ghrepo.issues(1, 100, callback);        //array of first 100 issues
-ghrepo.issues(10, callback);            //array of 30 issues from page 10
-ghrepo.issues(callback);                //array of first 30 issues
-ghrepo.issues({
-  page: 2,
-  per_page: 100,
-  state: 'closed'
-}, callback);                           //array of issues from page 2 of all closed issues
+ghrepo.issues(callback); //array of issues
+```
+
+#### Create an issue for a repository (POST /repos/pksunkara/hub/issues)
+
+```js
+ghrepo.issue({
+  "title": "Found a bug",
+  "body": "I'm having a problem with this.",
+  "assignee": "octocat",
+  "milestone": 1,
+  "labels": ["Label1", "Label2"]
+}, callback); //issue
+```
+
+#### Get the pull requests for a repository (GET /repos/pksunkara/hub/pulls)
+
+This query supports [pagination](#pagination).
+
+```js
+ghrepo.prs(callback); //array of pull requests
+```
+
+#### Create a pull request (POST /repos/pksunkara/hub/pulls)
+
+```js
+ghrepo.pr({
+  "title": "Amazing new feature",
+  "body": "Please pull this in!",
+  "head": "octocat:new-feature",
+  "base": "master"
+}, callback); //pull request
 ```
 
 #### Get the README for a repository (GET /repos/pksunkara/hub/readme)
@@ -447,7 +550,7 @@ ghrepo.destroy();
 #### List statuses for a specific ref (GET /repos/pksunkara/hub/statuses/master)
 
 ```js
-ghrepo.statuses('master', callback); // array of statuses
+ghrepo.statuses('master', callback); //array of statuses
 ```
 
 #### Create status (POST /repos/pksunkara/hub/statuses/SHA)
@@ -478,6 +581,8 @@ ghorg.update({
 
 #### List organization repositories (GET /orgs/flatiron/repos)
 
+This query supports [pagination](#pagination).
+
 ```js
 ghorg.repos(callback); //array of repos
 ```
@@ -485,7 +590,7 @@ ghorg.repos(callback); //array of repos
 #### Create an organization repository (POST /orgs/flatiron/repos)
 
 ```js
-ghorg.repos({
+ghorg.repo({
   name: 'Hello-world',
   description: 'My first world program'
 }, callback); //repo
@@ -509,9 +614,81 @@ ghorg.members(callback); //array of github users
 ghorg.member('pksunkara', callback); //boolean
 ```
 
+## Github issues api
+
+#### Get a single issue (GET /repos/pksunkara/hub/issues/37)
+
+```js
+ghissue.info(callback); //issue
+```
+
+#### Edit an issue for a repository (PATCH /repos/pksunkara/hub/issues/37)
+
+```js
+ghissue.update({
+  "title": "Found a bug and I am serious",
+}, callback); //issue
+```
+
+#### List comments on an issue (GET /repos/pksunkara/hub/issues/37/comments)
+
+This query supports [pagination](#pagination).
+
+```js
+ghissue.comments(callback); //array of comments
+```
+
+## Github pull requests api
+
+#### Get a single pull request (GET /repos/pksunkara/hub/pulls/37)
+
+```js
+ghpr.info(callback); //pull request
+```
+
+#### Update a pull request (PATCH /repos/pksunkara/hub/pulls/37)
+
+```js
+ghpr.update({
+  'title': 'Wow this pr'
+}, callback); //pull request
+```
+
+#### Close a pull request
+
+```js
+ghpr.close(callback); //pull request
+```
+
+#### Get if a pull request has been merged (GET /repos/pksunkara/hub/pulls/37/merge)
+
+```js
+ghpr.merged(callback); //boolean
+```
+
+#### List commits on a pull request (GET /repos/pksunkara/hub/pulls/37/commits)
+
+```js
+ghpr.commits(callback); //array of commits
+```
+
+#### List comments on a pull request (GET /repos/pksunkara/hub/pulls/37/comments)
+
+```js
+ghpr.comments(callback); //array of comments
+```
+
+#### List files in pull request (GET /repos/pksunkara/hub/pulls/37/files)
+
+```js
+ghpr.files(callback); //array of files
+```
+
 ## Github gists api
 
 #### List authenticated user's gists (GET /gists)
+
+This query supports [pagination](#pagination).
 
 ```js
 ghgist.list(callback); //array of gists
@@ -519,17 +696,23 @@ ghgist.list(callback); //array of gists
 
 #### List authenticated user's public gists (GET /gists/public)
 
+This query supports [pagination](#pagination).
+
 ```js
 ghgist.public(callback); //array of gists
 ```
 
 #### List authenticated user's starred gists (GET /gists/starred)
 
+This query supports [pagination](#pagination).
+
 ```js
 ghgist.starred(callback); //array of gists
 ```
 
 #### List a user's public gists (GET /users/pksunkara/gists)
+
+This query supports [pagination](#pagination).
 
 ```js
 ghgist.user('pksunkara', callback); //array of gists
