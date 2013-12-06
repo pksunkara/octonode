@@ -57,7 +57,7 @@ class Pr
       return cb(err) if err
       if s isnt 200 then cb(new Error("Pr comments error")) else cb null, b
 
-  # List pull request's files
+  # List files in pull request
   # '/repos/pksunkara/hub/pulls/37/files' GET
   files: (cb) ->
     @client.get "/repos/#{@repo}/pulls/#{@number}/files", (err, s, b) ->

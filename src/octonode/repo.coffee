@@ -43,7 +43,7 @@ class Repo
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo commits error")) else cb null, b
 
-  # Get the commits for a repository
+  # Get a certain commit for a repository
   # '/repos/pksunkara/hub/commits/SHA' GET
   commit: (sha, cb) ->
     @client.get "/repos/#{@name}/commits/#{sha}", (err, s, b) ->
@@ -97,9 +97,9 @@ class Repo
   # - page or query object, optional - params[0]
   # - per_page, optional             - params[1]
   issues: (params..., cb) ->
-    @client.get "/repos/#{@name}/issues", params..., (err, s, b, headers) ->
+    @client.get "/repos/#{@name}/issues", params..., (err, s, b) ->
       return cb(err) if err
-      if s isnt 200 then cb(new Error("Repo issues error")) else cb null, b, headers
+      if s isnt 200 then cb(new Error("Repo issues error")) else cb null, b
 
   # Create an issue for a repository
   # '/repos/pksunkara/hub/issues' POST
@@ -216,10 +216,9 @@ class Repo
   stargazers: (params..., cb)->
     page = params[0] || 1
     per_page = params[1] || 30
-    @client.get "/repos/#{@name}/stargazers", page, per_page, (err, s, b, headers) ->
+    @client.get "/repos/#{@name}/stargazers", page, per_page, (err, s, b) ->
       return cb(err) if err
-      if s isnt 200 then cb(new Error("Repo stargazers error")) else cb null, b, headers
-
+      if s isnt 200 then cb(new Error("Repo stargazers error")) else cb null, b
 
 # Export module
 module.exports = Repo

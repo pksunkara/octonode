@@ -13,29 +13,37 @@ class Gist
 
   # List authenticated user's gists
   # '/gists' GET
-  list: (cb) ->
-    @client.get "/gists", (err, s, b)  ->
+  # - page or query object, optional - params[0]
+  # - per_page, optional             - params[1]
+  list: (params..., cb) ->
+    @client.get "/gists", params..., (err, s, b)  ->
       return cb(err) if err
       if s isnt 200 then cb(new Error('Gist list error')) else cb null, b
 
   # List authenticated user's public gists
   # '/gists/public' GET
-  public: (cb) ->
-    @client.get "/gists/public", (err, s, b) ->
+  # - page or query object, optional - params[0]
+  # - per_page, optional             - params[1]
+  public: (params..., cb) ->
+    @client.get "/gists/public", params..., (err, s, b) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error('Gist public error')) else cb null, b
 
   # List authenticated user's starred gists
   # '/gists/starred' GET
-  starred: (cb) ->
-    @client.get "/gists/starred", (err, s, b) ->
+  # - page or query object, optional - params[0]
+  # - per_page, optional             - params[1]
+  starred: (params..., cb) ->
+    @client.get "/gists/starred", params..., (err, s, b) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error('Gist starred error')) else cb null, b
 
   # List a user's public gists
   # '/users/pksunkara/gists' GET
-  user: (user, cb) ->
-    @client.get "/users/#{user}/gists", (err, s, b) ->
+  # - page or query object, optional - params[0]
+  # - per_page, optional             - params[1]
+  user: (params..., user, cb) ->
+    @client.get "/users/#{user}/gists", params..., (err, s, b) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error('Gist user error')) else cb null, b
 

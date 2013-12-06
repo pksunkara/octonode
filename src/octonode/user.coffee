@@ -24,31 +24,34 @@ class User
 
   # Get the followers of a user
   # '/users/pkumar/followers' GET
-  # TODO: page, user
-  followers: (cb) ->
-    @client.get "/users/#{@login}/followers", (err, s, b)  ->
+  # - page, optional     - params[0]
+  # - per_page, optional - params[1]
+  followers: (params..., cb) ->
+    @client.get "/users/#{@login}/followers", params..., (err, s, b)  ->
       return cb(err) if err
       if s isnt 200 then cb(new Error('User followers error')) else cb null, b
 
   # Get the followings of a user
   # '/users/pkumar/following' GET
-  # TODO: page, user
-  following: (cb) ->
-    @client.get "/users/#{@login}/following", (err, s, b)  ->
+  # - page, optional     - params[0]
+  # - per_page, optional - params[1]
+  following: (params..., cb) ->
+    @client.get "/users/#{@login}/following", params..., (err, s, b)  ->
       return cb(err) if err
       if s isnt 200 then cb(new Error('User following error')) else cb null, b
 
   # Get events performed by a user
   # '/users/pksunkara/events' GET
-  # TODO: page
-  events: (events, cb) ->
+  # - page, optional     - params[0]
+  # - per_page, optional - params[1]
+  events: (params..., events, cb) ->
     if !cb and typeof events == 'function'
       cb = events
       events = null
     else if !Array.isArray events
       events = [events]
 
-    @client.get "/users/#{@login}/events", (err, s, b)  ->
+    @client.get "/users/#{@login}/events", params..., (err, s, b)  ->
       return cb(err) if err
       return cb(new Error('User events error')) if s isnt 200
 
@@ -57,8 +60,10 @@ class User
 
   # Get a list of organizations a user belongs to and has publicized membership.
   # '/users/pksunkara/orgs' GET
-  orgs: (cb) ->
-    @client.get "/users/#{@login}/orgs", (err, s, b)  ->
+  # - page, optional     - params[0]
+  # - per_page, optional - params[1]
+  orgs: (params..., cb) ->
+    @client.get "/users/#{@login}/orgs", params..., (err, s, b)  ->
       return cb(err) if err
       if s isnt 200 then cb(new Error('User organizations error')) else cb null, b
 

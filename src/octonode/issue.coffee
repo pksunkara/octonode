@@ -25,8 +25,10 @@ class Issue
 
   # List comments on an issue
   # '/repos/pksunkara/hub/issues/37/comments' GET
-  comments: (cb) ->
-    @client.get "/repos/" + @repo + "/issues/" + @number + "/comments", (err, s, b)  ->
+  # - page or query object, optional - params[0]
+  # - per_page, optional             - params[1]
+  comments: (params..., cb) ->
+    @client.get "/repos/" + @repo + "/issues/" + @number + "/comments", params..., (err, s, b)  ->
       return cb(err) if err
       if s isnt 200 then cb(new Error('Issue Comments error')) else cb null, b
 

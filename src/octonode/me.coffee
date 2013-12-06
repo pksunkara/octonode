@@ -55,9 +55,10 @@ class Me
 
   # Get the followers of the user
   # '/user/followers' GET
-  # TODO: page, user
-  followers: (cb) ->
-    @client.get '/user/followers', (err, s, b)  ->
+  # - page or query object, optional - params[0]
+  # - per_page, optional             - params[1]
+  followers: (params..., cb) ->
+    @client.get '/user/followers', params..., (err, s, b)  ->
       return cb(err) if err
       if s isnt 200 then cb(new Error('User followers error')) else cb null, b
 
@@ -95,11 +96,11 @@ class Me
   # Get the starred repos for the user
   # '/user/starred' GET
   # TODO: page, user
-  starred: (cbOrUser, cb) ->
-    if cb? and typeof cbOrUser isnt 'function'
-      @checkStarred cbOrUser, cb
+  starred: (cbOrRepo, cb) ->
+    if cb? and typeof cbOrRepo isnt 'function'
+      @checkStarred cbOrRepo, cb
     else
-      cb = cbOrUser
+      cb = cbOrRepo
       @client.get '/user/starred', (err, s, b)  ->
         return cb(err) if err
         if s isnt 200 then cb(new Error('User starred error')) else cb null, b
@@ -125,9 +126,10 @@ class Me
 
   # Get the subscriptions of the user (what she watches)
   # '/user/subscriptions' GET
-  # TODO: page, user
-  watched: (cb) ->
-    @client.get '/user/subscriptions', (err, s, b)  ->
+  # - page or query object, optional - params[0]
+  # - per_page, optional             - params[1]
+  watched: (params..., cb) ->
+    @client.get '/user/subscriptions', params..., (err, s, b)  ->
       return cb(err) if err
       if s isnt 200 then cb(new Error('User subscription error')) else cb null, b
 
@@ -181,17 +183,19 @@ class Me
 
   # List your public and private organizations
   # '/user/orgs' GET
-  orgs: (cb) ->
-    @client.get "/user/orgs", (err, s, b) ->
+  # - page or query object, optional - params[0]
+  # - per_page, optional             - params[1]
+  orgs: (params..., cb) ->
+    @client.get "/user/orgs", params..., (err, s, b) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error('User orgs error')) else cb null, b
 
   # Get repository instance for client
-  repo: (name, cb) ->
+  repo: (nameOrRepo, cb) ->
     if typeof cb is 'function' and typeof nameOrRepo is 'object'
       @createRepo nameOrRepo, cb
     else
-      @client.repo name
+      @client.repo nameOrRepo
 
   # List your repositories
   # '/user/repos' GET

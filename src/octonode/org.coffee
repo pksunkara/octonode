@@ -25,16 +25,21 @@ class Org
       return cb(err) if err
       if s isnt 200 then cb(new Error('Org update error')) else cb null, b
 
+  # Get repository instance for client
+  repo: (nameOrRepo, cb) ->
+    if typeof cb is 'function' and typeof nameOrRepo is 'object'
+      @createRepo nameOrRepo, cb
+    else
+      @client.repo "#{@name}/#{nameOrRepo}"
+
   # List organization repositories
   # '/orgs/flatiron/repos' GET
-  repos: (cbOrRepo, cb) ->
-    if typeof cb is 'function' and typeof cbOrRepo is 'object'
-      @createRepo cbOrRepo, cb
-    else
-      cb = cbOrRepo
-      @client.get "/orgs/#{@name}/repos", (err, s, b) ->
-        return cb(err) if err
-        if s isnt 200 then cb(new Error('Org repos error')) else cb null, b
+  # - page or query object, optional - params[0]
+  # - per_page, optional             - params[1]
+  repos: (params..., cb) ->
+    @client.get "/orgs/#{@name}/repos", params..., (err, s, b) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error('Org repos error')) else cb null, b
 
   # Create an organisation repository
   # '/orgs/flatiron/repos' POST
