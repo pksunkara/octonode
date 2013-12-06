@@ -162,9 +162,10 @@ client.limit(function (err, left, max) {
 __All the callbacks for the following will take first an error argument, then a data argument, like this:__
 
 ```js
-ghme.info(function(err, data) {
+ghme.info(function(err, data, headers) {
   console.log("error: " + err);
   console.log("data: " + data);
+  console.log("headers:" + headers);
 });
 ```
 

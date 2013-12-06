@@ -14,16 +14,16 @@ class Org
   # Get an organization
   # '/orgs/flatiron' GET
   info: (cb) ->
-    @client.get "/orgs/#{@name}", (err, s, b)  ->
+    @client.get "/orgs/#{@name}", (err, s, b, h)  ->
       return cb(err) if err
-      if s isnt 200 then cb(new Error('Org info error')) else cb null, b
+      if s isnt 200 then cb(new Error('Org info error')) else cb null, b, h
 
   # Edit an organization
   # '/orgs/flatiron' POST
   update: (info, cb) ->
-    @client.post "/orgs/#{@name}", info, (err, s, b) ->
+    @client.post "/orgs/#{@name}", info, (err, s, b, h) ->
       return cb(err) if err
-      if s isnt 200 then cb(new Error('Org update error')) else cb null, b
+      if s isnt 200 then cb(new Error('Org update error')) else cb null, b, h
 
   # Get repository instance for client
   repo: (nameOrRepo, cb) ->
@@ -37,37 +37,37 @@ class Org
   # - page or query object, optional - params[0]
   # - per_page, optional             - params[1]
   repos: (params..., cb) ->
-    @client.get "/orgs/#{@name}/repos", params..., (err, s, b) ->
+    @client.get "/orgs/#{@name}/repos", params..., (err, s, b, h) ->
       return cb(err) if err
-      if s isnt 200 then cb(new Error('Org repos error')) else cb null, b
+      if s isnt 200 then cb(new Error('Org repos error')) else cb null, b, h
 
   # Create an organisation repository
   # '/orgs/flatiron/repos' POST
   createRepo: (repo, cb) ->
-    @client.post "/orgs/#{@name}/repos", repo, (err, s, b) ->
+    @client.post "/orgs/#{@name}/repos", repo, (err, s, b, h) ->
       return cb(err) if err
-      if s isnt 201 then cb(new Error('Org createRepo error')) else cb null, b
+      if s isnt 201 then cb(new Error('Org createRepo error')) else cb null, b, h
 
   # Get an organization's teams.
   # '/orgs/flatiron/teams' GET
   teams: (cb) ->
-    @client.get "/orgs/#{@name}/teams", (err, s, b)  ->
+    @client.get "/orgs/#{@name}/teams", (err, s, b, h)  ->
       return cb(err) if err
-      if s isnt 200 then cb(new Error('Org teams error')) else cb null, b
+      if s isnt 200 then cb(new Error('Org teams error')) else cb null, b, h
 
   # Get an organization's members.
   # '/orgs/flatiron/members' GET
   members: (cb) ->
-    @client.get "/orgs/#{@name}/members", (err, s, b)  ->
+    @client.get "/orgs/#{@name}/members", (err, s, b, h)  ->
       return cb(err) if err
-      if s isnt 200 then cb(new Error('Org members error')) else cb null, b
+      if s isnt 200 then cb(new Error('Org members error')) else cb null, b, h
 
   # Check an organization's member.
   # '/orgs/flatiron/members/pksunkara' GET
   member: (user, cb) ->
-    @client.getNoFollow "/orgs/#{@name}/members/#{user}", (err, s, b)  ->
+    @client.getNoFollow "/orgs/#{@name}/members/#{user}", (err, s, b, h)  ->
       return cb(err) if err
-      cb null, s is 204
+      cb null, s is 204, h
 
 # Export module
 module.exports = Org

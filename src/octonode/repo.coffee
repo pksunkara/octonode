@@ -14,9 +14,9 @@ class Repo
   # Get a repository
   # '/repos/pksunkara/hub' GET
   info: (cb) ->
-    @client.get "/repos/#{@name}", (err, s, b) ->
+    @client.get "/repos/#{@name}", (err, s, b, h) ->
       return cb(err) if err
-      if s isnt 200 then cb(new Error("Repo info error")) else cb null, b
+      if s isnt 200 then cb(new Error("Repo info error")) else cb null, b, h
 
   # Get the collaborators for a repository
   # '/repos/pksunkara/hub/collaborators
@@ -25,65 +25,65 @@ class Repo
       @hasCollaborator cbOrUser, cb
     else
       cb = cbOrUser
-      @client.get "repos/#{@name}/collaborators", (err, s, b) ->
+      @client.get "repos/#{@name}/collaborators", (err, s, b, h) ->
         return cb(err) if err
-        if s isnt 200 then cb(new Error("Repo collaborators error")) else cb null, b
+        if s isnt 200 then cb(new Error("Repo collaborators error")) else cb null, b, h
 
   # Check if user is collaborator for a repository
   # '/repos/pksunkara/hub/collaborators/pksunkara
   hasCollaborator: (user, cb) ->
-    @client.get "repos/#{@name}/collaborators/#{user}", (err, s, b) ->
+    @client.get "repos/#{@name}/collaborators/#{user}", (err, s, b, h) ->
       return cb(err) if err
-      if s isnt 204 and s isnt 404 then cb(new Error("Repo hasCollaborator error")) else cb null, b
+      cb null, s is 204, h
 
   # Get the commits for a repository
   # '/repos/pksunkara/hub/commits' GET
   commits: (cb) ->
-    @client.get "/repos/#{@name}/commits", (err, s, b) ->
+    @client.get "/repos/#{@name}/commits", (err, s, b, h) ->
       return cb(err) if err
-      if s isnt 200 then cb(new Error("Repo commits error")) else cb null, b
+      if s isnt 200 then cb(new Error("Repo commits error")) else cb null, b, h
 
   # Get a certain commit for a repository
   # '/repos/pksunkara/hub/commits/SHA' GET
   commit: (sha, cb) ->
-    @client.get "/repos/#{@name}/commits/#{sha}", (err, s, b) ->
+    @client.get "/repos/#{@name}/commits/#{sha}", (err, s, b, h) ->
       return cb(err) if err
-      if s isnt 200 then cb(new Error("Repo commits error")) else cb null, b
+      if s isnt 200 then cb(new Error("Repo commits error")) else cb null, b, h
 
   # Get the tags for a repository
   # '/repos/pksunkara/hub/tags' GET
   tags: (cb) ->
-    @client.get "/repos/#{@name}/tags", (err, s, b) ->
+    @client.get "/repos/#{@name}/tags", (err, s, b, h) ->
       return cb(err) if err
-      if s isnt 200 then cb(new Error("Repo tags error")) else cb null, b
+      if s isnt 200 then cb(new Error("Repo tags error")) else cb null, b, h
 
   # Get the languages for a repository
   # '/repos/pksunkara/hub/languages' GET
   languages: (cb) ->
-    @client.get "/repos/#{@name}/languages", (err, s, b) ->
+    @client.get "/repos/#{@name}/languages", (err, s, b, h) ->
       return cb(err) if err
-      if s isnt 200 then cb(new Error("Repo languages error")) else cb null, b
+      if s isnt 200 then cb(new Error("Repo languages error")) else cb null, b, h
 
   # Get the contributors for a repository
   # '/repos/pksunkara/hub/contributors' GET
   contributors: (cb) ->
-    @client.get "/repos/#{@name}/contributors", (err, s, b) ->
+    @client.get "/repos/#{@name}/contributors", (err, s, b, h) ->
       return cb(err) if err
-      if s isnt 200 then cb(new Error("Repo contributors error")) else cb null, b
+      if s isnt 200 then cb(new Error("Repo contributors error")) else cb null, b, h
 
   # Get the teams for a repository
   # '/repos/pksunkara/hub/teams' GET
   teams: (cb) ->
-    @client.get "/repos/#{@name}/teams", (err, s, b) ->
+    @client.get "/repos/#{@name}/teams", (err, s, b, h) ->
       return cb(err) if err
-      if s isnt 200 then cb(new Error("Repo teams error")) else cb null, b
+      if s isnt 200 then cb(new Error("Repo teams error")) else cb null, b, h
 
   # Get the branches for a repository
   # '/repos/pksunkara/hub/branches' GET
   branches: (cb) ->
-    @client.get "/repos/#{@name}/branches", (err, s, b) ->
+    @client.get "/repos/#{@name}/branches", (err, s, b, h) ->
       return cb(err) if err
-      if s isnt 200 then cb(new Error("Repo branches error")) else cb null, b
+      if s isnt 200 then cb(new Error("Repo branches error")) else cb null, b, h
 
   # Get issue instance for a repo
   issue: (numberOrIssue, cb) ->
@@ -97,15 +97,16 @@ class Repo
   # - page or query object, optional - params[0]
   # - per_page, optional             - params[1]
   issues: (params..., cb) ->
-    @client.get "/repos/#{@name}/issues", params..., (err, s, b) ->
+    @client.get "/repos/#{@name}/issues", params..., (err, s, b, h) ->
       return cb(err) if err
-      if s isnt 200 then cb(new Error("Repo issues error")) else cb null, b
+      if s isnt 200 then cb(new Error("Repo issues error")) else cb null, b, h
 
   # Create an issue for a repository
   # '/repos/pksunkara/hub/issues' POST
   createIssue: (issue, cb) ->
-    @client.post "/repos/#{@name}/issues", issue, (err, s, b) ->
-      if s isnt 201 then cb(new Error("Repo createIssue error")) else cb null, b
+    @client.post "/repos/#{@name}/issues", issue, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 201 then cb(new Error("Repo createIssue error")) else cb null, b, h
 
   # Get the README for a repository
   # '/repos/pksunkara/hub/readme' GET
@@ -113,9 +114,9 @@ class Repo
     if !cb? and cbOrRef
       cb = cbOrRef
       cbOrRef = 'master'
-    @client.get "/repos/#{@name}/readme?ref=#{cbOrRef}", (err, s, b) ->
+    @client.get "/repos/#{@name}/readme?ref=#{cbOrRef}", (err, s, b, h) ->
       return cb(err) if err
-      if s isnt 200 then cb(new Error("Repo readme error")) else cb null, b
+      if s isnt 200 then cb(new Error("Repo readme error")) else cb null, b, h
 
   # Get the contents of a path in repository
   # '/repos/pksunkara/hub/contents/lib/index.js' GET
@@ -123,9 +124,9 @@ class Repo
     if !cb? and cbOrRef
       cb = cbOrRef
       cbOrRef = 'master'
-    @client.get "/repos/#{@name}/contents/#{path}?ref=#{cbOrRef}", (err, s, b) ->
+    @client.get "/repos/#{@name}/contents/#{path}?ref=#{cbOrRef}", (err, s, b, h) ->
       return cb(err) if err
-      if s isnt 200 then cb(new Error("Repo contents error")) else cb null, b
+      if s isnt 200 then cb(new Error("Repo contents error")) else cb null, b, h
 
   # Get archive link for a repository
   # '/repos/pksunkara/hub/tarball/v0.1.0' GET
@@ -135,23 +136,23 @@ class Repo
       cbOrRef = 'master'
     @client.get "/repos/#{@name}/#{format}/#{cbOrRef}", (err, s, b, h) ->
       return cb(err) if err
-      if s isnt 302 then cb(new Error("Repo archive error")) else cb null, h['Location']
+      if s isnt 302 then cb(new Error("Repo archive error")) else cb null, h['Location'], h
 
   # Get the forks for a repository
   # '/repos/pksunkara/hub/forks' GET
   forks: (cb) ->
-    @client.get "/repos/#{@name}/forks", (err, s, b) ->
+    @client.get "/repos/#{@name}/forks", (err, s, b, h) ->
       return cb(err) if err
-      if s isnt 200 then cb(new Error("Repo forks error")) else cb null, b
+      if s isnt 200 then cb(new Error("Repo forks error")) else cb null, b, h
 
   # Get the blob for a repository
   # '/repos/pksunkara/hub/git/blobs/SHA' GET
   blob: (sha, cb) ->
     @client.get "/repos/#{@name}/git/blobs/#{sha}",
       Accept: 'application/vnd.github.raw'
-    , (err, s, b) ->
+    , (err, s, b, h) ->
       return cb(err) if (err)
-      if s isnt 200 then cb(new Error("Repo blob error")) else cb null, b
+      if s isnt 200 then cb(new Error("Repo blob error")) else cb null, b, h
 
   # Get a git tree
   # '/repos/pksunkara/hub/git/trees/SHA' GET
@@ -162,14 +163,14 @@ class Repo
       cbOrRecursive = false
     url = "/repos/#{@name}/git/trees/#{sha}"
     url += "?recursive=1" if cbOrRecursive
-    @client.get url, (err, s, b) ->
+    @client.get url, (err, s, b, h) ->
       return cb(err) if err
-      if s isnt 200 then cb(new Error("Repo tree error")) else cb null, b
+      if s isnt 200 then cb(new Error("Repo tree error")) else cb null, b, h
 
   # Delete the repository
   # '/repos/pksunkara/hub' DELETE
   destroy: ->
-    @client.del "/repos/#{@name}", {}, (err, s, b) =>
+    @client.del "/repos/#{@name}", {}, (err, s, b, h) =>
       @destroy() if err? or s isnt 204
 
   # Get pull-request instance for repo
@@ -184,41 +185,39 @@ class Repo
   # - page or query object, optional - params[0]
   # - per_page, optional             - params[1]
   prs: (params..., cb) ->
-    @client.get "/repos/#{@name}/pulls", params..., (err, s, b) ->
+    @client.get "/repos/#{@name}/pulls", params..., (err, s, b, h) ->
       return cb(err) if (err)
-      if s isnt 200 then cb(new Error("Repo prs error")) else cb null, b
+      if s isnt 200 then cb(new Error("Repo prs error")) else cb null, b, h
 
   # Create a pull request
   # '/repos/pksunkara/hub/pulls' POST
   createPr: (pr, cb) ->
-    @client.post "/repos/#{@name}/pulls", pr, (err, s, b) ->
+    @client.post "/repos/#{@name}/pulls", pr, (err, s, b, h) ->
       return cb(err) if err
-      if s isnt 201 then cb(new Error("Repo createPr error")) else cb null, b
+      if s isnt 201 then cb(new Error("Repo createPr error")) else cb null, b, h
 
   # List statuses for a specific ref
   # '/repos/pksunkara/hub/statuses/master' GET
   statuses: (ref, cb) ->
-    @client.get "/repos/#{@name}/statuses/#{ref}", (err, s, b) ->
+    @client.get "/repos/#{@name}/statuses/#{ref}", (err, s, b, h) ->
       return cb(err) if err
-      if s isnt 200 then cb(new Error("Repo statuses error")) else cb null, b
+      if s isnt 200 then cb(new Error("Repo statuses error")) else cb null, b, h
 
   # Create a status
   # '/repos/pksunkara/hub/statuses/18e129c213848c7f239b93fe5c67971a64f183ff' POST
   status: (sha, obj, cb) ->
-    @client.post "/repos/#{@name}/statuses/#{sha}", obj, (err, s, b) ->
+    @client.post "/repos/#{@name}/statuses/#{sha}", obj, (err, s, b, h) ->
       return cb(err) if err
-      if s isnt 201 then cb(new Error("Repo status error")) else cb null, b
+      if s isnt 201 then cb(new Error("Repo status error")) else cb null, b, h
 
   # List Stargazers
   # '/repos/:owner/:repo/stargazers' GET
-  # - page, optional     - params[0]
-  # - per_page, optional - params[1]
+  # - page or query object, optional - params[0]
+  # - per_page, optional             - params[1]
   stargazers: (params..., cb)->
-    page = params[0] || 1
-    per_page = params[1] || 30
-    @client.get "/repos/#{@name}/stargazers", page, per_page, (err, s, b) ->
+    @client.get "/repos/#{@name}/stargazers", params..., (err, s, b, h) ->
       return cb(err) if err
-      if s isnt 200 then cb(new Error("Repo stargazers error")) else cb null, b
+      if s isnt 200 then cb(new Error("Repo stargazers error")) else cb null, b, h
 
 # Export module
 module.exports = Repo
