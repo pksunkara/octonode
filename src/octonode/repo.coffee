@@ -57,6 +57,13 @@ class Repo
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo tags error")) else cb null, b, h
 
+  # Get the releases for a repository
+  # '/repos/pksunkara/hub/releases' GET
+  releases: (cb) ->
+    @client.get "/repos/#{@name}/releases", (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Repo releases error")) else cb null, b, h
+
   # Get the languages for a repository
   # '/repos/pksunkara/hub/languages' GET
   languages: (cb) ->

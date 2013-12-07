@@ -437,6 +437,12 @@ ghrepo.commit('18293abcd72', callback); //commit
 ghrepo.tags(callback); //array of tags
 ```
 
+#### Get the releases for a repository (GET /repos/pksunkara/hub/releases)
+
+```js
+ghrepo.releases(callback); //array of releases
+```
+
 #### Get the languages for a repository (GET /repos/pksunkara/hub/languages)
 
 ```js
