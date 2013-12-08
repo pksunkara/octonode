@@ -31,7 +31,7 @@ var ghsearch = client.search();
 ```js
 var client = github.client();
 
-client.get('/users/pksunkara', function (err, status, body) {
+client.get('/users/pksunkara', {}, function (err, status, body, headers) {
   console.log(body); //json object
 });
 ```
@@ -41,7 +41,7 @@ client.get('/users/pksunkara', function (err, status, body) {
 ```js
 var client = github.client('someaccesstoken');
 
-client.get('/user', function (err, status, body) {
+client.get('/user', {}, function (err, status, body, headers) {
   console.log(body); //json object
 });
 ```
@@ -54,7 +54,7 @@ var client = github.client({
   password: 'password'
 });
 
-client.get('/user', function (err, status, body) {
+client.get('/user', {}, function (err, status, body, headers) {
   console.log(body); //json object
 });
 ```
@@ -67,7 +67,7 @@ var client = github.client({
   secret: 'abcdefghijk'
 });
 
-client.get('/user', function (err, status, body) {
+client.get('/user', {}, function (err, status, body, headers) {
   console.log(body); //json object
 });
 ```

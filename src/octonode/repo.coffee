@@ -121,7 +121,7 @@ class Repo
     if !cb? and cbOrRef
       cb = cbOrRef
       cbOrRef = 'master'
-    @client.get "/repos/#{@name}/readme?ref=#{cbOrRef}", (err, s, b, h) ->
+    @client.get "/repos/#{@name}/readme", {ref: cbOrRef}, (err, s, b, h) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo readme error")) else cb null, b, h
 
@@ -131,7 +131,7 @@ class Repo
     if !cb? and cbOrRef
       cb = cbOrRef
       cbOrRef = 'master'
-    @client.get "/repos/#{@name}/contents/#{path}?ref=#{cbOrRef}", (err, s, b, h) ->
+    @client.get "/repos/#{@name}/contents/#{path}", {ref: cbOrRef}, (err, s, b, h) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo contents error")) else cb null, b, h
 
@@ -168,9 +168,8 @@ class Repo
     if !cb? and cbOrRecursive
       cb = cbOrRecursive
       cbOrRecursive = false
-    url = "/repos/#{@name}/git/trees/#{sha}"
-    url += "?recursive=1" if cbOrRecursive
-    @client.get url, (err, s, b, h) ->
+    param = {recursive: 1} if cbOrRecursive
+    @client.get "/repos/#{@name}/git/trees/#{sha}", param, (err, s, b, h) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo tree error")) else cb null, b, h
 

@@ -20,20 +20,20 @@ class Search
 
   # Search repositories
   repos: (keyword, language, start_page, cb) ->
-    param = ''
-    param+= "language=#{language}&" if language
-    param+= "start_page=#{start_page}&" if start_page
+    param = {}
+    param['language'] = language if language
+    param['start_page'] = start_page if start_page
 
-    @client.get "/legacy/repos/search/#{keyword}?#{param}", (err, s, b, h) ->
+    @client.get "/legacy/repos/search/#{keyword}", param, (err, s, b, h) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error('Search repos error')) else cb null, b.repositories, h
 
   # Search users
   users: (keyword, start_page, cb) ->
-    param = ''
-    param+= "start_page=#{start_page}&" if start_page
+    param = {}
+    param['start_page'] = start_page if start_page
 
-    @client.get "/legacy/user/search/#{keyword}?#{param}", (err, s, b, h) ->
+    @client.get "/legacy/user/search/#{keyword}", param, (err, s, b, h) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error('Search users error')) else cb null, b.users, h
 
