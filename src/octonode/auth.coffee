@@ -55,6 +55,10 @@ auth = module.exports =
           'Content-Type': 'application/json'
           'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
       options.url.auth = "#{@options.username}:#{@options.password}"
+
+      # Check for a one time password (for two factor authentication)
+      if @options.otp then options.headers['X-GitHub-OTP'] = @options.otp
+
       request options, (err, res, body) ->
         if err?
           callback err
