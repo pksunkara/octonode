@@ -500,6 +500,27 @@ ghrepo.pr({
 }, callback); //pull request
 ```
 
+#### Get the hooks for a repository (GET /repos/pksunkara/hub/hooks)
+
+This query supports [pagination](#pagination).
+
+```js
+ghrepo.hooks(callback); //array of hooks
+```
+
+#### Create a hook (POST /repos/pksunkara/hub/hooks)
+
+```js
+ghrepo.hook({
+  "name": "web",
+  "active": true,
+  "events": ["push", "pull_request"],
+  "config": {
+    "url": "http://myawesomesite.com/github/events"
+  }
+}, callback); // hook
+```
+
 #### Get the README for a repository (GET /repos/pksunkara/hub/readme)
 
 ```js

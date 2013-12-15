@@ -202,6 +202,20 @@ class Repo
       return cb(err) if err
       if s isnt 201 then cb(new Error("Repo createPr error")) else cb null, b, h
 
+  # List hooks
+  # '/repos/pksunkara/hub/hooks' GET
+  hooks: (cb) ->
+    @client.get "/repos/#{@name}/hooks", (err, s, b, h) ->
+      return cb(err) if (err)
+      if s isnt 200 then cb(new Error("Repo hooks error")) else cb null, b, h
+
+  # Create a hook
+  # '/repos/pksunkara/hub/hooks' POST
+  hook: (hookInfo, cb) ->
+    @client.post "/repos/#{@name}/hooks", hookInfo, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 201 then cb(new Error("Repo createHook error")) else cb null, b, h
+
   # List statuses for a specific ref
   # '/repos/pksunkara/hub/statuses/master' GET
   statuses: (ref, cb) ->
