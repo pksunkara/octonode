@@ -26,7 +26,7 @@ class HttpError extends Error
 # Initiate class
 class Client
 
-  constructor: (@token) ->
+  constructor: (@token, @options) ->
 
   # Get authenticated user instance for client
   me: ->
@@ -80,7 +80,7 @@ class Client
     url.format
       protocol: "https:"
       auth: if typeof @token == 'object' and @token.username then "#{@token.username}:#{@token.password}" else ''
-      hostname: "api.github.com"
+      hostname: @options and @options.hostname or "api.github.com"
       pathname: path
       query: query
 
