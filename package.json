@@ -34,7 +34,8 @@
   ],
   "dependencies": {
     "request": "2.27.x",
-    "randomstring": "1.x.x"
+    "randomstring": "1.x.x",
+    "util-extend": "1.x.x"
   },
   "devDependencies": {
     "nock": "0.7.x",

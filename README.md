@@ -72,6 +72,22 @@ client.get('/user', {}, function (err, status, body, headers) {
 });
 ```
 
+
+## Request Options
+
+Request options can be set by setting defaults on the client. (e.g. Proxies)
+
+```js
+var client = github.client();
+
+client.requestDefaults['proxy'] = 'https://myproxy.com:1085'
+```
+These options are passed though to `request`, see their API here: https://github.com/mikeal/request#requestoptions-callback
+
+### Proxies
+You can set proxies dynamically by using the example above, but Octonode will respect environment proxies by default. Just set this using:
+`export HTTP_PROXY='https://myproxy.com:1085'` if you are using the command line
+
 __Many of the below use cases use parts of the above code__
 
 ## Authentication
@@ -298,7 +314,7 @@ ghme.keys(1);
 This query supports [pagination](#pagination).
 
 ```js
-ghme.starred(callback); //array of repos 
+ghme.starred(callback); //array of repos
 ```
 
 #### Check if you have starred a repository (GET /user/starred/pksunkara/octonode)
