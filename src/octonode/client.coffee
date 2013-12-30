@@ -5,8 +5,8 @@
 #
 
 # Requiring modules
-@request = request = require 'request'
-@url = url = require 'url'
+request = require 'request'
+url = require 'url'
 
 Me    = require './me'
 User  = require './user'
@@ -16,6 +16,7 @@ Gist  = require './gist'
 Team  = require './team'
 Pr    = require './pr'
 Issue = require './issue'
+extend = require 'util-extend'
 
 Search = require './search'
 
@@ -27,6 +28,10 @@ class HttpError extends Error
 class Client
 
   constructor: (@token, @options) ->
+    @requestDefaults =
+      headers:
+        'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
+      proxy: process.env.HTTP_PROXY
 
   # Get authenticated user instance for client
   me: ->
@@ -63,6 +68,9 @@ class Client
   issue: (repo, number) ->
     new Issue repo, number, @
 
+  requestOptions: (params) =>
+    return extend @requestDefaults, params
+
   # Github api URL builder
   buildUrl: (path = '/', pageOrQuery = null, per_page = null) ->
     if pageOrQuery? and typeof pageOrQuery == 'object'
@@ -97,63 +105,56 @@ class Client
 
   # Github api GET request
   get: (path, params..., callback) ->
-    request
+    request @requestOptions(
       uri: @buildUrl path, params...
       method: 'GET'
-      headers:
-        'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
-    , (err, res, body) =>
+    ), (err, res, body) =>
       return callback(err) if err
       @errorHandle res, body, callback
 
   # Github api GET request
   getNoFollow: (path, params..., callback) ->
-    request
+    request @requestOptions(
       uri: @buildUrl path, params...
       method: 'GET'
       followRedirect: false
-      headers:
-        'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
-    , (err, res, body) =>
+    ), (err, res, body) =>
       return callback(err) if err
       @errorHandle res, body, callback
 
   # Github api POST request
   post: (path, content, callback) ->
-    request
+    request @requestOptions(
       uri: @buildUrl path
       method: 'POST'
       body: JSON.stringify content
       headers:
         'Content-Type': 'application/json'
-        'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
-    , (err, res, body) =>
+    ), (err, res, body) =>
       return callback(err) if err
       @errorHandle res, body, callback
 
   # Github api PUT request
   put: (path, content, callback) ->
-    request
+    request @requestOptions(
       uri: @buildUrl path
       method: 'PUT'
       body: JSON.stringify content
       headers:
         'Content-Type': 'application/json'
-        'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
-    , (err, res, body) =>
+    ), (err, res, body) =>
       return callback(err) if err
       @errorHandle res, body, callback
 
   # Github api DELETE request
   del: (path, content, callback) ->
-    request
+    request @requestOptions(
       uri: @buildUrl path
       method: 'DELETE'
       body: JSON.stringify content
       headers:
         'Content-Type': 'application/json'
-        'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
-    , (err, res, body) =>
+    ), (err, res, body) =>
       return callback(err) if err
       @errorHandle res, body, callback
 
