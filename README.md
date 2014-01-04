@@ -551,6 +551,27 @@ ghrepo.contents('lib/index.js', callback); //path
 ghrepo.contents('lib/index.js', 'v0.1.0', callback); //path
 ```
 
+#### Create a file at a path in repository
+
+```js
+ghrepo.createContents('lib/index.js', 'commit message', 'content', callback); //path
+ghrepo.createContents('lib/index.js', 'commit message', 'content', 'v0.1.0', callback); //path
+```
+
+#### Update a file at a path in repository
+
+```js
+ghrepo.updateContents('lib/index.js', 'commit message', 'content', 'put-sha-here', callback); //path
+ghrepo.updateContents('lib/index.js', 'commit message', 'content', 'put-sha-here', 'v0.1.0', callback); //path
+```
+
+#### Delete a file at a path in repository
+
+```js
+ghrepo.deleteContents('lib/index.js', 'commit message', 'put-sha-here', callback); //path
+ghrepo.deleteContents('lib/index.js', 'commit message', 'put-sha-here', 'v0.1.0', callback); //path
+```
+
 #### Get archive link for a repository
 
 ```js
