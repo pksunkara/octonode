@@ -135,6 +135,36 @@ class Repo
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo contents error")) else cb null, b, h
 
+  # Create a file at a path in repository
+  # '/repos/pksunkara/hub/contents/lib/index.js' PUT
+  createContents: (path, message, content, cbOrBranch, cb) ->
+    if !cb? and cbOrBranch
+      cb = cbOrBranch
+      cbOrBranch = 'master'
+    @client.put "/repos/#{@name}/contents/#{path}", {branch: cbOrBranch, message: message, content: new Buffer(content).toString('base64')}, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 201 then cb(new Error("Repo createContents error")) else cb null, b, h
+
+  # Update a file at a path in repository
+  # '/repos/pksunkara/hub/contents/lib/index.js' PUT
+  updateContents: (path, message, content, sha, cbOrBranch, cb) ->
+    if !cb? and cbOrBranch
+      cb = cbOrBranch
+      cbOrBranch = 'master'
+    @client.put "/repos/#{@name}/contents/#{path}", {branch: cbOrBranch, message: message, content: new Buffer(content).toString('base64'), sha: sha}, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Repo updateContents error")) else cb null, b, h
+
+  # Delete a file at a path in repository
+  # '/repos/pksunkara/hub/contents/lib/index.js' DELETE
+  deleteContents: (path, message, sha, cbOrBranch, cb) ->
+    if !cb? and cbOrBranch
+      cb = cbOrBranch
+      cbOrBranch = 'master'
+    @client.del "/repos/#{@name}/contents/#{path}", {branch: cbOrBranch, message: message, sha: sha}, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Repo deleteContents error")) else cb null, b, h
+
   # Get archive link for a repository
   # '/repos/pksunkara/hub/tarball/v0.1.0' GET
   archive: (format, cbOrRef, cb) ->
