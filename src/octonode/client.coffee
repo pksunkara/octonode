@@ -99,8 +99,7 @@ class Client
       body = JSON.parse(body || '{}')
     catch err
       return callback(err)
-    return callback(new HttpError(body.message, res.statusCode, res.headers)) if body.message and res.statusCode is 422
-    return callback(new HttpError(body.message, res.statusCode, res.headers)) if body.message and res.statusCode in [400, 401, 404]
+    return callback(new HttpError(body.message, res.statusCode, res.headers)) if body.message and res.statusCode in [400, 401, 404, 410, 422]
     callback null, res.statusCode, body, res.headers
 
   # Github api GET request
