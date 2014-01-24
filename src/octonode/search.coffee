@@ -12,36 +12,28 @@ class Search
   constructor: (@client) ->
 
   # Search issues
-  issues: (repo, state, keyword, cb) ->
-    state = 'open' if state isnt 'closed'
-    @client.get "/search/issues/#{repo}/#{state}/#{keyword}", (err, s, b, h) ->
+  issues: (params, cb) ->
+    @client.get "/search/issues", params, (err, s, b, h) ->
       return cb(err) if err
-      if s isnt 200 then cb(new Error('Search issues error')) else cb null, b.issues, h
+      if s isnt 200 then cb(new Error('Search issues error')) else cb null, b, h
 
   # Search repositories
-  repos: (keyword, language, start_page, cb) ->
-    param = {}
-    param['language'] = language if language
-    param['start_page'] = start_page if start_page
-
-    @client.get "/search/repositories/#{keyword}", param, (err, s, b, h) ->
+  repos: (params, cb) ->
+    @client.get "/search/repositories", params, (err, s, b, h) ->
       return cb(err) if err
-      if s isnt 200 then cb(new Error('Search repos error')) else cb null, b.repositories, h
+      if s isnt 200 then cb(new Error('Search repos error')) else cb null, b, h
 
   # Search users
   users: (keyword, start_page, cb) ->
-    param = {}
-    param['start_page'] = start_page if start_page
-
-    @client.get "/search/users/#{keyword}", param, (err, s, b, h) ->
+    @client.get "/search/users", params, (err, s, b, h) ->
       return cb(err) if err
-      if s isnt 200 then cb(new Error('Search users error')) else cb null, b.users, h
+      if s isnt 200 then cb(new Error('Search users error')) else cb null, b, h
 
-  # Search emails
-  emails: (email, cb) ->
-    @client.get "/legacy/user/email/#{email}", (err, s, b, h) ->
+  # Search code
+  code: (params, cb) ->
+    @client.get "/search/code", params, (err, s, b, h) ->
       return cb(err) if err
-      if s isnt 200 then cb(new Error('Search email error')) else cb null, b.user, h
+      if s isnt 200 then cb(new Error('Search email error')) else cb null, b, h
 
 # Export module
 module.exports = Search

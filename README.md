@@ -895,25 +895,41 @@ ghteam.member('pksunkara'); //boolean
 #### Search issues
 
 ```js
-ghsearch.issues('pksunkara/hub', 'open', 'git', callback); //array of issues
+ghsearch.issues({
+  q: 'windows+state:open+repo:pksunkara/hub',
+  sort: 'created'
+  order: 'asc'
+}, callback); //array of search results
 ```
 
 #### Search repositories
 
 ```js
-ghsearch.repos('git', 'javascript', 1, callback); //array of repositories
+ghsearch.repos({
+  q: 'hub+language:go',
+  sort: 'created',
+  order: 'asc'
+}, callback); //array of search results
 ```
 
 #### Search users
 
 ```js
-ghsearch.users('git', callback); //array of users
+ghsearch.users({
+  q: 'tom+followers:>100',
+  sort: 'created',
+  order: 'asc'
+}, callback); //array of search results
 ```
 
-#### Search emails
+#### Search code
 
 ```js
-ghsearch.emails('pavan.sss1991@gmail.com', callback); //user
+ghsearch.code({
+  q: 'auth+in:file+repo:pksunkara/hub',
+  sort: 'created',
+  order: 'asc'
+}, callback); //array of search results
 ```
 
 ## Testing
