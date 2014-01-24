@@ -85,12 +85,24 @@ class Client
       query.client_id = @token.id
       query.client_secret = @token.secret
 
-    url.format
+    # https://github.com/pksunkara/octonode/issues/87
+    if query.q
+      q = query.q
+      delete query.q
+      if Object.keys(query).length
+        separator = '&'
+      else
+        separator = '?'
+
+    _url = url.format
       protocol: "https:"
       auth: if typeof @token == 'object' and @token.username then "#{@token.username}:#{@token.password}" else ''
       hostname: @options and @options.hostname or "api.github.com"
       pathname: path
       query: query
+
+    _url += "#{separator}q=#{q}"
+    return _url
 
   errorHandle: (res, body, callback) ->
     # TODO: More detailed HTTP error message
