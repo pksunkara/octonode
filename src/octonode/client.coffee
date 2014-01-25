@@ -16,7 +16,7 @@ Gist  = require './gist'
 Team  = require './team'
 Pr    = require './pr'
 Issue = require './issue'
-extend = require 'util-extend'
+extend = require 'deep-extend'
 
 Search = require './search'
 
