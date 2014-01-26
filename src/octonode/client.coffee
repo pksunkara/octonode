@@ -101,7 +101,9 @@ class Client
       pathname: path
       query: query
 
-    _url += "#{separator}q=#{q}"
+    if q
+      _url += "#{separator}q=#{q}"
+
     return _url
 
   errorHandle: (res, body, callback) ->
