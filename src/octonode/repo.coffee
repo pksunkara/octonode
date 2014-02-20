@@ -78,11 +78,7 @@ class Repo
       return cb(err) if err
       if s is 204
         cb null, [], h
-      else
-        if s isnt 200
-          cb(new Error("Repo contributors error"))
-        else
-          cb null, b, h
+      else if s isnt 200 then cb(new Error("Repo contributors error")) else cb null, b, h
 
   # Get the teams for a repository
   # '/repos/pksunkara/hub/teams' GET
