@@ -76,7 +76,13 @@ class Repo
   contributors: (cb) ->
     @client.get "/repos/#{@name}/contributors", (err, s, b, h) ->
       return cb(err) if err
-      if s isnt 200 then cb(new Error("Repo contributors error")) else cb null, b, h
+      if s is 204
+        cb null, [], h
+      else
+        if s isnt 200
+          cb(new Error("Repo contributors error"))
+        else
+          cb null, b, h
 
   # Get the teams for a repository
   # '/repos/pksunkara/hub/teams' GET
