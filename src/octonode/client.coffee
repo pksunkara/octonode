@@ -69,8 +69,8 @@ class Client
   issue: (repo, number) ->
     new Issue repo, number, @
 
-  requestOptions: (params) =>
-    return extend @requestDefaults, params
+  requestOptions: (params1, params2) =>
+    return extend @requestDefaults, params1, params2
 
   # Github api URL builder
   buildUrl: (path = '/', pageOrQuery = null, per_page = null) ->
@@ -134,6 +134,15 @@ class Client
       method: 'GET'
       followRedirect: false
     ), (err, res, body) =>
+      return callback(err) if err
+      @errorHandle res, body, callback
+
+  # Github api GET request
+  getOptions: (path, options, params..., callback) ->
+    @request @requestOptions({
+      uri: @buildUrl path, params...
+      method: 'GET'
+    }, options), (err, res, body) =>
       return callback(err) if err
       @errorHandle res, body, callback
 
