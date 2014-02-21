@@ -28,6 +28,7 @@ class HttpError extends Error
 class Client
 
   constructor: (@token, @options) ->
+    @request = @options and @options.request or request
     @requestDefaults =
       headers:
         'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
@@ -109,16 +110,17 @@ class Client
   errorHandle: (res, body, callback) ->
     # TODO: More detailed HTTP error message
     return callback(new HttpError('Error ' + res.statusCode, res.statusCode, res.headers)) if Math.floor(res.statusCode/100) is 5
-    try
-      body = JSON.parse(body || '{}')
-    catch err
-      return callback(err)
+    if typeof body == 'string'
+      try
+        body = JSON.parse(body || '{}')
+      catch err
+        return callback(err)
     return callback(new HttpError(body.message, res.statusCode, res.headers)) if body.message and res.statusCode in [400, 401, 403, 404, 410, 422]
     callback null, res.statusCode, body, res.headers
 
   # Github api GET request
   get: (path, params..., callback) ->
-    request @requestOptions(
+    @request @requestOptions(
       uri: @buildUrl path, params...
       method: 'GET'
     ), (err, res, body) =>
@@ -127,7 +129,7 @@ class Client
 
   # Github api GET request
   getNoFollow: (path, params..., callback) ->
-    request @requestOptions(
+    @request @requestOptions(
       uri: @buildUrl path, params...
       method: 'GET'
       followRedirect: false
@@ -137,7 +139,7 @@ class Client
 
   # Github api POST request
   post: (path, content, callback) ->
-    request @requestOptions(
+    @request @requestOptions(
       uri: @buildUrl path
       method: 'POST'
       body: JSON.stringify content
@@ -149,7 +151,7 @@ class Client
 
   # Github api PUT request
   put: (path, content, callback) ->
-    request @requestOptions(
+    @request @requestOptions(
       uri: @buildUrl path
       method: 'PUT'
       body: JSON.stringify content
@@ -161,7 +163,7 @@ class Client
 
   # Github api DELETE request
   del: (path, content, callback) ->
-    request @requestOptions(
+    @request @requestOptions(
       uri: @buildUrl path
       method: 'DELETE'
       body: JSON.stringify content
