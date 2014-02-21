@@ -40,11 +40,6 @@ class Me
         return cb(err) if err
         if s isnt 200 then cb(new Error('User emails error')) else cb null, b, h
 
-  emailsDetailed: (cb) ->
-    @client.getOptions '/user/emails', { headers: { Accept: 'application/vnd.github.v3.full+json'} },(err, s, b, h)  ->
-      return cb(err) if err
-      if s isnt 200 then cb(new Error('User emails error')) else cb null, b, h
-
   # Set emails of the user
   # '/user/emails' POST
   setEmails: (emails, cb) ->
