@@ -33,14 +33,14 @@
     }
   ],
   "dependencies": {
-    "request": "2.27.x",
+    "request": "2.34.x",
     "randomstring": "1.x.x",
     "deep-extend": "0.x.x"
   },
   "devDependencies": {
     "nock": "0.7.x",
     "vows": "0.7.x",
-    "coffee-script": "1.6.3"
+    "coffee-script": "1.7.1"
   },
   "engines": {
     "node": ">0.4.11"
