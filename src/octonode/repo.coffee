@@ -146,11 +146,18 @@ class Repo
 
   # Create a file at a path in repository
   # '/repos/pksunkara/hub/contents/lib/index.js' PUT
-  createContents: (path, message, content, cbOrBranch, cb) ->
-    if !cb? and cbOrBranch
-      cb = cbOrBranch
-      cbOrBranch = 'master'
-    @client.put "/repos/#{@name}/contents/#{path}", {branch: cbOrBranch, message: message, content: new Buffer(content).toString('base64')}, (err, s, b, h) ->
+  createContents: (path, message, content, cbOrBranchOrOptions, cb) ->
+    content = new Buffer(content).toString('base64')
+    if !cb? and cbOrBranchOrOptions
+      cb = cbOrBranchOrOptions
+      cbOrBranchOrOptions = 'master'
+    if typeof cbOrBranchOrOptions is 'string'
+      param = {branch: cbOrBranchOrOptions, message: message, content: content}
+    else if typeof cbOrBranchOrOptions is 'hash'
+      param = cbOrBranchOrOptions
+      param['message'] = message
+      param['content'] = content
+    @client.put "/repos/#{@name}/contents/#{path}", param, (err, s, b, h) ->
       return cb(err) if err
       if s isnt 201 then cb(new Error("Repo createContents error")) else cb null, b, h
 
