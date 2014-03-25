@@ -52,10 +52,18 @@ class Repo
 
   # Create a commit
   # '/repos/pksunkara/hub/git/commits' POST
-  createCommit: (message, tree, parents, cb) ->
-    @client.post "/repos/#{@name}/git/commits", {message: message, parents: parents, tree: tree}, (err, s, b) ->
+  createCommit: (message, tree, parents, cbOrOptions, cb) ->
+    if !cb? and cbOrOptions
+      cb = cbOrOptions
+      param = {message: message, parents: parents, tree: tree}
+    else if typeof cbOrOptions is 'hash'
+      param = cbOrOptions
+      param['message'] = message
+      param['parents'] = parents
+      param['tree'] = tree
+    @client.post "/repos/#{@name}/git/commits", param, (err, s, b, h) ->
       return cb(err) if err
-      if s isnt 201 then cb(new Error("Repo createCommit error")) else cb null, b
+      if s isnt 201 then cb(new Error("Repo createCommit error")) else cb null, b, h
 
   # Get the tags for a repository
   # '/repos/pksunkara/hub/tags' GET
