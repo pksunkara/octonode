@@ -125,6 +125,20 @@ class Repo
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo issues error")) else cb null, b, h
 
+  # Create an issue for a repository
+  # '/repos/pksunkara/hub/issues' POST
+  createIssue: (issue, cb) ->
+    @client.post "/repos/#{@name}/issues", issue, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 201 then cb(new Error("Repo createIssue error")) else cb null, b, h
+
+  # Get milestone instance for a repo
+  milestone: (numberOrMilestone, cb) ->
+    if typeof cb is 'function' and typeof numberOrMilestone is 'object'
+      @createMilestone numberOrIssue, cb
+    else
+      @client.milestone @name, numberOrMilestone
+
   # List milestones for a repository
   # '/repos/pksunkara/hub/milestones' GET
   # - page or query object, optional - params[0]
@@ -140,13 +154,6 @@ class Repo
     @client.post "/repos/#{@name}/milestones", milestone, (err, s, b, h) ->
       return cb(err) if err
       if s isnt 201 then cb(new Error("Repo createMilestone error")) else cb null, b, h
-
-  # Create an issue for a repository
-  # '/repos/pksunkara/hub/issues' POST
-  createIssue: (issue, cb) ->
-    @client.post "/repos/#{@name}/issues", issue, (err, s, b, h) ->
-      return cb(err) if err
-      if s isnt 201 then cb(new Error("Repo createIssue error")) else cb null, b, h
 
   # Get the README for a repository
   # '/repos/pksunkara/hub/readme' GET

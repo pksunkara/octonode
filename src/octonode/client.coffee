@@ -8,15 +8,16 @@
 request = require 'request'
 url = require 'url'
 
-Me    = require './me'
-User  = require './user'
-Repo  = require './repo'
-Org   = require './org'
-Gist  = require './gist'
-Team  = require './team'
-Pr    = require './pr'
-Issue = require './issue'
-extend = require 'deep-extend'
+Me        = require './me'
+User      = require './user'
+Repo      = require './repo'
+Org       = require './org'
+Gist      = require './gist'
+Team      = require './team'
+Pr        = require './pr'
+Issue     = require './issue'
+Milestone = require './milestone'
+extend    = require 'deep-extend'
 
 Search = require './search'
 
@@ -68,6 +69,9 @@ class Client
 
   issue: (repo, number) ->
     new Issue repo, number, @
+
+  milestone: (repo, number) ->
+    new Milestone repo, number, @
 
   requestOptions: (params1, params2) =>
     return extend @requestDefaults, params1, params2
