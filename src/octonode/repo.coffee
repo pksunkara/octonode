@@ -125,6 +125,15 @@ class Repo
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo issues error")) else cb null, b, h
 
+  # List milestones for a repository
+  # '/repos/pksunkara/hub/milestones' GET
+  # - page or query object, optional - params[0]
+  # - per_page, optional             - params[1]
+  milestones: (params..., cb) ->
+    @client.get "/repos/#{@name}/milestones", params..., (err, s, b, h) ->
+      return db(err) if err
+      if s isnt 200 then cb(new Error("Repo milestones error")) else cb null, b, h
+
   # Create an issue for a repository
   # '/repos/pksunkara/hub/issues' POST
   createIssue: (issue, cb) ->
