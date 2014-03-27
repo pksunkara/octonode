@@ -101,12 +101,8 @@ class Me
   # Get the starred repos for the user
   # '/user/starred' GET
   # TODO: page, user
-  starred: (cbOrRepo, cb) ->
-    if cb? and typeof cbOrRepo isnt 'function'
-      @checkStarred cbOrRepo, cb
-    else
-      cb = cbOrRepo
-      @client.get '/user/starred', (err, s, b, h)  ->
+  starred: (params..., cb) ->
+      @client.get '/user/starred', params..., (err, s, b, h)  ->
         return cb(err) if err
         if s isnt 200 then cb(new Error('User starred error')) else cb null, b, h
 
