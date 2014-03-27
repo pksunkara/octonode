@@ -1,7 +1,7 @@
 #
 # milestone.coffee: Github milestone class
 #
-# Copyright © 2013 Josh Priestley. All rights reserved
+# Copyright © 2014 Matthew Taylor. All rights reserved
 #
 
 # Initiate class
