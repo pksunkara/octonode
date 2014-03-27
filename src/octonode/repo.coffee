@@ -134,6 +134,13 @@ class Repo
       return db(err) if err
       if s isnt 200 then cb(new Error("Repo milestones error")) else cb null, b, h
 
+  # Create a milestone for a repository
+  # '/repos/pksunkara/hub/milestones' POST
+  createMilestone: (milestone, cb) ->
+    @client.post "/repos/#{@name}/milestones", milestone, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 201 then cb(new Error("Repo createMilestone error")) else cb null, b, h
+
   # Create an issue for a repository
   # '/repos/pksunkara/hub/issues' POST
   createIssue: (issue, cb) ->
