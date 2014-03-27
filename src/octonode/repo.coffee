@@ -135,7 +135,7 @@ class Repo
   # Get milestone instance for a repo
   milestone: (numberOrMilestone, cb) ->
     if typeof cb is 'function' and typeof numberOrMilestone is 'object'
-      @createMilestone numberOrIssue, cb
+      @createMilestone numberOrMilestone, cb
     else
       @client.milestone @name, numberOrMilestone
 
