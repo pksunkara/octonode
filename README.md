@@ -14,14 +14,15 @@ var github = require('octonode');
 
 // Then we instanciate a client with or without a token (as show in a later section)
 
-var ghme   = client.me();
-var ghuser = client.user('pksunkara');
-var ghrepo = client.repo('pksunkara/hub');
-var ghorg  = client.org('flatiron');
-var ghissue = client.issue('pksunkara/hub', 37);
-var ghpr = client.pr('pksunkara/hub', 37);
-var ghgist = client.gist();
-var ghteam = client.team(37);
+var ghme        = client.me();
+var ghuser      = client.user('pksunkara');
+var ghrepo      = client.repo('pksunkara/hub');
+var ghorg       = client.org('flatiron');
+var ghissue     = client.issue('pksunkara/hub', 37);
+var ghmilestone = client.milestone('pksunkara/hub', 37);
+var ghpr        = client.pr('pksunkara/hub', 37);
+var ghgist      = client.gist();
+var ghteam      = client.team(37);
 
 var ghsearch = client.search();
 ```
@@ -497,6 +498,26 @@ ghrepo.issue({
 }, callback); //issue
 ```
 
+
+#### Get the milestones for a repository (GET /repos/pksunkara/hub/milestones)
+
+This query supports [pagination](#pagination).
+
+```js
+ghrepo.milestones(callback); //array of milestones
+```
+
+#### Create a milestone for a repository (POST /repos/pksunkara/hub/milestones)
+
+```js
+ghrepo.milestone({
+  "title": "Sprint 345",
+  "description": "The sprint where we fix all the things!",
+  "due_on": new Date(2014, 7, 1)
+}, callback); //milestone
+```
+
+
 #### Get the pull requests for a repository (GET /repos/pksunkara/hub/pulls)
 
 This query supports [pagination](#pagination).
@@ -693,6 +714,22 @@ ghissue.info(callback); //issue
 ghissue.update({
   "title": "Found a bug and I am serious",
 }, callback); //issue
+```
+
+## Github milestones api
+
+#### Get a single milestone (GET /repos/pksunkara/hub/milestones/37)
+
+```js
+ghmilestone.info(callback); //milestone
+```
+
+#### Edit an milestone for a repository (PATCH /repos/pksunkara/hub/milestones/37)
+
+```js
+ghmilestone.update({
+  "title": "Updated milestone title",
+}, callback); //milestone
 ```
 
 #### List comments on an issue (GET /repos/pksunkara/hub/issues/37/comments)
