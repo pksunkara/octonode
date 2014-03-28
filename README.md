@@ -320,7 +320,7 @@ ghme.starred(callback); //array of repos
 #### Check if you have starred a repository (GET /user/starred/pksunkara/octonode)
 
 ```js
-ghme.starred('flatiron/flatiron', callback); //boolean
+ghme.checkStarred('flatiron/flatiron', callback); //boolean
 ```
 
 #### Star a repository (PUT /user/starred/pksunkara/octonode)
