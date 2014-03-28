@@ -145,7 +145,7 @@ class Repo
   # - per_page, optional             - params[1]
   milestones: (params..., cb) ->
     @client.get "/repos/#{@name}/milestones", params..., (err, s, b, h) ->
-      return db(err) if err
+      return cb(err) if err
       if s isnt 200 then cb(new Error("Repo milestones error")) else cb null, b, h
 
   # Create a milestone for a repository
