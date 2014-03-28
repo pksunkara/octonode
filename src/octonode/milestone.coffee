@@ -31,10 +31,5 @@ class Milestone
       if s isnt 204 then cb(new Error("Milestone delete error")) else cb null, b, h
 
 
-    # @client.del "/repos/#{@name}/contents/#{path}", {}, (err, s, b, h) ->
-    #   return cb(err) if err
-    #   if s isnt 200 then cb(new Error("Repo deleteContents error")) else cb null, b, h
-
-
 # Export module
 module.exports = Milestone
