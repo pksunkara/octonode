@@ -191,6 +191,14 @@ class Client
       return callback(err) if err
       if s isnt 200 then callback(new HttpError('Client rate_limit error', s)) else callback null, b.rate.remaining, b.rate.limit
 
+  checkToken: (id, callback) ->
+    if typeof @token == 'string'
+      @get "/applications/#{id}tokens/#{@token}", (err, s, b) ->
+        return callback(err) if err
+        if s isnt 200 then callback(new HttpError("Client token checking error", s)) else callback null, true
+      
+    else typeof @token == 'object' and @token.id
+      throw new Error("Cannot check token without providing it first!")
 # Export modules
 module.exports = (token, credentials...) ->
   new Client(token, credentials...)
