@@ -31,6 +31,28 @@ class Team
     @client.get "/teams/#{@id}/members/#{user}", (err, s, b, h)  ->
       return cb(err) if err
       cb null, s is 204, h
+  
+    # Add a user to a team (must have admin permissions to do so)
+  # '/teams/37/members/pksunkara' PUT
+  newUser: (user, cb) ->
+    @client.put "/teams/{@id}/members/#{user}", (err, s, b, h) ->
+      return cb(err) if err
+      cb null, s is 204, h
+  
+  # Remove a user from a team (must have admin permissions to do so)
+  # '/teams/37/members/pksunkara' DELETE
+  rmUser: (user, cb) ->
+    @client.del "/teams/#{@id}/members/#{user}", (err, s, b, h) ->
+      return cb(err) if err
+      cb null, s is 204, h
+  
+  # List repos of a team
+  # '/teams/37/repos/' GET
+  repos: (cb) ->
+    @client.get "/teams/#{@id}/repos/", (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Team repos error")) else cb null, b, h
+
 
 # Export module
 module.exports = Team
