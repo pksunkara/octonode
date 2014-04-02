@@ -942,13 +942,13 @@ ghteam.member('pksunkara', callback); //boolean
 #### Add a user to a team (PUT /team/37/members/pksunkara)
 
 ```js
-ghteam.newUser("pksunkara", callback); //boolean
+ghteam.addUser("pksunkara", callback); //boolean
 ```
 
 #### Remove a user from a team (DELETE /team/37/members/pksunkara)
 
 ```js
-ghteam.rmUser("pksunkara", callback); //boolean
+ghteam.removeUser("pksunkara", callback); //boolean
 ```
 
 #### List all repos of a team (GET /team/37/repos)
