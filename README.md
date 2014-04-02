@@ -700,6 +700,18 @@ ghorg.members(callback); //array of github users
 ghorg.member('pksunkara', callback); //boolean
 ```
 
+#### Create an organization team (POST /orgs/flatiron/teams)
+
+```js
+ghorg.createTeam({
+  "name": "new team name",
+  "permission": "push",
+  "repo_names": [
+    "flatiron/utile"
+   ]
+}, callback);
+```
+
 ## Github issues api
 
 #### Get a single issue (GET /repos/pksunkara/hub/issues/37)
@@ -924,7 +936,25 @@ ghteam.members(callback); //array of github users
 #### Check if a user is part of the team (GET /team/37/members/pksunkara)
 
 ```js
-ghteam.member('pksunkara'); //boolean
+ghteam.member('pksunkara', callback); //boolean
+```
+
+#### Add a user to a team (PUT /team/37/members/pksunkara)
+
+```js
+ghteam.addUser("pksunkara", callback); //boolean
+```
+
+#### Remove a user from a team (DELETE /team/37/members/pksunkara)
+
+```js
+ghteam.removeUser("pksunkara", callback); //boolean
+```
+
+#### List all repos of a team (GET /team/37/repos)
+
+```js
+ghteam.repos(callback); //Array of JSON
 ```
 
 ## Github search api
