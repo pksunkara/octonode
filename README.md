@@ -1,4 +1,4 @@
-# octonode
+# octonode [![Gitter chat](https://badges.gitter.im/pksunkara/octonode.png)](https://gitter.im/pksunkara/octonode)
 
 octonode is a library for nodejs to access the [github v3 api](http://developer.github.com)
 
@@ -954,7 +954,7 @@ ghteam.removeUser("pksunkara", callback); //boolean
 #### List all repos of a team (GET /team/37/repos)
 
 ```js
-ghteam.repos(callback); //Array of JSON
+ghteam.repos(callback); //array of repos
 ```
 
 ## Github search api
@@ -1026,8 +1026,6 @@ me.get_issues(params, callback);
 var org = octonode.Organization('bulletjs');
 
 org.update(dict_with_update_properties, callback);
-org.add_member('user', 'team', callback);
-org.remove_member('user', callback);
 org.get_public_members(callback);
 org.is_public_member('user', callback);
 org.make_member_public('user', callback);
