@@ -35,14 +35,14 @@ class Team
   # Add a user to a team (must have admin permissions to do so)
   # '/teams/37/members/pksunkara' PUT
   addUser: (user, cb) ->
-    @client.put "/teams/{@id}/members/#{user}", (err, s, b, h) ->
+    @client.put "/teams/#{@id}/members/#{user}", null,  (err, s, b, h) ->
       return cb(err) if err
       cb null, s is 204, h
   
   # Remove a user from a team (must have admin permissions to do so)
   # '/teams/37/members/pksunkara' DELETE
   removeUser: (user, cb) ->
-    @client.del "/teams/#{@id}/members/#{user}", (err, s, b, h) ->
+    @client.del "/teams/#{@id}/members/#{user}", null, (err, s, b, h) ->
       return cb(err) if err
       cb null, s is 204, h
   
