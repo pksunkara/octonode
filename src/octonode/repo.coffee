@@ -218,9 +218,9 @@ class Repo
     if !cb? and cbOrRef
       cb = cbOrRef
       cbOrRef = 'master'
-    @client.get "/repos/#{@name}/#{format}/#{cbOrRef}", (err, s, b, h) ->
+    @client.getNoFollow "/repos/#{@name}/#{format}/#{cbOrRef}", (err, s, b, h) ->
       return cb(err) if err
-      if s isnt 302 then cb(new Error("Repo archive error")) else cb null, h['Location'], h
+      if s isnt 302 then cb(new Error("Repo archive error")) else cb null, h['location'], h
 
   # Get the forks for a repository
   # '/repos/pksunkara/hub/forks' GET
