@@ -84,11 +84,12 @@ class Client
       query = {}
       query.page     = pageOrQuery if pageOrQuery?
       query.per_page = per_page if per_page?
-    if typeof @token == 'string'
-      query.access_token = @token
-    else if typeof @token == 'object' and @token.id
-      query.client_id = @token.id
-      query.client_secret = @token.secret
+    if @token
+      if typeof @token == 'string'
+        query.access_token = @token
+      else if typeof @token == 'object' and @token.id
+        query.client_id = @token.id
+        query.client_secret = @token.secret
 
     # https://github.com/pksunkara/octonode/issues/87
     if query.q
