@@ -274,6 +274,13 @@ class Repo
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo ref error")) else cb null, b
 
+  # Create a reference
+  # '/repos/pksunkara/hub/git/refs' POST
+  createRef: (ref, sha, cb) ->
+    @client.post "/repos/#{@name}/git/refs", {ref: ref, sha: sha}, (err, s, b) ->
+      return cb(err) if err
+      if s isnt 201 then cb(new Error("Repo createRef error")) else cb null, b
+
   # Update a reference
   # '/repos/pksunkara/hub/git/refs/REF' PATCH
   updateRef: (ref, sha, cb) ->
