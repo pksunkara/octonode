@@ -109,6 +109,7 @@ class Client
 
     if q
       _url += "#{separator}q=#{q}"
+      query.q = q
 
     return _url
 
