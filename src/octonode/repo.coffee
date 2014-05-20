@@ -277,7 +277,7 @@ class Repo
   # Create a reference
   # '/repos/pksunkara/hub/git/refs' POST
   createRef: (ref, sha, cb) ->
-    @client.post "/repos/#{@name}/git/refs", {ref: ref, sha: sha}, (err, s, b) ->
+    @client.post "/repos/#{@name}/git/refs", {ref: "refs/" + ref, sha: sha}, (err, s, b) ->
       return cb(err) if err
       if s isnt 201 then cb(new Error("Repo createRef error")) else cb null, b
 
