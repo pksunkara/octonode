@@ -17,6 +17,7 @@ Team      = require './team'
 Pr        = require './pr'
 Issue     = require './issue'
 Milestone = require './milestone'
+Label     = require './label'
 extend    = require 'deep-extend'
 
 Search = require './search'
@@ -72,6 +73,9 @@ class Client
 
   milestone: (repo, number) ->
     new Milestone repo, number, @
+
+  label: (repo, name) ->
+    new Label repo, name, @
 
   requestOptions: (params1, params2) =>
     return extend @requestDefaults, params1, params2

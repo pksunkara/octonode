@@ -39,5 +39,8 @@ octonode = module.exports =
   # [Milestone](octonode/milestone.html) class for github
   milestone: require './octonode/milestone'
 
+  # [Label](octonode/label.html) class for github
+  label: require './octonode/label'
+
   # [Authenticated user](octonode/me.html) class for github
   me: require './octonode/me'

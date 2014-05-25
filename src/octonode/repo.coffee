@@ -155,6 +155,29 @@ class Repo
       return cb(err) if err
       if s isnt 201 then cb(new Error("Repo createMilestone error")) else cb null, b, h
 
+  # Get label instance for a repo
+  label: (nameOrLabel, cb) ->
+    if typeof cb is 'function' and typeof nameOrLabel is 'object'
+      @createLabel nameOrLabel, cb
+    else
+      @client.label @name, nameOrLabel
+
+  # List labels for a repository
+  # '/repos/pksunkara/hub/labels' GET
+  # - page or query object, optional - params[0]
+  # - per_page, optional             - params[1]
+  labels: (params..., cb) ->
+    @client.get "/repos/#{@name}/labels", params..., (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Repo labels error")) else cb null, b, h
+
+  # Create a label for a repository
+  # '/repos/pksunkara/hub/labels' POST
+  createLabel: (label, cb) ->
+    @client.post "/repos/#{@name}/labels", label, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 201 then cb(new Error("Repo createLabel error")) else cb null, b, h
+
   # Get the README for a repository
   # '/repos/pksunkara/hub/readme' GET
   readme: (cbOrRef, cb) ->
