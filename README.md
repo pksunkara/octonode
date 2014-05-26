@@ -20,7 +20,7 @@ var ghrepo      = client.repo('pksunkara/hub');
 var ghorg       = client.org('flatiron');
 var ghissue     = client.issue('pksunkara/hub', 37);
 var ghmilestone = client.milestone('pksunkara/hub', 37);
-var ghlabel = client.label('pksunkara/hub', 'todo');
+var ghlabel     = client.label('pksunkara/hub', 'todo');
 var ghpr        = client.pr('pksunkara/hub', 37);
 var ghgist      = client.gist();
 var ghteam      = client.team(37);
@@ -771,7 +771,7 @@ ghmilestone.update({
 }, callback); //milestone
 ```
 
-#### Delete a milestone for a repository (PATCH /repos/pksunkara/hub/milestones/todo)
+#### Delete a milestone for a repository (DELETE /repos/pksunkara/hub/milestones/37)
 
 ```js
 ghmilestone.delete(callback); //milestone
