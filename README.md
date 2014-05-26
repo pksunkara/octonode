@@ -20,6 +20,7 @@ var ghrepo      = client.repo('pksunkara/hub');
 var ghorg       = client.org('flatiron');
 var ghissue     = client.issue('pksunkara/hub', 37);
 var ghmilestone = client.milestone('pksunkara/hub', 37);
+var ghlabel = client.label('pksunkara/hub', 'todo');
 var ghpr        = client.pr('pksunkara/hub', 37);
 var ghgist      = client.gist();
 var ghteam      = client.team(37);
@@ -518,6 +519,24 @@ ghrepo.milestone({
 ```
 
 
+#### Get the labels for a repository (GET /repos/pksunkara/hub/labels)
+
+This query supports [pagination](#pagination).
+
+```js
+ghrepo.labels(callback); //array of labels
+```
+
+#### Create a label for a repository (POST /repos/pksunkara/hub/labels)
+
+```js
+ghrepo.label({
+  "name": "Priority",
+  "color": "ff0000",
+}, callback); //label
+```
+
+
 #### Get the pull requests for a repository (GET /repos/pksunkara/hub/pulls)
 
 This query supports [pagination](#pagination).
@@ -728,6 +747,14 @@ ghissue.update({
 }, callback); //issue
 ```
 
+#### List comments on an issue (GET /repos/pksunkara/hub/issues/37/comments)
+
+This query supports [pagination](#pagination).
+
+```js
+ghissue.comments(callback); //array of comments
+```
+
 ## Github milestones api
 
 #### Get a single milestone (GET /repos/pksunkara/hub/milestones/37)
@@ -736,7 +763,7 @@ ghissue.update({
 ghmilestone.info(callback); //milestone
 ```
 
-#### Edit an milestone for a repository (PATCH /repos/pksunkara/hub/milestones/37)
+#### Edit a milestone for a repository (PATCH /repos/pksunkara/hub/milestones/37)
 
 ```js
 ghmilestone.update({
@@ -744,12 +771,32 @@ ghmilestone.update({
 }, callback); //milestone
 ```
 
-#### List comments on an issue (GET /repos/pksunkara/hub/issues/37/comments)
-
-This query supports [pagination](#pagination).
+#### Delete a milestone for a repository (PATCH /repos/pksunkara/hub/milestones/todo)
 
 ```js
-ghissue.comments(callback); //array of comments
+ghmilestone.delete(callback); //milestone
+```
+
+## Github labels api
+
+#### Get a single label (GET /repos/pksunkara/hub/labels/todo)
+
+```js
+ghlabel.info(callback); //label
+```
+
+#### Edit a label for a repository (PATCH /repos/pksunkara/hub/labels/todo)
+
+```js
+ghlabel.update({
+  "color": "000000",
+}, callback); //label
+```
+
+#### Delete a label for a repository (PATCH /repos/pksunkara/hub/labels/todo)
+
+```js
+ghlabel.delete(callback); //label
 ```
 
 ## Github pull requests api
