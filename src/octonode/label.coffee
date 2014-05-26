@@ -16,7 +16,7 @@ class Label
       return cb(err) if err
       if s isnt 200 then cb(new Error("Label info error")) else cb null, b, h
 
-  # Edit an label for a repository
+  # Edit a label for a repository
   # '/repos/pksunkara/hub/labels/todo' PATCH
   update: (obj, cb) ->
     @client.post "/repos/#{@repo}/labels/#{@name}", obj, (err, s, b, h) ->
