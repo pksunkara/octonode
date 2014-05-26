@@ -748,6 +748,14 @@ ghissue.update({
 }, callback); //issue
 ```
 
+#### List comments on an issue (GET /repos/pksunkara/hub/issues/37/comments)
+
+This query supports [pagination](#pagination).
+
+```js
+ghissue.comments(callback); //array of comments
+```
+
 ## Github milestones api
 
 #### Get a single milestone (GET /repos/pksunkara/hub/milestones/37)
@@ -764,12 +772,10 @@ ghmilestone.update({
 }, callback); //milestone
 ```
 
-#### List comments on an issue (GET /repos/pksunkara/hub/issues/37/comments)
-
-This query supports [pagination](#pagination).
+#### Delete a milestone for a repository (PATCH /repos/pksunkara/hub/milestones/todo)
 
 ```js
-ghissue.comments(callback); //array of comments
+ghmilestone.delete(callback); //milestone
 ```
 
 ## Github labels api
