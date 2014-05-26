@@ -194,7 +194,6 @@ If a function is said to be supporting pagination, then that function can be use
 The page argument is optional and is used to specify which page of issues to retrieve.
 The perPage argument is also optional and is used to specify how many issues per page.
 
-
 ```js
 // Normal usage of function
 ghrepo.issues(callback); //array of first 30 issues
