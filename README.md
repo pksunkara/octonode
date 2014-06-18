@@ -709,6 +709,8 @@ ghorg.teams(callback); //array of teams
 
 #### Get an organization's members (GET /orgs/flatiron/members)
 
+This query supports [pagination](#pagination).
+
 ```js
 ghorg.members(callback); //array of github users
 ```

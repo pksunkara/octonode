@@ -57,8 +57,10 @@ class Org
 
   # Get an organization's members.
   # '/orgs/flatiron/members' GET
-  members: (cb) ->
-    @client.get "/orgs/#{@name}/members", (err, s, b, h)  ->
+  # - page or query object, optional - params[0]
+  # - per_page, optional             - params[1]
+  members: (params..., cb) ->
+    @client.get "/orgs/#{@name}/members", params..., (err, s, b, h)  ->
       return cb(err) if err
       if s isnt 200 then cb(new Error('Org members error')) else cb null, b, h
 
@@ -68,7 +70,7 @@ class Org
     @client.getNoFollow "/orgs/#{@name}/members/#{user}", (err, s, b, h)  ->
       return cb(err) if err
       cb null, s is 204, h
-      
+
   # Create an organisation team
   # '/orgs/flatiron/teams' POST
   createTeam: (options, cb) ->
