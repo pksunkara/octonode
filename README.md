@@ -1013,7 +1013,7 @@ ghteam.repos(callback); //array of repos
 ```js
 ghsearch.issues({
   q: 'windows+state:open+repo:pksunkara/hub',
-  sort: 'created'
+  sort: 'created',
   order: 'asc'
 }, callback); //array of search results
 ```
