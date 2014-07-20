@@ -479,6 +479,12 @@ ghrepo.contributors(callback); //array of github users
 ghrepo.branches(callback); //array of branches
 ```
 
+#### Get a branch for a repository (GET /repos/pksunkara/hub/branches/master)
+
+```js
+ghrepo.branch('master', callback); //branch
+```
+
 #### Get the issues for a repository (GET /repos/pksunkara/hub/issues)
 
 This query supports [pagination](#pagination).

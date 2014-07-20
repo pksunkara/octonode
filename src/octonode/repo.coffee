@@ -109,6 +109,13 @@ class Repo
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo branches error")) else cb null, b, h
 
+  # Get a branch for a repository
+  # '/repos/pksunkara/hub/branches/master' GET
+  branch: (branch, cb) ->
+    @client.get "/repos/#{@name}/branches/#{branch}", (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Repo branch error")) else cb null, b, h
+
   # Get issue instance for a repo
   issue: (numberOrIssue, cb) ->
     if typeof cb is 'function' and typeof numberOrIssue is 'object'
