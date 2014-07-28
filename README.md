@@ -407,7 +407,7 @@ ghuser.following(callback); //array of github users
 This query supports [pagination](#pagination).
 
 ```js
-ghuser.events(['commit_comment'], callback); //array of events
+ghuser.events(['PushEvent'], callback); //array of events
 ```
 
 #### Get user public organizations (GET /users/pksunkara/orgs)
