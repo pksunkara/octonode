@@ -48,15 +48,16 @@ class User
     if !cb and typeof events == 'function'
       cb = events
       events = null
-    else if !Array.isArray events
+    else if events? and !Array.isArray events
       events = [events]
 
     @client.get "/users/#{@login}/events", params..., (err, s, b, h)  ->
       return cb(err) if err
       return cb(new Error('User events error')) if s isnt 200
 
-      b = b.filter (event) ->
-        return events.indexOf(event.type) != -1
+      if events?
+        b = b.filter (event) ->
+          return events.indexOf(event.type) != -1
 
       cb null, b, h
 
