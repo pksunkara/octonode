@@ -406,8 +406,16 @@ ghuser.following(callback); //array of github users
 
 This query supports [pagination](#pagination).
 
+Optionally, supply an array of Event Types to filter by.
+
 ```js
-ghuser.events(['PushEvent'], callback); //array of events
+ghuser.events(['PushEvent'], callback); //array of PushEvent events
+```
+
+Or leave it out to get all Event Types.
+
+```js
+ghuser.events(callback); //array of events
 ```
 
 #### Get user public organizations (GET /users/pksunkara/orgs)
