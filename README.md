@@ -12,7 +12,7 @@ npm install octonode
 ```js
 var github = require('octonode');
 
-// Then we instanciate a client with or without a token (as show in a later section)
+// Then we instantiate a client with or without a token (as show in a later section)
 
 var ghme        = client.me();
 var ghuser      = client.user('pksunkara');
