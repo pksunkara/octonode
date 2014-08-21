@@ -168,6 +168,18 @@ class Client
       return callback(err) if err
       @errorHandle res, body, callback
 
+  # Github api PATCH request
+  patch: (path, content, callback) ->
+    @request @requestOptions(
+      uri: @buildUrl path
+      method: 'PATCH'
+      body: JSON.stringify content
+      headers:
+        'Content-Type': 'application/json'
+    ), (err, res, body) =>
+      return callback(err) if err
+      @errorHandle res, body, callback
+
   # Github api PUT request
   put: (path, content, callback) ->
     @request @requestOptions(
