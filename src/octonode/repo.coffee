@@ -104,8 +104,10 @@ class Repo
 
   # Get the branches for a repository
   # '/repos/pksunkara/hub/branches' GET
-  branches: (cb) ->
-    @client.get "/repos/#{@name}/branches", (err, s, b, h) ->
+  # - page or query object, optional - params[0]
+  # - per_page, optional             - params[1]
+  branches: (params..., cb) ->
+    @client.get "/repos/#{@name}/branches", params..., (err, s, b, h) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo branches error")) else cb null, b, h
 
