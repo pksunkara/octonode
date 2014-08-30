@@ -225,5 +225,12 @@ class Me
   pr: (repo, number) ->
     @client.pr repo, number
 
+  # Get the notifications for the user
+  # '/notifications' GET
+  notifications: (options = {}, cb) ->
+    @client.get "/notifications", options, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error('User info error')) else cb null, b, h
+
 # Export module
 module.exports = Me
