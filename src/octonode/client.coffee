@@ -105,7 +105,7 @@ class Client
         separator = '?'
 
     _url = url.format
-      protocol: "https:"
+      protocol: @options and @options.protocol or "https:"
       auth: if typeof @token == 'object' and @token.username then "#{@token.username}:#{@token.password}" else ''
       hostname: @options and @options.hostname or "api.github.com"
       pathname: path
