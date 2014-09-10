@@ -8,6 +8,10 @@
 
 class Me
 
+  _hasRepoName = (repoName, repos) ->
+    repos.some (element, index, array) ->
+      element.name.toLowerCase() is repoName or element.full_name.toLowerCase() is repoName
+
   constructor: (@client) ->
 
   profile: (data) ->
@@ -247,7 +251,7 @@ class Me
       return cb(err) if err
       return cb(new Error('User subscriptions error')) if s isnt 200
 
-      if hasRepoName(repo) 
+      if _hasRepoName(repo) 
         cb null, true
       else 
         cb null, false
