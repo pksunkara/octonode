@@ -5,7 +5,12 @@
 #
 
 # Initiate class
+
 class Me
+
+  _hasRepoName = (repoName, repos) ->
+    repos.some (element, index, array) ->
+      element.name.toLowerCase() is repoName or element.full_name.toLowerCase() is repoName
 
   constructor: (@client) ->
 
@@ -230,7 +235,46 @@ class Me
   notifications: (options = {}, cb) ->
     @client.get "/notifications", options, (err, s, b, h) ->
       return cb(err) if err
-      if s isnt 200 then cb(new Error('User info error')) else cb null, b, h
+      if s isnt 200 then cb(new Error('User notification error')) else cb null, b, h
+
+  # Get the watched repositories for the user
+  # '/user/subscriptions' GET
+  getWatchedRepositories: (cb) ->
+    @client.get "/user/subscriptions", (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error('User subscriptions error')) else cb null, b, h
+
+  # Determine if repo is being watched by the user
+  # '/user/subscriptions' GET
+  isWatching: (repo, cb) ->
+    @client.get "/user/subscriptions", (err, s, b, h) ->
+      return cb(err) if err
+      return cb(new Error('User subscriptions error')) if s isnt 200
+
+      if _hasRepoName(repo) 
+        cb null, true
+      else 
+        cb null, false
+
+  # Start watching a repo for the user
+  # '/repos/owner/repo_name/subscription' PUT
+  # Options:
+  #   subscribed: true
+  #   ignored:    false
+  startWatching: (cb) ->
+    options = 
+      subscribed: true
+      ignored: false
+    @client.put "/repos/#{repo}/subscription", options, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error('User subscriptions error')) else cb null, b, h
+
+  # Stop watching a repo for the user
+  # '/repos/owner/repo_name/subscription' DELETE
+  stopWatching: (cb) ->
+    @client.del "/repos/#{repo}/subscription", (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 204 then cb(new Error('User subscriptions error')) else cb null, b, h
 
 # Export module
 module.exports = Me
