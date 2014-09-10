@@ -230,7 +230,31 @@ class Me
   notifications: (options = {}, cb) ->
     @client.get "/notifications", options, (err, s, b, h) ->
       return cb(err) if err
-      if s isnt 200 then cb(new Error('User info error')) else cb null, b, h
+      if s isnt 200 then cb(new Error('User notification error')) else cb null, b, h
+
+  # Get a repository subscription
+  # '/repos/pksunkara/hub/subscription' GET
+  checkWatching: (repo, cb) ->
+    @client.get "/repos/#{repo}/subscription", (err, s, b, h) ->
+      return cb(err) if err
+      if s is 200 then cb(null, b, h) else cb null, false, h
+
+  # Set a repository subscription
+  # '/repos/pksunkara/hub/subscription' PUT
+  subscribe: (repo, cb) ->
+    options = 
+      subscribed: true
+      ignored: false
+    @client.put "/repos/#{repo}/subscription", options, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error('User subscribe error')) else cb null, b, h
+
+  # Delete a repository subscription
+  # '/repos/pksunkara/hub/subscription' DELETE
+  unsubscribe: (repo, cb) ->
+    @client.del "/repos/#{repo}/subscription", (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 204 then cb(new Error('User unsubscribe error')) else cb null, b, h
 
 # Export module
 module.exports = Me
