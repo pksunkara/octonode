@@ -40,6 +40,15 @@ class User
       return cb(err) if err
       if s isnt 200 then cb(new Error('User following error')) else cb null, b, h
 
+  # Get the repos of a user
+  # '/users/pkumar/repos' GET
+  # - page or query object, optional - params[0]
+  # - per_page, optional             - params[1]
+  repos: (params..., cb) ->
+    @client.get "/users/#{@login}/repos", params..., (err, s, b, h)  ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error('User repos error')) else cb null, b, h
+
   # Get events performed by a user
   # '/users/pksunkara/events' GET
   # - page or query object, optional - params[0]
