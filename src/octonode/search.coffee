@@ -24,7 +24,7 @@ class Search
       if s isnt 200 then cb(new Error('Search repos error')) else cb null, b, h
 
   # Search users
-  users: (keyword, start_page, cb) ->
+  users: (params, start_page, cb) ->
     @client.get "/search/users", params, (err, s, b, h) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error('Search users error')) else cb null, b, h
