@@ -37,7 +37,7 @@
     }
   ],
   "dependencies": {
-    "request": "2.34.x",
+    "request": "2.44.x",
     "randomstring": "1.x.x",
     "deep-extend": "0.x.x"
   },
