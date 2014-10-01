@@ -106,7 +106,7 @@ class Client
 
     _url = url.format
       protocol: @options and @options.protocol or "https:"
-      auth: if typeof @token == 'object' and @token.username then "#{@token.username}:#{@token.password}" else ''
+      auth: if @token and @token.username and @token.password then "#{@token.username}:#{@token.password}" else ''
       hostname: @options and @options.hostname or "api.github.com"
       pathname: path
       query: query
