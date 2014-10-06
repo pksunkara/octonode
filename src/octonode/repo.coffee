@@ -38,6 +38,8 @@ class Repo
 
   # Get the commits for a repository
   # '/repos/pksunkara/hub/commits' GET
+  # - page or query object, optional - params[0]
+  # - per_page, optional             - params[1]
   commits: (params...,cb) ->
     @client.get "/repos/#{@name}/commits", params..., (err, s, b, h) ->
       return cb(err) if err
