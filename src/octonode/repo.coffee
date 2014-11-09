@@ -258,8 +258,10 @@ class Repo
 
   # Get the forks for a repository
   # '/repos/pksunkara/hub/forks' GET
-  forks: (cb) ->
-    @client.get "/repos/#{@name}/forks", (err, s, b, h) ->
+  # - page , optional                - params[0]
+  # - per_page, optional             - params[1]
+  forks: (params..., cb) ->
+    @client.get "/repos/#{@name}/forks", params..., (err, s, b, h) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo forks error")) else cb null, b, h
 
