@@ -108,6 +108,7 @@ class Client
       protocol: @options and @options.protocol or "https:"
       auth: if @token and @token.username and @token.password then "#{@token.username}:#{@token.password}" else ''
       hostname: @options and @options.hostname or "api.github.com"
+      port: @options and @options.port
       pathname: path
       query: query
 
