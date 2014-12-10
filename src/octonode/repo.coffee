@@ -90,12 +90,12 @@ class Repo
 
   # Get the contributors for a repository
   # '/repos/pksunkara/hub/contributors' GET
-  contributors: (cb) ->
-    @client.get "/repos/#{@name}/contributors", (err, s, b, h) ->
+  # - page or query object, optional - params[0]
+  # - per_page, optional             - params[1]
+  contributors: (params..., cb) ->
+    @client.get "/repos/#{@name}/contributors", params..., (err, s, b, h) ->
       return cb(err) if err
-      if s is 204
-        cb null, [], h
-      else if s isnt 200 then cb(new Error("Repo contributors error")) else cb null, b, h
+      if s isnt 200 then cb(new Error("Repo contributors error")) else cb null, b, h
 
   # Get the teams for a repository
   # '/repos/pksunkara/hub/teams' GET
@@ -194,8 +194,10 @@ class Repo
   readme: (cbOrRef, cb) ->
     if !cb? and cbOrRef
       cb = cbOrRef
-      cbOrRef = 'master'
-    @client.get "/repos/#{@name}/readme", {ref: cbOrRef}, (err, s, b, h) ->
+      cbOrRef = null
+    if cbOrRef
+      cbOrRef = {ref: cbOrRef}
+    @client.get "/repos/#{@name}/readme", cbOrRef, (err, s, b, h) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo readme error")) else cb null, b, h
 
@@ -204,8 +206,10 @@ class Repo
   contents: (path, cbOrRef, cb) ->
     if !cb? and cbOrRef
       cb = cbOrRef
-      cbOrRef = 'master'
-    @client.get "/repos/#{@name}/contents/#{path}", {ref: cbOrRef}, (err, s, b, h) ->
+      cbOrRef = null
+    if cbOrRef
+      cbOrRef = {ref: cbOrRef}
+    @client.get "/repos/#{@name}/contents/#{path}", cbOrRef, (err, s, b, h) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo contents error")) else cb null, b, h
 
