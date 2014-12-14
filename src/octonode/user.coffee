@@ -57,8 +57,12 @@ class User
     if !cb and typeof events == 'function'
       cb = events
       events = null
-    else if events? and !Array.isArray events
-      events = [events]
+    else if events?
+      if typeof events == 'number' and params.length > 0
+        params[1] = events
+        events = null
+      else if !Array.isArray events
+        events = [events]
 
     @client.get "/users/#{@login}/events", params..., (err, s, b, h)  ->
       return cb(err) if err
