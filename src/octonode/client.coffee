@@ -208,7 +208,7 @@ class Client
   limit: (callback) =>
     @get '/rate_limit', (err, s, b) ->
       return callback(err) if err
-      if s isnt 200 then callback(new HttpError('Client rate_limit error', s)) else callback null, b.rate.remaining, b.rate.limit
+      if s isnt 200 then callback(new HttpError('Client rate_limit error', s)) else callback null, b.rate.remaining, b.rate.limit, b
 
 # Export modules
 module.exports = (token, credentials...) ->
