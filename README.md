@@ -599,6 +599,11 @@ ghrepo.hook({
 ghrepo.readme(callback); //file
 ghrepo.readme('v0.1.0', callback); //file
 ```
+#### Get the root contents on a branch called "myBranch"
+
+```js
+ghrepo.contents('', "myBranch", callback);
+```
 
 #### Get the contents of a path in repository
 
