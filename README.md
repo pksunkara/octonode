@@ -69,7 +69,7 @@ var client = github.client({
   secret: 'abcdefghijk'
 });
 
-client.get('/user', {}, function (err, status, body, headers) {
+client.get('/users/pksunkara', {}, function (err, status, body, headers) {
   console.log(body); //json object
 });
 ```
