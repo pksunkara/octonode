@@ -139,7 +139,7 @@ http.createServer(function (req, res) {
   uri = url.parse(req.url);
   // Redirect to github login
   if (uri.pathname=='/login') {
-    res.writeHead(301, {'Content-Type': 'text/plain', 'Location': auth_url})
+    res.writeHead(302, {'Content-Type': 'text/plain', 'Location': auth_url})
     res.end('Redirecting to ' + auth_url);
   }
   // Callback url from github login
