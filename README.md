@@ -742,6 +742,12 @@ ghorg.members(callback); //array of github users
 ghorg.member('pksunkara', callback); //boolean
 ```
 
+#### Check a member's public membership in an org (GET /orgs/flatiron/public_members/pksunkara)
+
+```js
+ghorg.publicMember('pksunkara', callback); //boolean
+```
+
 #### Create an organization team (POST /orgs/flatiron/teams)
 
 ```js

@@ -71,6 +71,13 @@ class Org
       return cb(err) if err
       cb null, s is 204, h
 
+  # Check an organization's public member.
+  # '/orgs/flatiron/public_members/pksunkara' GET
+  publicMember: (user, cb) ->
+    @client.getNoFollow "/orgs/#{@name}/public_members/#{user}", (err, s, b, h)  ->
+      return cb(err) if err
+      cb null, s is 204, h
+
   # Create an organisation team
   # '/orgs/flatiron/teams' POST
   createTeam: (options, cb) ->
