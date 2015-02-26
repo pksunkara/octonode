@@ -64,6 +64,13 @@ class Org
       return cb(err) if err
       if s isnt 200 then cb(new Error('Org members error')) else cb null, b, h
 
+  # Check membership for a user in the org.
+  # '/orgs/flatiron/memberships/pksunkara' GET
+  membership: (user, cb) ->
+    @client.getOptions "/orgs/#{@name}/memberships/#{user}", { headers: { Accept: 'application/vnd.github.moondragon+json'} },(err, s, b, h)  ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error('Org memberships error')) else cb null, b, h
+
   # Check an organization's member.
   # '/orgs/flatiron/members/pksunkara' GET
   member: (user, cb) ->
