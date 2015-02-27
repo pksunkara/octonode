@@ -1,4 +1,4 @@
-# octonode [![Gitter chat](https://badges.gitter.im/pksunkara/octonode.png)](https://gitter.im/pksunkara/octonode)
+# octonode [![Gitter chat](https://badges.gitter.im/pksunkara/octonode.svg)](https://gitter.im/pksunkara/octonode)
 
 octonode is a library for nodejs to access the [github v3 api](http://developer.github.com)
 
