@@ -748,6 +748,12 @@ ghorg.member('pksunkara', callback); //boolean
 ghorg.publicMember('pksunkara', callback); //boolean
 ```
 
+#### Check a member's membership status (GET /orgs/flatiron/memberships/pksunkara)
+
+```js
+ghorg.memberships('pksunkara', callback); //membership status object indicating state, role, etc.
+```
+
 #### Create an organization team (POST /orgs/flatiron/teams)
 
 ```js
