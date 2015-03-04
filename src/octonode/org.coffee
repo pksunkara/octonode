@@ -50,8 +50,10 @@ class Org
 
   # Get an organization's teams.
   # '/orgs/flatiron/teams' GET
-  teams: (cb) ->
-    @client.get "/orgs/#{@name}/teams", (err, s, b, h)  ->
+  # - page or query object, optional - params[0]
+  # - per_page, optional             - params[1]
+  teams: (params..., cb) ->
+    @client.get "/orgs/#{@name}/teams", params..., (err, s, b, h)  ->
       return cb(err) if err
       if s isnt 200 then cb(new Error('Org teams error')) else cb null, b, h
 
