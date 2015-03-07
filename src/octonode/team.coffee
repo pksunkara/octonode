@@ -48,8 +48,10 @@ class Team
 
   # List repos of a team
   # '/teams/37/repos/' GET
-  repos: (cb) ->
-    @client.get "/teams/#{@id}/repos", (err, s, b, h) ->
+  # - page or query object, optional - params[0]
+  # - per_page, optional             - params[1]
+  repos: (params..., cb) ->
+    @client.get "/teams/#{@id}/repos", params..., (err, s, b, h) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error("Team repos error")) else cb null, b, h
 
