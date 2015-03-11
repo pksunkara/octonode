@@ -20,8 +20,10 @@ class Team
 
   # Get a teams's members
   # '/teams/37/members' GET
-  members: (cb) ->
-    @client.get "/teams/#{@id}/members", (err, s, b, h)  ->
+  # - page or query object, optional - params[0]
+  # - per_page, optional             - params[1]
+  members: (params..., cb) ->
+    @client.get "/teams/#{@id}/members", params..., (err, s, b, h)  ->
       return cb(err) if err
       if s isnt 200 then cb(new Error('Team members error')) else cb null, b, h
 
