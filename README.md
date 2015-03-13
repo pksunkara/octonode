@@ -376,6 +376,20 @@ ghme.repo({
 ghme.fork('pksunkara/hub', callback); //forked repo
 ```
 
+#### List all issues across owned and member repositories (GET /user/issues)
+
+This query supports [pagination](#pagination).
+
+```js
+ghme.issues({
+  page: 2,
+  per_page: 100,
+  filter: 'assigned',
+  state: 'open',
+  sort: 'created'  
+}, callback); //array of issues
+```
+
 ## Github users api
 
 No token required for the following
@@ -1102,7 +1116,6 @@ me.get_watched_repositories(callback);
 me.is_watching('repo', callback);
 me.start_watching('repo', callback);
 me.stop_watching('repo', callback);
-me.get_issues(params, callback);
 
 // organization data
 var org = octonode.Organization('bulletjs');
