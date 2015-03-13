@@ -242,7 +242,7 @@ class Me
   # Set a repository subscription
   # '/repos/pksunkara/hub/subscription' PUT
   subscribe: (repo, cb) ->
-    options = 
+    options =
       subscribed: true
       ignored: false
     @client.put "/repos/#{repo}/subscription", options, (err, s, b, h) ->
@@ -255,15 +255,15 @@ class Me
     @client.del "/repos/#{repo}/subscription", (err, s, b, h) ->
       return cb(err) if err
       if s isnt 204 then cb(new Error('User unsubscribe error')) else cb null, b, h
-      
+
   # List all issues across owned and member repositories for the authenticated user
   # '/user/issues' GET
-  # - query object, optional - params[0]
+  # - page or query object, optional - params[0]
+  # - per_page, optional             - params[1]
   issues: (params..., cb) ->
     @client.get "/user/issues", params..., (err, s, b, h) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error("User issues error")) else cb null, b, h
-  
 
 # Export module
 module.exports = Me

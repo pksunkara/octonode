@@ -40,7 +40,7 @@
   "devDependencies": {
     "nock": "0.57.x",
     "vows": "0.8.x",
-    "coffee-script": "1.8.0"
+    "coffee-script": "1.9.x"
   },
   "engines": {
     "node": ">0.4.11"
