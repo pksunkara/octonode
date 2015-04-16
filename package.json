@@ -12,7 +12,8 @@
     "github"
   ],
   "scripts": {
-    "test": "vows --spec $(find test -name '*.js')"
+    "test": "vows --spec $(find test -name '*.js')",
+    "prepublish": "cake lib"
   },
   "contributors": [
     {
