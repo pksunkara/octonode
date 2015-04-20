@@ -24,7 +24,7 @@ Search = require './search'
 
 # Specialized error
 class HttpError extends Error
-  constructor: (@message, @statusCode, @headers) ->
+  constructor: (@message, @statusCode, @headers, @body) ->
 
 # Initiate class
 class Client
@@ -118,14 +118,15 @@ class Client
     return _url
 
   errorHandle: (res, body, callback) ->
-    # TODO: More detailed HTTP error message
     return callback(new HttpError('Error ' + res.statusCode, res.statusCode, res.headers)) if Math.floor(res.statusCode/100) is 5
+
     if typeof body == 'string'
       try
         body = JSON.parse(body || '{}')
       catch err
         return callback(err)
-    return callback(new HttpError(body.message, res.statusCode, res.headers)) if body.message and res.statusCode in [400, 401, 403, 404, 410, 422]
+
+    return callback(new HttpError(body.message, res.statusCode, res.headers, body)) if body.message and res.statusCode in [400, 401, 403, 404, 410, 422]
     callback null, res.statusCode, body, res.headers
 
   # Github api GET request
