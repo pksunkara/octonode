@@ -34,7 +34,6 @@ class Client
     @requestDefaults =
       headers:
         'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
-      proxy: process.env.HTTP_PROXY
 
   # Get authenticated user instance for client
   me: ->
