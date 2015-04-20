@@ -97,6 +97,19 @@ class Repo
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo contributors error")) else cb null, b, h
 
+  # Get the contributors for a repository
+  # '/repos/pksunkara/hub/stats/contributors' GET
+  # - page or query object, optional - params[0]
+  # - per_page, optional             - params[1]
+  contributorsStats: (cb) ->
+    @client.get "/repos/#{@name}/stats/contributors", (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 200
+        error = new Error("Repo stats contributors error")
+        error.status = s # 202 means recomputing stats... https://developer.github.com/v3/repos/statistics/#a-word-about-caching
+        cb(error)
+      else cb null, b, h
+
   # Get the teams for a repository
   # '/repos/pksunkara/hub/teams' GET
   teams: (cb) ->
