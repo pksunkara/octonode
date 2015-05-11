@@ -636,7 +636,7 @@ ghrepo.createContents('lib/index.js', 'commit message', 'content', 'v0.1.0', cal
 #### Update a file at a path in repository
 
 ```js
-ghrepo.updateContents('lib/index.js', 'commit message', 'content', 'put-sha-here', branch(optional) callback); //path
+ghrepo.updateContents('lib/index.js', 'commit message', 'content', 'put-sha-here', 'branch(optional)' callback); //path
 ghrepo.updateContents('lib/index.js', 'commit message', 'content', 'put-sha-here', 'v0.1.0', callback); //path
 ```
 
