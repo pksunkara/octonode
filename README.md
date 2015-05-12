@@ -637,6 +637,7 @@ ghrepo.createContents('lib/index.js', 'commit message', 'content', 'v0.1.0', cal
 
 ```js
 ghrepo.updateContents('lib/index.js', 'commit message', 'content', 'put-sha-here', callback); //path
+ghrepo.updateContents('lib/index.js', 'commit message', 'content', 'put-sha-here', 'master', callback); //path
 ghrepo.updateContents('lib/index.js', 'commit message', 'content', 'put-sha-here', 'v0.1.0', callback); //path
 ```
 
