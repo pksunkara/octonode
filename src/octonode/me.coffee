@@ -265,5 +265,14 @@ class Me
       return cb(err) if err
       if s isnt 200 then cb(new Error("User issues error")) else cb null, b, h
 
+  # List all team memberships across the authenticated user's organizations
+  # '/user/teams' GET
+  # - page or query object, optional - params[0]
+  # - per_page, optional             - params[1]
+  teams: (params..., cb) ->
+    @client.get "/user/teams", params..., (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("User teams error")) else cb null, b, h
+
 # Export module
 module.exports = Me

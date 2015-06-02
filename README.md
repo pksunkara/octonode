@@ -390,6 +390,17 @@ ghme.issues({
 }, callback); //array of issues
 ```
 
+#### List user teams (GET /user/teams)
+
+This query supports [pagination](#pagination).
+
+```js
+ghme.teams({
+  page: 1,
+  per_page: 50
+}, callback); //array of team memberships
+```
+
 ## Github users api
 
 No token required for the following
@@ -763,6 +774,18 @@ ghorg.member('pksunkara', callback); //boolean
 ghorg.publicMember('pksunkara', callback); //boolean
 ```
 
+#### Publicize a user’s membership (PUT /orgs/flatiron/public_members/pksunkara)
+
+```js
+ghorg.publicizeMembership('pksunkara', callback);
+```
+
+#### Conceal a user’s membership (DELETE /orgs/flatiron/public_members/pksunkara)
+
+```js
+ghorg.concealMembership('pksunkara', callback);
+```
+
 #### Check a member's membership status (GET /orgs/flatiron/memberships/pksunkara)
 
 ```js
@@ -803,6 +826,28 @@ This query supports [pagination](#pagination).
 
 ```js
 ghissue.comments(callback); //array of comments
+```
+
+#### Create a comment (POST /repos/pksunkara/hub/issues/37/comments)
+
+```js
+ghissue.createComment({
+  body: 'Me too.'
+}, callback);
+```
+
+#### Edit a comment (PATCH /repos/pksunkara/hub/issues/comments/3)
+
+```js
+ghissue.updateComment(3, {
+  body: 'The updated body of the comment.'
+}, callback);
+```
+
+#### Delete a comment (DELETE /repos/pksunkara/hub/issues/comments/3)
+
+```js
+ghissue.deleteComment(3, callback);
 ```
 
 ## Github milestones api
@@ -1046,6 +1091,24 @@ ghteam.addUser("pksunkara", callback); //boolean
 
 ```js
 ghteam.removeUser("pksunkara", callback); //boolean
+```
+
+#### Get team membership (GET /teams/37/memberships/pksunkara)
+
+```js
+ghteam.membership("pksunkara", callback); //boolean
+```
+
+#### Add team membership (PUT /teams/37/memberships/pksunkara)
+
+```js
+ghteam.addMembership("pksunkara", callback); //boolean
+```
+
+#### Remove team membership (DELETE /team/37/memberships/pksunkara)
+
+```js
+ghteam.removeMembership("pksunkara", callback); //boolean
 ```
 
 #### List all repos of a team (GET /team/37/repos)

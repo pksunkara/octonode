@@ -18,6 +18,13 @@ class Team
       return cb(err) if err
       if s isnt 200 then cb(new Error('Team info error')) else cb null, b, h
 
+  # Edit a team
+  # '/teams/37' PATCH
+  update: (info, cb) ->
+    @client.patch "/teams/#{@id}", info, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error('Team update error')) else cb null, b, h
+
   # Get a teams's members
   # '/teams/37/members' GET
   # - page or query object, optional - params[0]
@@ -39,14 +46,35 @@ class Team
   addUser: (user, cb) ->
     @client.put "/teams/#{@id}/members/#{user}", null,  (err, s, b, h) ->
       return cb(err) if err
-      cb null, s is 204, h
+      if s isnt 204 then cb(new Error("Team addUser error")) else cb null, b, h
 
   # Remove a user from a team (must have admin permissions to do so)
   # '/teams/37/members/pksunkara' DELETE
   removeUser: (user, cb) ->
     @client.del "/teams/#{@id}/members/#{user}", null, (err, s, b, h) ->
       return cb(err) if err
+      if s isnt 204 then cb(new Error("Team removeUser error")) else cb null, b, h
+
+  # Check a team's membership
+  # '/teams/37/memberships/pksunkara' GET
+  membership: (user, cb) ->
+    @client.get "/teams/#{@id}/memberships/#{user}", (err, s, b, h)  ->
+      return cb(err) if err
       cb null, s is 204, h
+
+  # Add a user to a team's membership
+  # '/teams/37/memberships/pksunkara' PUT
+  addMembership: (user, cb) ->
+    @client.put "/teams/#{@id}/memberships/#{user}", null,  (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Team membership error")) else cb null, b, h
+
+  # Remove a user from a team's membership
+  # '/teams/37/memberships/pksunkara' DELETE
+  removeMembership: (user, cb) ->
+    @client.del "/teams/#{@id}/memberships/#{user}", null, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 204 then cb(new Error("Team removeMembership error")) else cb null, b, h
 
   # List repos of a team
   # '/teams/37/repos/' GET
