@@ -87,6 +87,27 @@ class Org
       return cb(err) if err
       cb null, s is 204, h
 
+  # Publicize the authenticated user's membership in an organization.
+  # '/orgs/flatiron/public_members/pksunkara' PUT
+  publicizeMembership: (user, cb) ->
+    @client.put "/orgs/#{@name}/public_members/#{user}", null, (err, s, b, h) ->
+      return cb(err)  if err
+      if s isnt 204 then cb new Error("Org publicizeMembership error") else cb null, b, h
+
+  # Conceal public membership of the authenticated user in the organization.
+  # '/orgs/flatiron/public_members/pksunkara' DELETE
+  concealMembership: (user, cb) ->
+    @client.del "/orgs/#{@name}/public_members/#{user}", null, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 204 then cb(new Error("Org concealMembership error")) else cb null, b, h
+
+  # Remove a user from an organization and all of its teams
+  # '/orgs/flatiron/members/pksunkara' DELETE
+  removeMember: (user, cb) ->
+    @client.del "/orgs/#{@name}/members/#{user}", null, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 204 then cb(new Error("Org removeMember error")) else cb null, b, h
+
   # Create an organisation team
   # '/orgs/flatiron/teams' POST
   createTeam: (options, cb) ->
