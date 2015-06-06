@@ -618,6 +618,12 @@ ghrepo.hook({
 }, callback); // hook
 ```
 
+#### Delete a hook (DELETE /repos/pksunkara/hub/hooks/37)
+
+```js
+ghrepo.deleteHook(37, callback);
+```
+
 #### Get the README for a repository (GET /repos/pksunkara/hub/readme)
 
 ```js
