@@ -74,6 +74,7 @@ auth = module.exports =
         uri+= "?client_id=#{@options.id}"
         uri+= "&state=#{randomstring.generate()}"
         uri+= "&scope=#{scopes.join(',')}"
+        if @options.redirect_uri then uri+= "&redirect_uri=#{@options.redirect_uri}"
       else
         request
           url: 'https://github.com/login/oauth/access_token'
