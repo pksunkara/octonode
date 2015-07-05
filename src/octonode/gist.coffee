@@ -70,9 +70,10 @@ class Gist
 
   # Delete a gist
   # '/gists/37' DELETE
-  delete: (id) ->
-    @client.del "/gists/#{id}", {}, (err, s, b, h) =>
-      @delete(id) if err? or s isnt 204
+  delete: (id, cb) ->
+    @client.del "/gists/#{id}", {}, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 204 then cb(new Error("Gist delete error")) else cb null
 
   # Fork a gist
   # '/gists/37/forks' POST
