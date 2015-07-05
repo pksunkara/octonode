@@ -133,7 +133,7 @@ class Gist
 
   # Delete a comment
   # '/gists/comments/1' DELETE
-  deleteComment: (id) ->
+  deleteComment: (id, cb) ->
     @client.del "/gists/comments/#{id}", {}, (err, s, b, h) ->
       return cb(err) if err
       if s isnt 204 then cb(new Error("Gist deleteComment error")) else cb null
