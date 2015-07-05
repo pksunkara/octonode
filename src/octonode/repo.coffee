@@ -343,9 +343,11 @@ class Repo
 
   # Delete the repository
   # '/repos/pksunkara/hub' DELETE
-  destroy: ->
-    @client.del "/repos/#{@name}", {}, (err, s, b, h) =>
-      @destroy() if err? or s isnt 204
+  destroy: (cb) ->
+    @client.del "/repos/#{@name}", {}, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 204 then cb(new Error("Repo destroy error")) else cb null
+
 
   # Get pull-request instance for repo
   pr: (numberOrPr, cb) ->

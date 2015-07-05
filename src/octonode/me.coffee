@@ -54,9 +54,10 @@ class Me
 
   # Delete emails of the user
   # '/user/emails' DELETE
-  deleteEmails: (emails) ->
-    @client.del '/user/emails', emails, (err, s, b, h)  =>
-      @deleteEmails(emails) if err? or s isnt 204
+  deleteEmails: (emails, cb) ->
+    @client.del '/user/emails', emails, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 204 then cb(new Error("User deleteEmails error")) else cb null
 
   # Get the followers of the user
   # '/user/followers' GET
@@ -88,23 +89,25 @@ class Me
 
   # Follow a user
   # '/user/following/pksunkara' PUT
-  follow: (user) ->
-    @client.put "/user/following/#{user}", {}, (err, s, b, h)  =>
-      @follow(user) if err? or s isnt 204
+  follow: (user, cb) ->
+    @client.put "/user/following/#{user}", {}, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 204 then cb(new Error("User follow error")) else cb null
 
   # Unfollow a user
   # '/user/following/pksunkara' DELETE
-  unfollow: (user) ->
-    @client.del "/user/following/#{user}", {}, (err, s, b, h)  =>
-      @unfollow(user) if err? or s isnt 204
+  unfollow: (user, cb) ->
+    @client.del "/user/following/#{user}", {}, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 204 then cb(new Error("User unfollow error")) else cb null
 
   # Get the starred repos for the user
   # '/user/starred' GET
   # TODO: page, user
   starred: (params..., cb) ->
-      @client.get '/user/starred', params..., (err, s, b, h)  ->
-        return cb(err) if err
-        if s isnt 200 then cb(new Error('User starred error')) else cb null, b, h
+    @client.get '/user/starred', params..., (err, s, b, h)  ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error('User starred error')) else cb null, b, h
 
   # Check if you have starred a repository
   # '/user/starred/pksunkara/octonode' GET
@@ -115,15 +118,17 @@ class Me
 
   # Star a repository
   # '/user/starred/pksunkara/octonode' PUT
-  star: (repo) ->
-    @client.put "/user/starred/#{repo}", {}, (err, s, b, h)  =>
-      @star(repo) if err? or s isnt 204
+  star: (repo, cb) ->
+    @client.put "/user/starred/#{repo}", {}, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 204 then cb(new Error("User star error")) else cb null
 
   # Unstar a repository
   # '/user/starred/pksunkara/octonode' DELETE
-  unstar: (repo) ->
-    @client.del "/user/starred/#{repo}", {}, (err, s, b, h)  =>
-      @unstar(repo) if err? or s isnt 204
+  unstar: (repo, cb) ->
+    @client.del "/user/starred/#{repo}", {}, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 204 then cb(new Error("User unstar error")) else cb null
 
   # Get the subscriptions of the user (what she watches)
   # '/user/subscriptions' GET
@@ -174,9 +179,10 @@ class Me
 
   # Delete a public key
   # '/user/keys/1' DELETE
-  deleteKey: (id) ->
-    @client.del "/user/keys/#{id}", {}, (err, s, b, h)  =>
-      @deleteKey(id) if err? or s isnt 204
+  deleteKey: (id, cb) ->
+    @client.del "/user/keys/#{id}", {}, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 204 then cb(new Error("User deleteKey error")) else cb null
 
   # Get organization instance for client
   org: (name) ->
