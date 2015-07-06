@@ -88,7 +88,9 @@ auth = module.exports =
             'Content-Type': 'application/x-www-form-urlencoded'
             'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
         , (err, res, body) ->
-          if res.statusCode is 404
+          if err?
+            callback err
+          else if res.statusCode is 404
             callback(new Error('Access token not found'))
           else
             body = qs.parse body
