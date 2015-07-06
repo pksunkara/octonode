@@ -70,9 +70,10 @@ class Gist
 
   # Delete a gist
   # '/gists/37' DELETE
-  delete: (id) ->
-    @client.del "/gists/#{id}", {}, (err, s, b, h) =>
-      @delete(id) if err? or s isnt 204
+  delete: (id, cb) ->
+    @client.del "/gists/#{id}", {}, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 204 then cb(new Error("Gist delete error")) else cb null
 
   # Fork a gist
   # '/gists/37/forks' POST
@@ -83,19 +84,21 @@ class Gist
 
   # Star a gist
   # '/gists/37/star' PUT
-  star: (id) ->
-    @client.put "/gists/#{id}/star", {}, (err, s, b, h) =>
-      @star(id) if err? or s isnt 204
+  star: (id, cb) ->
+    @client.put "/gists/#{id}/star", {}, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 204 then cb(new Error("Gist star error")) else cb null
 
   # Unstar a gist
   # '/gists/37/unstar' DELETE
-  unstar: (id) ->
-    @client.del "/gists/#{id}/unstar", {}, (err, s, b, h) =>
-      @unstar(id) if err? or s isnt 204
+  unstar: (id, cb) ->
+    @client.del "/gists/#{id}/unstar", {}, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 204 then cb(new Error("Gist unstar error")) else cb null
 
   # Check if a gist is starred
   # '/gists/37/star' GET
-  check: (id) ->
+  check: (id, cb) ->
     @client.get "/gists/#{id}/star", (err, s, b, h) ->
       return cb(err) if err
       cb null, s is 204, h
@@ -130,9 +133,10 @@ class Gist
 
   # Delete a comment
   # '/gists/comments/1' DELETE
-  deleteComment: (id) ->
-    @client.del "/gists/comments/#{id}", {}, (err, s, b, h) =>
-      @deleteComment(id) if err? or s isnt 204
+  deleteComment: (id, cb) ->
+    @client.del "/gists/comments/#{id}", {}, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 204 then cb(new Error("Gist deleteComment error")) else cb null
 
   comments: (id, cbOrCmnt, cb) ->
     if !cb? and typeof cbOrCmnt is 'function'
