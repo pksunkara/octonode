@@ -1,6 +1,6 @@
 {
   "name": "octonode",
-  "version": "0.6.18",
+  "version": "0.7.0",
   "author": "Pavan Kumar Sunkara <pavan.sss1991@gmail.com> (http://pksunkara.github.com)",
   "description": "nodejs wrapper for github v3 api",
   "main": "./lib/octonode",
@@ -14,24 +14,6 @@
   "scripts": {
     "test": "vows --spec $(find test -name '*.js')"
   },
-  "contributors": [
-    {
-      "name": "Pavan Kumar Sunkara",
-      "email": "pavan.sss1991@gmail.com"
-    },
-    {
-      "name": "Martin Wawrusch",
-      "email": "martin@wawrusch.com"
-    },
-    {
-      "name": "Joe Frambach",
-      "email": "joe.frambach@showclix.com"
-    },
-    {
-      "name": "Matthew Taylor",
-      "email": "rhyolight@gmail.com"
-    }
-  ],
   "dependencies": {
     "request": "2.51.x",
     "randomstring": "1.x.x",
