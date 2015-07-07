@@ -389,7 +389,7 @@ class Repo
   # Delete a hook
   # '/repos/pksunkara/hub/hooks/37' DELETE
   deleteHook: (id, cb) ->
-    @client.del "/repos/#{@name}/hooks/#{id}", (err, s, b, h) ->
+    @client.del "/repos/#{@name}/hooks/#{id}", {}, (err, s, b, h) ->
       return cb(err) if err
       if s isnt 204 then cb(new Error("Repo deleteHook error")) else cb null, b, h
 
