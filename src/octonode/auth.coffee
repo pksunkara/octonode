@@ -44,7 +44,7 @@ auth = module.exports =
   login: (data, callback) ->
     # for backwards compatibility, create the data object if only scopes
     # are passed to the method
-    if typeof(data) != 'object'
+    unless data.scopes?
       data =
         scopes: data
 
