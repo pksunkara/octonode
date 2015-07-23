@@ -24,7 +24,7 @@ var ghlabel        = client.label('pksunkara/hub', 'todo');
 var ghpr           = client.pr('pksunkara/hub', 37);
 var ghgist         = client.gist();
 var ghteam         = client.team(37);
-var ghnotification = client.notification(123456789);
+var ghnotification = client.notification(37);
 
 var ghsearch = client.search();
 ```
