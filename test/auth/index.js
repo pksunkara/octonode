@@ -22,7 +22,7 @@ vows.describe('auth').addBatch({
     },
     'should throw error on no mode set': function(auth) {
       asrt.throws(function() {
-        return auth.login(['repo'], function(err) {
+        return auth.login({scopes: ['repo']}, function(err) {
           throw err;
         }, Error);
       });
@@ -62,7 +62,7 @@ vows.describe('auth').addBatch({
       },
       'calling login([])': {
         topic: function(auth) {
-          return auth.login(['repo', 'user']);
+          return auth.login({scopes: ['repo', 'user']});
         },
         'should give correct url': function(url) {
           url = url.split('&');

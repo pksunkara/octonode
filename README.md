@@ -100,7 +100,10 @@ __Many of the below use cases use parts of the above code__
 github.auth.config({
   username: 'pksunkara',
   password: 'password'
-}).login(['user', 'repo', 'gist'], function (err, id, token) {
+}).login({
+  scopes: ['user', 'repo', 'gist'],
+  note: 'Octonode Client'
+}, function (err, id, token) {
   console.log(id, token);
 });
 ```
@@ -129,7 +132,9 @@ var http = require('http')
 var auth_url = github.auth.config({
   id: 'mygithubclientid',
   secret: 'mygithubclientsecret'
-}).login(['user', 'repo', 'gist']);
+}).login({
+  scopes: ['user', 'repo', 'gist']
+});
 
 // Store info to verify against CSRF
 var state = auth_url.match(/&state=([0-9a-z]{32})/i);

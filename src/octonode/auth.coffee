@@ -41,16 +41,21 @@ auth = module.exports =
     else
       callback new Error('Cannot revoke authorization in web mode')
 
-  login: (scopes, callback) ->
+  login: (data, callback) ->
+    # for backwards compatibility, create the data object if only scopes
+    # are passed to the method
+    if typeof(data) != 'object'
+      data =
+        scopes: data
+
     if @mode == @modes.cli
-      if scopes instanceof Array
-        scopes = JSON.stringify scopes: scopes
-      else
-        scopes = JSON.stringify scopes
+      # set default note, which is a required for creating an authorization
+      data.note = 'Octonode' unless data.note?
+
       options =
         url: url.parse "https://api.github.com/authorizations"
         method: 'POST'
-        body: scopes
+        body: JSON.stringify data
         headers:
           'Content-Type': 'application/json'
           'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
@@ -67,13 +72,13 @@ auth = module.exports =
             body = JSON.parse body
           catch err
             callback new Error('Unable to parse body')
-          if res.statusCode is 401 then callback(new Error(body.message)) else callback(null, body.id, body.token)
+          if res.statusCode is 200 then callback(null, body.id, body.token) else callback(new Error(body.message))
     else if @mode == @modes.web
-      if scopes instanceof Array
+      if data.scopes instanceof Array
         uri = 'https://github.com/login/oauth/authorize'
         uri+= "?client_id=#{@options.id}"
         uri+= "&state=#{randomstring.generate()}"
-        uri+= "&scope=#{scopes.join(',')}"
+        uri+= "&scope=#{data.scopes.join(',')}"
         if @options.redirect_uri then uri+= "&redirect_uri=#{@options.redirect_uri}"
         return uri
       else
@@ -81,7 +86,7 @@ auth = module.exports =
           url: 'https://github.com/login/oauth/access_token'
           method: 'POST'
           body: qs.stringify
-            code: scopes
+            code: data.scopes
             client_id: @options.id
             client_secret: @options.secret
           headers:
