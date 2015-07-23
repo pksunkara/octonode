@@ -14,16 +14,17 @@ var github = require('octonode');
 
 // Then we instantiate a client with or without a token (as show in a later section)
 
-var ghme        = client.me();
-var ghuser      = client.user('pksunkara');
-var ghrepo      = client.repo('pksunkara/hub');
-var ghorg       = client.org('flatiron');
-var ghissue     = client.issue('pksunkara/hub', 37);
-var ghmilestone = client.milestone('pksunkara/hub', 37);
-var ghlabel     = client.label('pksunkara/hub', 'todo');
-var ghpr        = client.pr('pksunkara/hub', 37);
-var ghgist      = client.gist();
-var ghteam      = client.team(37);
+var ghme           = client.me();
+var ghuser         = client.user('pksunkara');
+var ghrepo         = client.repo('pksunkara/hub');
+var ghorg          = client.org('flatiron');
+var ghissue        = client.issue('pksunkara/hub', 37);
+var ghmilestone    = client.milestone('pksunkara/hub', 37);
+var ghlabel        = client.label('pksunkara/hub', 'todo');
+var ghpr           = client.pr('pksunkara/hub', 37);
+var ghgist         = client.gist();
+var ghteam         = client.team(37);
+var ghnotification = client.notification(37);
 
 var ghsearch = client.search();
 ```
@@ -401,6 +402,14 @@ ghme.teams({
 }, callback); //array of team memberships
 ```
 
+#### List notifications
+
+Options based on http://git.io/vYYOx
+
+```js
+ghme.notifications({}, callback); //array of notifications
+```
+
 ## Github users api
 
 No token required for the following
@@ -719,6 +728,32 @@ ghrepo.status('18e129c213848c7f239b93fe5c67971a64f183ff', {
   "target_url": "http://ci.mycompany.com/job/hub/3",
   "description": "Build success."
 }, callback); // created status
+```
+
+## GitHub notifications api
+
+#### Mark a thread as read
+
+```js
+ghnotification.markAsRead(callback);
+```
+
+#### Subscribe to a thread
+
+```js
+ghnotification.subscribe(callback);
+```
+
+#### Unsubscribe from a thread
+
+```js
+ghnotification.unsubscribe(callback);
+```
+
+#### Mute a thread
+
+```js
+ghnotification.mute(callback);
 ```
 
 ## Github organizations api
