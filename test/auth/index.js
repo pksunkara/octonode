@@ -22,7 +22,7 @@ vows.describe('auth').addBatch({
     },
     'should throw error on no mode set': function(auth) {
       asrt.throws(function() {
-        return auth.login({scopes: ['repo']}, function(err) {
+        return auth.login(['repo'], function(err) {
           throw err;
         }, Error);
       });
@@ -42,7 +42,28 @@ vows.describe('auth').addBatch({
       },
       'should set the correct mode': function(auth) {
         asrt.equal(auth.mode, 0);
-      }
+      },
+      'calling login([])': {
+        topic: function(auth) {
+          return auth.login(['repo', 'user'], function() {});
+        },
+        'should set default note': function(data) {
+          body = JSON.parse(data.body);
+          asrt.equal(body.note, 'Octonode');
+        }
+      },
+      'calling login({})': {
+        topic: function(auth) {
+          return auth.login({
+            scopes: ['repo', 'user'],
+            note: 'Test Note'
+          }, function() {});
+        },
+        'should set note': function(data) {
+          body = JSON.parse(data.body);
+          asrt.equal(body.note, 'Test Note');
+        }
+      },
     }
   }
 }).addBatch({
@@ -61,6 +82,16 @@ vows.describe('auth').addBatch({
         asrt.equal(auth.mode, 1);
       },
       'calling login([])': {
+        topic: function(auth) {
+          return auth.login(['repo', 'user']);
+        },
+        'should give correct url': function(url) {
+          url = url.split('&');
+          asrt.equal(url[0], 'https://github.com/login/oauth/authorize?client_id=clientid');
+          asrt.equal(url[2], 'scope=repo,user');
+        }
+      },
+      'calling login({scopes: []})': {
         topic: function(auth) {
           return auth.login({scopes: ['repo', 'user']});
         },
