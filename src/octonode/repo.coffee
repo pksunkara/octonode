@@ -18,6 +18,13 @@ class Repo
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo info error")) else cb null, b, h
 
+  # Edit a repository
+  # '/repos/pksunkara/hub' PATCH
+  update: (info, cb) ->
+    @client.patch "/repos/#{@name}", info, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Repo update error")) else cb null, b, h
+
   # Get the collaborators for a repository
   # '/repos/pksunkara/hub/collaborators
   collaborators: (cbOrUser, cb) ->
