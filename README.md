@@ -468,6 +468,14 @@ ghuser.orgs(callback); //array of organizations
 ghrepo.info(callback); //json
 ```
 
+#### Edit a repository (PATCH /repos/pksunkara/hub)
+
+```js
+ghrepo.update({
+  private: false
+}, callback); // repo
+```
+
 #### Get the collaborators for a repository (GET /repos/pksunkara/hub/collaborators)
 
 ```js
