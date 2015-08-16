@@ -101,6 +101,14 @@ class Org
       return cb(err) if err
       if s isnt 204 then cb(new Error("Org concealMembership error")) else cb null, b, h
 
+  # Add a user to an organization
+  # '/orgs/flatiron/members/pksunkara' PUT
+  # - role, required - params.role
+  addMember: (user, options, cb) ->
+    @client.put "/orgs/#{@name}/memberships/#{user}", options, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 204 then cb(new Error("Org addMember error")) else cb null, b, h
+
   # Remove a user from an organization and all of its teams
   # '/orgs/flatiron/members/pksunkara' DELETE
   removeMember: (user, cb) ->
