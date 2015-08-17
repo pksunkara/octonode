@@ -103,7 +103,6 @@ class Org
 
   # Add a user to an organization
   # '/orgs/flatiron/members/pksunkara' PUT
-  # - role, required - params.role
   addMember: (user, options, cb) ->
     @client.put "/orgs/#{@name}/memberships/#{user}", options, (err, s, b, h) ->
       return cb(err) if err
