@@ -1166,6 +1166,12 @@ ghteam.removeMembership("pksunkara", callback); //boolean
 ghteam.repos(callback); //array of repos
 ```
 
+#### Delete a team (DELETE /team/37)
+
+```js
+ghteam.destroy(callback);
+```
+
 ## Github search api
 
 #### Search issues
