@@ -85,5 +85,12 @@ class Team
       return cb(err) if err
       if s isnt 200 then cb(new Error("Team repos error")) else cb null, b, h
 
+  # Delete the team
+  # '/teams/37' DELETE
+  destroy: (cb) ->
+    @client.del "/teams/#{@id}", {}, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 204 then cb(new Error("Team destroy error")) else cb null, b, h
+
 # Export module
 module.exports = Team
