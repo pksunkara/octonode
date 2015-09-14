@@ -87,8 +87,8 @@ class Team
 
   # Remove repo from a team
   # '/teams/37/repos/flatiron/hub' DELETE
-  removeRepo: (user, team, cb) ->
-    @client.del "/teams/#{@id}/repos/#{user}/#{team}", {}, (err, s, b, h) ->
+  removeRepo: (org, team, cb) ->
+    @client.del "/teams/#{@id}/repos/#{org}/#{team}", {}, (err, s, b, h) ->
       return cb(err) if err
       if s isnt 204 then cb(new Error("Team removeMembership error")) else cb null, b, h
 
