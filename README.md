@@ -1166,6 +1166,12 @@ ghteam.removeMembership("pksunkara", callback); //boolean
 ghteam.repos(callback); //array of repos
 ```
 
+#### Remove a repo from a team (DELETE /team/37/repos/flatiron/hub)
+
+```js
+ghteam.removeRepo("flatiron/hub", callback);
+```
+
 #### Delete a team (DELETE /team/37)
 
 ```js
