@@ -85,6 +85,13 @@ class Team
       return cb(err) if err
       if s isnt 200 then cb(new Error("Team repos error")) else cb null, b, h
 
+  # Remove repo from a team
+  # '/teams/37/repos/flatiron/hub' DELETE
+  removeRepo: (repo, cb) ->
+    @client.del "/teams/#{@id}/repos/#{repo}", {}, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 204 then cb(new Error("Team removeRepo error")) else cb null, b, h
+
   # Delete the team
   # '/teams/37' DELETE
   destroy: (cb) ->
