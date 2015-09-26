@@ -536,6 +536,11 @@ ghrepo.branches(callback); //array of branches
 ```js
 ghrepo.branch('master', callback); //branch
 ```
+#### Create a Reference (POST /repos/pksunkara/hub/git/refs)
+
+```js
+ghrepo.createReference('master', '18293abcd72', callback);
+```
 
 #### Get the issues for a repository (GET /repos/pksunkara/hub/issues)
 
@@ -1340,7 +1345,6 @@ repo.get_commit('sha-id', callback);
 repo.create_commit('message', 'tree', [parents], callback);
 repo.get_reference('ref', callback);
 repo.get_all_references(callback);
-repo.create_reference('ref', 'sha', callback);
 repo.update_reference('ref', 'sha', force, callback);
 ```
 
