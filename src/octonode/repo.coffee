@@ -140,6 +140,13 @@ class Repo
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo branch error")) else cb null, b, h
 
+  # Get a reference for a repository
+  # '/repos/pksunkara/hub/git/refs' POST
+  createReference: (ref, sha, cb) ->
+    @client.post "/repos/#{@name}/git/refs", {ref: "refs/heads/#{ref}", sha: sha}, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 201 then cb(new Error("Repo createReference error")) else cb null, b, h
+
   # Get issue instance for a repo
   issue: (numberOrIssue, cb) ->
     if typeof cb is 'function' and typeof numberOrIssue is 'object'
