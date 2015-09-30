@@ -27,6 +27,9 @@ octonode = module.exports =
   # [Team](octonode/team.html) class for github
   team: require './octonode/team'
 
+  # [Release](octonode/release.html) class for github
+  release: require './octonode/release'
+
   # [Gist](octonode/gist.html) class for github
   gist: require './octonode/gist'
 

@@ -84,7 +84,7 @@ class Repo
     if !cb? and cbOrOptions
       cb = cbOrOptions
       param = {message: message, parents: parents, tree: tree}
-    else if typeof cbOrOptions is 'hash'
+    else if typeof cbOrOptions is 'object'
       param = cbOrOptions
       param['message'] = message
       param['parents'] = parents
@@ -106,6 +106,26 @@ class Repo
     @client.get "/repos/#{@name}/releases", (err, s, b, h) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo releases error")) else cb null, b, h
+
+  release: (numberOrCb, cb) ->
+    if typeof cb is 'function' and typeof numberOrCb is 'object'
+      @createRelease numberOrCb, cb
+    else
+      @client.release @name, numberOrCb
+
+  # Create a relase for a repository
+  # '/repos/pksunkara/hub/releases' POST
+  createRelease: (tag, cbOrOptions, cb) ->
+    if !cb? and cbOrOptions
+      cb = cbOrOptions
+      cbOrOptions = null
+      param = {tag_name: "#{tag}"}
+    else if typeof cbOrOptions is 'object'
+      param = cbOrOptions
+      param.tag_name = "#{tag}"
+    @client.post "/repos/#{@name}/releases", param, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 201 then cb(new Error("Repo createRelease error")) else cb null, b, h
 
   # Get the languages for a repository
   # '/repos/pksunkara/hub/languages' GET
@@ -268,7 +288,7 @@ class Repo
       cbOrBranchOrOptions = 'master'
     if typeof cbOrBranchOrOptions is 'string'
       param = {branch: cbOrBranchOrOptions, message: message, content: content}
-    else if typeof cbOrBranchOrOptions is 'hash'
+    else if typeof cbOrBranchOrOptions is 'object'
       param = cbOrBranchOrOptions
       param['message'] = message
       param['content'] = content

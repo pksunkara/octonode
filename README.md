@@ -22,6 +22,7 @@ var ghissue        = client.issue('pksunkara/hub', 37);
 var ghmilestone    = client.milestone('pksunkara/hub', 37);
 var ghlabel        = client.label('pksunkara/hub', 'todo');
 var ghpr           = client.pr('pksunkara/hub', 37);
+var ghrelease      = client.release('pksunkara/hub', 37);
 var ghgist         = client.gist();
 var ghteam         = client.team(37);
 var ghnotification = client.notification(37);
@@ -992,6 +993,14 @@ ghpr.comments(callback); //array of comments
 
 ```js
 ghpr.files(callback); //array of files
+```
+## Github releases api
+
+#### Upload assets in a release (POST /uploads.github.com/repos/pksunkara/hub/releases/37/assets?name=archve-v0.0.1.zip)
+
+```js
+const file = fs.readFileSync(__dirname, 'archive-v0.0.1.zip');
+ghrelease.assets('uploads.github.com', 'archive-v0.0.1.zip', file, 'application/zip', callback);
 ```
 
 ## Github gists api
