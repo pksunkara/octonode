@@ -60,12 +60,24 @@ class Team
   membership: (user, cb) ->
     @client.get "/teams/#{@id}/memberships/#{user}", (err, s, b, h)  ->
       return cb(err) if err
-      cb null, s is 204, h
+      cb null, s is 204 or s is 200, h
+
+  # Get a team's membership object for the user
+  # '/teams/37/memberships/pksunkara' GET
+  getMembership: (user, cb) ->
+    @client.get "/teams/#{@id}/memberships/#{user}", (err, s, b, h)  ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Team getMembership error")) else cb null, b, h
 
   # Add a user to a team's membership
   # '/teams/37/memberships/pksunkara' PUT
-  addMembership: (user, cb) ->
-    @client.put "/teams/#{@id}/memberships/#{user}", null,  (err, s, b, h) ->
+  addMembership: (user, cbOrOptions, cb) ->
+    if !cb? and cbOrOptions
+      cb = cbOrOptions
+      param = {}
+    else if typeof cbOrOptions is 'object'
+      param = cbOrOptions
+    @client.put "/teams/#{@id}/memberships/#{user}", param,  (err, s, b, h) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error("Team membership error")) else cb null, b, h
 
