@@ -29,8 +29,9 @@ class Team
   # '/teams/37/members' GET
   # - page or query object, optional - params[0]
   # - per_page, optional             - params[1]
+  # - role, optional                 - params[2]
   members: (params..., cb) ->
-    @client.get "/teams/#{@id}/members", params..., (err, s, b, h)  ->
+    @client.getOptions "/teams/#{@id}/members", { headers: { Accept: 'application/vnd.github.ironman-preview+json'} }, params..., (err, s, b, h)  ->
       return cb(err) if err
       if s isnt 200 then cb(new Error('Team members error')) else cb null, b, h
 
