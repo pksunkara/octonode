@@ -107,23 +107,17 @@ class Repo
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo releases error")) else cb null, b, h
 
-  release: (numberOrCb, cb) ->
-    if typeof cb is 'function' and typeof numberOrCb is 'object'
-      @createRelease numberOrCb, cb
+  # Get release instance for a repo
+  release: (numberOrRelease, cb) ->
+    if typeof cb is 'function' and typeof numberOrRelease is 'object'
+      @createRelease numberOrRelease, cb
     else
-      @client.release @name, numberOrCb
+      @client.release @name, numberOrRelease
 
-  # Create a relase for a repository
-  # '/repos/pksunkara/hub/releases' POST
-  createRelease: (tag, cbOrOptions, cb) ->
-    if !cb? and cbOrOptions
-      cb = cbOrOptions
-      cbOrOptions = null
-      param = {tag_name: "#{tag}"}
-    else if typeof cbOrOptions is 'object'
-      param = cbOrOptions
-      param.tag_name = "#{tag}"
-    @client.post "/repos/#{@name}/releases", param, (err, s, b, h) ->
+  # Create a relase for a repo
+  # '/repo/pksunkara/releases' POST
+  createRelease: (release, cb) ->
+    @client.post "/repos/#{@name}/releases", release, (err, s, b, h) ->
       return cb(err) if err
       if s isnt 201 then cb(new Error("Repo createRelease error")) else cb null, b, h
 

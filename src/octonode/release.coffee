@@ -18,13 +18,20 @@ class Release
 
   # Attach a file to a release
   # '/repos/pksunkara/hub/releases/37/assets?name=archive.zip' POST
-  assets: (uploadHost, name, file, contentType, cb) ->
+  uploadAssets: (file, optionsOrCb, cb) ->
+    if !cb? and typeof optionsOrCb is 'function'
+      cb = optionsOrCb
+      optionsOrCb = {}
+
     options =
-      params:
-        name: name
+      query:
+        name: optionsOrCb.name || 'archive.zip'
       body: file
       headers:
-        'Content-Type': contentType
+        'Content-Type': optionsOrCb.contentType || 'application/zip'
+
+    uploadHost = optionsOrCb.uploadHost || 'uploads.github.com'
+
     @client.post "https://#{uploadHost}/repos/#{@repo}/releases/#{@number}/assets", null, options, (err, s, b, h) ->
       return cb(err) if err
       if s isnt 201 then cb(new Error("Release assets error")) else cb null, b, h

@@ -169,12 +169,12 @@ class Client
 
   # Github api POST request
   post: (path, content, options, callback) ->
-    if !callback?
+    if !callback? and typeof options is 'function'
       callback = options
       options = {}
 
     reqDefaultOption =
-      uri: @buildUrl path, options.params
+      uri: @buildUrl path, options.query
       method: 'POST'
       headers:
         'Content-Type': 'application/json'
