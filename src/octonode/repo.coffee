@@ -36,6 +36,25 @@ class Repo
         return cb(err) if err
         if s isnt 200 then cb(new Error("Repo collaborators error")) else cb null, b, h
 
+  # Add a collaborator to a repository
+  # '/repos/pksunkara/hub/collaborators/pksunkara' PUT
+  addCollaborator: (user, cbOrOptions, cb) ->
+    if !cb? and cbOrOptions
+      cb = cbOrOptions
+      param = {}
+    else if typeof cbOrOptions is 'object'
+      param = cbOrOptions
+    @client.put "/repos/#{@name}/collaborators/#{user}", param,  (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 204 then cb(new Error("Repo addCollaborator error")) else cb null, b, h
+
+  # Remove a user from a repo's collaborators
+  # '/repos/pksunkara/hub/collaborators/pksunkara' DELETE
+  removeCollaborator: (user, cb) ->
+    @client.del "/repos/#{@name}/collaborators/#{user}", null, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 204 then cb(new Error("Repo removeCollaborator error")) else cb null, b, h
+
   # Check if user is collaborator for a repository
   # '/repos/pksunkara/hub/collaborators/pksunkara
   hasCollaborator: (user, cb) ->
