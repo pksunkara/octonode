@@ -84,7 +84,7 @@ class Repo
     if !cb? and cbOrOptions
       cb = cbOrOptions
       param = {message: message, parents: parents, tree: tree}
-    else if typeof cbOrOptions is 'hash'
+    else if typeof cbOrOptions is 'object'
       param = cbOrOptions
       param['message'] = message
       param['parents'] = parents
@@ -268,7 +268,7 @@ class Repo
       cbOrBranchOrOptions = 'master'
     if typeof cbOrBranchOrOptions is 'string'
       param = {branch: cbOrBranchOrOptions, message: message, content: content}
-    else if typeof cbOrBranchOrOptions is 'hash'
+    else if typeof cbOrBranchOrOptions is 'object'
       param = cbOrBranchOrOptions
       param['message'] = message
       param['content'] = content
