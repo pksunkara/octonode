@@ -15,6 +15,7 @@ Org          = require './org'
 Gist         = require './gist'
 Team         = require './team'
 Pr           = require './pr'
+Release      = require './release'
 Issue        = require './issue'
 Milestone    = require './milestone'
 Label        = require './label'
@@ -64,6 +65,9 @@ class Client
   pr: (repo, number) ->
     new Pr repo, number, @
 
+  release: (repo, number) ->
+    new Release repo, number, @
+
   # Get search instance for client
   search: ->
     new Search @
@@ -107,12 +111,14 @@ class Client
       else
         separator = '?'
 
+    urlFromPath = url.parse path
+
     _url = url.format
-      protocol: @options and @options.protocol or "https:"
-      auth: if @token and @token.username and @token.password then "#{@token.username}:#{@token.password}" else ''
-      hostname: @options and @options.hostname or "api.github.com"
-      port: @options and @options.port
-      pathname: path
+      protocol: urlFromPath.protocol or @options and @options.protocol or "https:"
+      auth: urlFromPath.auth or if @token and @token.username and @token.password then "#{@token.username}:#{@token.password}" else ''
+      hostname: urlFromPath.hostname or @options and @options.hostname or "api.github.com"
+      port: urlFromPath.port or @options and @options.port
+      pathname: urlFromPath.pathname
       query: query
 
     if q
@@ -162,14 +168,22 @@ class Client
       @errorHandle res, body, callback
 
   # Github api POST request
-  post: (path, content, callback) ->
-    @request @requestOptions(
-      uri: @buildUrl path
+  post: (path, content, options, callback) ->
+    if !callback? and typeof options is 'function'
+      callback = options
+      options = {}
+
+    reqDefaultOption =
+      uri: @buildUrl path, options.query
       method: 'POST'
-      body: JSON.stringify content
       headers:
         'Content-Type': 'application/json'
-    ), (err, res, body) =>
+
+    if content
+      reqDefaultOption.body = JSON.stringify content
+
+    reqOpt = @requestOptions extend reqDefaultOption, options
+    @request reqOpt, (err, res, body) =>
       return callback(err) if err
       @errorHandle res, body, callback
 

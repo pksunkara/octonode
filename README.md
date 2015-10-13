@@ -22,6 +22,7 @@ var ghissue        = client.issue('pksunkara/hub', 37);
 var ghmilestone    = client.milestone('pksunkara/hub', 37);
 var ghlabel        = client.label('pksunkara/hub', 'todo');
 var ghpr           = client.pr('pksunkara/hub', 37);
+var ghrelease      = client.release('pksunkara/hub', 37);
 var ghgist         = client.gist();
 var ghteam         = client.team(37);
 var ghnotification = client.notification(37);
@@ -993,7 +994,39 @@ ghpr.comments(callback); //array of comments
 ```js
 ghpr.files(callback); //array of files
 ```
+## Github releases api
 
+### Create release (POST /repos/pksunkara/releases)
+```js
+ghrepo.release({
+  tag_name: 'v1.0.0',
+  draft: true
+}, callback);
+```
+
+#### Upload assets in a release (POST /uploads.github.com/repos/pksunkara/hub/releases/37/assets?name=archve-v0.0.1.zip)
+
+```js
+var archive = fs.readFileSync(__dirname, 'archive-v0.0.1.zip');
+// Will upload a file with the default options
+/*
+{
+  name: 'archive.zip',
+  contentType: 'application/zip',
+  uploadHost: 'uploads.github.com'
+}
+*/
+ghrelease.uploadAssets(archive, callback);
+
+// Will upload a file with your custom options
+var image = fs.readFileSync(__dirname, 'octonode.png');
+var options = {
+  name: 'octonode.png',
+  contentType: 'image/png',
+  uplaodHost: 'uploads.github.com'
+};
+ghrelease.uplaodAssets(image, options, callback)
+```
 ## Github gists api
 
 #### List authenticated user's gists (GET /gists)
@@ -1226,6 +1259,9 @@ ghsearch.code({
 ```
 
 ## Testing
+Before run test copy the `config.example.json` file in `test` folder to `config.json` and populate it with your github information.
+
+Is suggested to fork `https://github.com/octocat/Spoon-Knife` repo and run test on your copy.
 ```
 npm test
 ```
