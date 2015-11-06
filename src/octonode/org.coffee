@@ -124,8 +124,18 @@ class Org
 
   # Add an organisation team repository
   # '/teams/37/repos/flatiron/hub' PUT
-  addTeamRepo: (team, repo, cb) ->
-    @client.put "/teams/#{team}/repos/#{@name}/#{repo}", null, (err, s, b, h) ->
+  addTeamRepo: (team, repo, cbOrOptions, cb) ->
+    if !cb? and cbOrOptions
+      cb = cbOrOptions
+      param = {}
+      options =
+        'Content-Type': 'application/json'
+    else if typeof cbOrOptions is 'object'
+      param = cbOrOptions
+      options =
+        'Content-Type': 'application/json'
+        'Accept': 'application/vnd.github.ironman-preview+json'
+    @client.put "/teams/#{team}/repos/#{@name}/#{repo}", param, options, (err, s, b, h) ->
       return cb(err)  if err
       if s isnt 204 then cb(new Error('Org addTeamRepo error')) else cb null, b, h
 
