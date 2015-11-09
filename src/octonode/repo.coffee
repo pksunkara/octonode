@@ -27,12 +27,16 @@ class Repo
 
   # Get the collaborators for a repository
   # '/repos/pksunkara/hub/collaborators
-  collaborators: (cbOrUser, cb) ->
-    if cb? and typeof cbOrUser isnt 'function'
-      @hasCollaborator cbOrUser, cb
+  collaborators: (cbParamOrUser, cb) ->
+    if cb? and typeof cbParamOrUser isnt 'function' and typeof cbParamOrUser isnt 'object'
+      @hasCollaborator cbParamOrUser, cb
     else
-      cb = cbOrUser
-      @client.get "repos/#{@name}/collaborators", (err, s, b, h) ->
+      if cb
+        param = cbParamOrUser
+      else
+        cb = cbParamOrUser
+        param = {}
+      @client.getOptions "/repos/#{@name}/collaborators", { headers: { Accept: 'application/vnd.github.ironman-preview+json'} }, param, (err, s, b, h)  ->
         return cb(err) if err
         if s isnt 200 then cb(new Error("Repo collaborators error")) else cb null, b, h
 
