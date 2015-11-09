@@ -197,6 +197,15 @@ class Me
       return cb(err) if err
       if s isnt 200 then cb(new Error('User orgs error')) else cb null, b, h
 
+  # Edit organization membership
+  # '/user/memberships/orgs/:org' PATCH
+  updateMembership: (org, state, cb) ->
+    info =
+      state: state
+    @client.patch "/user/memberships/orgs/#{org}", info, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error('User org update error')) else cb null, b, h
+
   # Get repository instance for client
   repo: (nameOrRepo, cb) ->
     if typeof cb is 'function' and typeof nameOrRepo is 'object'
