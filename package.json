@@ -27,10 +27,5 @@
   "engines": {
     "node": ">0.4.11"
   },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "https://raw.githubusercontent.com/pksunkara/octonode/master/LICENSE"
-    }
-  ]
+  "license": "MIT"
 }
