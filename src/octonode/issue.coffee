@@ -48,7 +48,7 @@ class Issue
 
   # Delete a comment
   # '/repos/pksunkara/hub/issues/comments/3' DELETE
-  deleteComment: (id) ->
+  deleteComment: (id, cb) ->
     @client.del "/repos/#{@repo}/issues/comments/#{id}", {}, (err, s, b, h) =>
       return cb(err) if err
       if s isnt 204 then cb(new Error("Issue deleteComment error")) else cb null, b, h
