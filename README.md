@@ -76,6 +76,21 @@ client.get('/user', {}, function (err, status, body, headers) {
 });
 ```
 
+#### Build a client from a different host
+You can configure the `protocol`, `hostname` and `port` to use. For example to connect to a GitHub Enterprise instance.
+
+```js
+var client = github.client({
+  username: 'pksunkara',
+  password: 'password'
+},{
+  hostname: 'mydomain.com/api/v3'
+});
+
+client.get('/user', {}, function (err, status, body, headers) {
+  console.log(body); //json object
+});
+```
 
 ## Request Options
 
@@ -86,7 +101,7 @@ var client = github.client();
 
 client.requestDefaults['proxy'] = 'https://myproxy.com:1085'
 ```
-These options are passed though to `request`, see their API here: https://github.com/mikeal/request#requestoptions-callback
+These options are passed through to `request`, see their API here: https://github.com/mikeal/request#requestoptions-callback
 
 ### Proxies
 You can set proxies dynamically by using the example above, but Octonode will respect environment proxies by default. Just set this using:
