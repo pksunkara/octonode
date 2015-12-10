@@ -515,6 +515,11 @@ ghrepo.commits(callback); //array of commits
 ghrepo.commit('18293abcd72', callback); //commit
 ```
 
+#### Get a comparison between branches for a repository (GET /repos/pksunkara/hub/compare/master...develop)
+```js
+ghrepo.compare('master', 'develop', callback); //compare develop to master
+```
+
 #### Get the tags for a repository (GET /repos/pksunkara/hub/tags)
 
 ```js
