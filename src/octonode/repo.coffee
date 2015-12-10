@@ -82,6 +82,13 @@ class Repo
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo commits error")) else cb null, b, h
 
+  # Compare two branches
+  # '/repos/pksunkara/hub/compare/master...develop' GET
+  compare: (base, head, cb) ->
+    @client.get "/repos/#{@name}/compare/#{base}...#{head}", (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Repo compare error")) else cb null, b, h
+
   # Create a commit
   # '/repos/pksunkara/hub/git/commits' POST
   createCommit: (message, tree, parents, cbOrOptions, cb) ->
