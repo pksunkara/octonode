@@ -1,6 +1,6 @@
 # octonode [![Gitter chat](https://badges.gitter.im/pksunkara/octonode.svg)](https://gitter.im/pksunkara/octonode)
 
-octonode is a library for nodejs to access the [github v3 api](http://developer.github.com)
+octonode is a library for nodejs to access the [github v3 api](https://developer.github.com/)
 
 ## Installation
 ```
@@ -101,7 +101,7 @@ var client = github.client();
 
 client.requestDefaults['proxy'] = 'https://myproxy.com:1085'
 ```
-These options are passed through to `request`, see their API here: https://github.com/mikeal/request#requestoptions-callback
+These options are passed through to `request`, see their API here: https://github.com/request/request#requestoptions-callback
 
 ### Proxies
 You can set proxies dynamically by using the example above, but Octonode will respect environment proxies by default. Just set this using:
@@ -206,7 +206,7 @@ ghme.info(function(err, data, headers) {
 
 ## Pagination
 
-If a function is said to be supporting pagination, then that function can be used in many ways as shown below. Results from the function are arranged in [pages](http://developer.github.com/v3/#pagination).
+If a function is said to be supporting pagination, then that function can be used in many ways as shown below. Results from the function are arranged in [pages](https://developer.github.com/v3/#pagination).
 
 The page argument is optional and is used to specify which page of issues to retrieve.
 The perPage argument is also optional and is used to specify how many issues per page.
@@ -1410,9 +1410,9 @@ __I accept pull requests and guarantee a reply back within a day__
 MIT/X11
 
 ## Bug Reports
-Report [here](http://github.com/pksunkara/octonode/issues). __Guaranteed reply within a day__.
+Report [here](https://github.com/pksunkara/octonode/issues). __Guaranteed reply within a day__.
 
 ## Contact
 Pavan Kumar Sunkara (pavan.sss1991@gmail.com)
 
-Follow me on [github](https://github.com/users/follow?target=pksunkara), [twitter](http://twitter.com/pksunkara)
+Follow me on [github](https://github.com/users/follow?target=pksunkara), [twitter](https://twitter.com/pksunkara)
