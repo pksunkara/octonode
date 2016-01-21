@@ -881,6 +881,33 @@ ghorg.createTeam({
 }, callback);
 ```
 
+#### Get the hooks for a repository (GET /orgs/pksunkara/hub/hooks)
+
+This query supports [pagination](#pagination).
+
+```js
+ghorg.hooks(callback); //array of hooks
+```
+
+#### Create a hook (POST /orgs/pksunkara/hub/hooks)
+
+```js
+ghorg.hook({
+  "name": "web",
+  "active": true,
+  "events": ["push", "pull_request"],
+  "config": {
+    "url": "http://myawesomesite.com/github/events"
+  }
+}, callback); // hook
+```
+
+#### Delete a hook (DELETE /orgs/pksunkara/hub/hooks/37)
+
+```js
+ghorg.deleteHook(37, callback);
+```
+
 ## Github issues api
 
 #### Get a single issue (GET /repos/pksunkara/hub/issues/37)
