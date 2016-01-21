@@ -144,21 +144,21 @@ class Org
   hooks: (cb) ->
     @client.get "/orgs/#{@name}/hooks", (err, s, b, h) ->
       return cb(err) if (err)
-      if s isnt 200 then cb(new Error("Repo hooks error")) else cb null, b, h
+      if s isnt 200 then cb(new Error("Org hooks error")) else cb null, b, h
 
   # Create a hook
   # '/orgs/pksunkara/hub/hooks' POST
   hook: (hookInfo, cb) ->
     @client.post "/orgs/#{@name}/hooks", hookInfo, (err, s, b, h) ->
       return cb(err) if err
-      if s isnt 201 then cb(new Error("Repo createHook error")) else cb null, b, h
+      if s isnt 201 then cb(new Error("Org createHook error")) else cb null, b, h
 
   # Delete a hook
   # '/orgs/pksunkara/hub/hooks/37' DELETE
   deleteHook: (id, cb) ->
     @client.del "/orgs/#{@name}/hooks/#{id}", {}, (err, s, b, h) ->
       return cb(err) if err
-      if s isnt 204 then cb(new Error("Repo deleteHook error")) else cb null, b, h
+      if s isnt 204 then cb(new Error("Org deleteHook error")) else cb null, b, h
 
 # Export module
 module.exports = Org
