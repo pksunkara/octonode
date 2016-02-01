@@ -67,7 +67,7 @@ auth = module.exports =
             body = JSON.parse body
           catch err
             callback new Error('Unable to parse body')
-          if res.statusCode is 401 then callback(new Error(body.message)) else callback(null, body.id, body.token)
+          if res.statusCode is 201 then callback(null, body.id, body.token) else callback(new Error(body.message))
     else if @mode == @modes.web
       if scopes instanceof Array
         uri = 'https://github.com/login/oauth/authorize'
