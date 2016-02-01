@@ -43,14 +43,18 @@ auth = module.exports =
 
   login: (scopes, callback) ->
     if @mode == @modes.cli
-      if scopes instanceof Array
-        scopes = JSON.stringify scopes: scopes
-      else
-        scopes = JSON.stringify scopes
+      unless scopes instanceof Array
+        scopes = [ scopes ]
       options =
         url: url.parse "https://api.github.com/authorizations"
         method: 'POST'
-        body: scopes
+        body: JSON.stringify
+          scopes: scopes
+          client_id: @options.id
+          client_secret: @options.secret
+          fingerprint: @options.fingerprint
+          note: @options.note
+          note_url: @options.note_url
         headers:
           'Content-Type': 'application/json'
           'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
