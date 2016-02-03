@@ -43,14 +43,24 @@ auth = module.exports =
 
   login: (scopes, callback) ->
     if @mode == @modes.cli
-      if scopes instanceof Array
-        scopes = JSON.stringify scopes: scopes
+      unless scopes instanceof Array
+        scopes = [ scopes ]
+      if @options.reuse and @options.id
+        authorizationUrl = "https://api.github.com/authorizations/clients/#{@options.id}"
+        authorizationMethod = 'PUT'
       else
-        scopes = JSON.stringify scopes
+        authorizationUrl = "https://api.github.com/authorizations"
+        authorizationMethod = 'POST'
       options =
-        url: url.parse "https://api.github.com/authorizations"
-        method: 'POST'
-        body: scopes
+        url: url.parse authorizationUrl
+        method: authorizationMethod
+        body: JSON.stringify
+          scopes: scopes
+          client_id: @options.id
+          client_secret: @options.secret
+          fingerprint: @options.fingerprint
+          note: @options.note
+          note_url: @options.note_url
         headers:
           'Content-Type': 'application/json'
           'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
@@ -67,7 +77,7 @@ auth = module.exports =
             body = JSON.parse body
           catch err
             callback new Error('Unable to parse body')
-          if res.statusCode is 201 then callback(null, body.id, body.token) else callback(new Error(body.message))
+          if res.statusCode in [200, 201] then callback(null, body.id, body.token) else callback(new Error(body.message))
     else if @mode == @modes.web
       if scopes instanceof Array
         uri = 'https://github.com/login/oauth/authorize'
