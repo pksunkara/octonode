@@ -145,7 +145,9 @@ var http = require('http')
 // Build the authorization config and url
 var auth_url = github.auth.config({
   id: 'mygithubclientid',
-  secret: 'mygithubclientsecret'
+  secret: 'mygithubclientsecret',
+  apiUrl: 'https://optional-internal-github-enterprise/api/v3',
+  webUrl: 'https://optional-internal-github-enterprise'
 }).login(['user', 'repo', 'gist']);
 
 // Store info to verify against CSRF
@@ -403,7 +405,7 @@ ghme.issues({
   per_page: 100,
   filter: 'assigned',
   state: 'open',
-  sort: 'created'  
+  sort: 'created'
 }, callback); //array of issues
 ```
 

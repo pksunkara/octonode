@@ -26,12 +26,14 @@ auth = module.exports =
     else
       throw new Error('No working mode recognized')
     @options = options
+    @options.apiUrl ||= "https://api.github.com"
+    @options.webUrl ||= "https://github.com"
     return this
 
   revoke: (id, callback) ->
     if @mode == @modes.cli
       options =
-        url: url.parse "https://api.github.com/authorizations/#{id}"
+        url: url.parse "#{@options.apiUrl}/authorizations/#{id}"
         method: 'DELETE'
         headers:
           'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
@@ -48,7 +50,7 @@ auth = module.exports =
       else
         scopes = JSON.stringify scopes
       options =
-        url: url.parse "https://api.github.com/authorizations"
+        url: url.parse "#{@options.apiUrl}/authorizations"
         method: 'POST'
         body: scopes
         headers:
@@ -70,7 +72,7 @@ auth = module.exports =
           if res.statusCode is 201 then callback(null, body.id, body.token) else callback(new Error(body.message))
     else if @mode == @modes.web
       if scopes instanceof Array
-        uri = 'https://github.com/login/oauth/authorize'
+        uri = "#{@options.webUrl}/login/oauth/authorize"
         uri+= "?client_id=#{@options.id}"
         uri+= "&state=#{randomstring.generate()}"
         uri+= "&scope=#{scopes.join(',')}"
@@ -78,7 +80,7 @@ auth = module.exports =
         return uri
       else
         request
-          url: 'https://github.com/login/oauth/access_token'
+          url: "#{@options.webUrl}/login/oauth/access_token"
           method: 'POST'
           body: qs.stringify
             code: scopes
