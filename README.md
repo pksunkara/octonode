@@ -881,7 +881,7 @@ ghorg.createTeam({
 }, callback);
 ```
 
-#### Get the hooks for a repository (GET /orgs/pksunkara/hub/hooks)
+#### Get the hooks for a repository (GET /orgs/flatiron/hub/hooks)
 
 This query supports [pagination](#pagination).
 
@@ -889,7 +889,7 @@ This query supports [pagination](#pagination).
 ghorg.hooks(callback); //array of hooks
 ```
 
-#### Create a hook (POST /orgs/pksunkara/hub/hooks)
+#### Create a hook (POST /orgs/flatiron/hub/hooks)
 
 ```js
 ghorg.createHook({
