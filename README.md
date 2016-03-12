@@ -881,7 +881,7 @@ ghorg.createTeam({
 }, callback);
 ```
 
-#### Get the hooks for a repository (GET /orgs/flatiron/hooks)
+#### Get the hooks for a Organization (GET /orgs/flatiron/hooks)
 
 This query supports [pagination](#pagination).
 
