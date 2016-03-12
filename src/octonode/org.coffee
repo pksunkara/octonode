@@ -140,21 +140,21 @@ class Org
       if s isnt 204 then cb(new Error('Org addTeamRepo error')) else cb null, b, h
 
   # List hooks
-  # '/orgs/pksunkara/hub/hooks' GET
-  hooks: (cb) ->
-    @client.get "/orgs/#{@name}/hooks", (err, s, b, h) ->
+  # '/orgs/flatiron/hub/hooks' GET
+  hooks: (params..., cb) ->
+    @client.get "/orgs/#{@name}/hooks", params..., (err, s, b, h) ->
       return cb(err) if (err)
       if s isnt 200 then cb(new Error("Org hooks error")) else cb null, b, h
 
   # Create a hook
-  # '/orgs/pksunkara/hub/hooks' POST
-  hook: (hookInfo, cb) ->
-    @client.post "/orgs/#{@name}/hooks", hookInfo, (err, s, b, h) ->
+  # '/orgs/flatiron/hub/hooks' POST
+  createHook: (hook, cb) ->
+    @client.post "/orgs/#{@name}/hooks", hook, (err, s, b, h) ->
       return cb(err) if err
       if s isnt 201 then cb(new Error("Org createHook error")) else cb null, b, h
 
   # Delete a hook
-  # '/orgs/pksunkara/hub/hooks/37' DELETE
+  # '/orgs/flatiron/hub/hooks/37' DELETE
   deleteHook: (id, cb) ->
     @client.del "/orgs/#{@name}/hooks/#{id}", {}, (err, s, b, h) ->
       return cb(err) if err
