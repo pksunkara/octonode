@@ -653,7 +653,7 @@ ghrepo.hooks(callback); //array of hooks
 #### Create a hook (POST /repos/pksunkara/hub/hooks)
 
 ```js
-ghrepo.hook({
+ghrepo.createHook({
   "name": "web",
   "active": true,
   "events": ["push", "pull_request"],
@@ -892,7 +892,7 @@ ghorg.hooks(callback); //array of hooks
 #### Create a hook (POST /orgs/pksunkara/hub/hooks)
 
 ```js
-ghorg.hook({
+ghorg.createHook({
   "name": "web",
   "active": true,
   "events": ["push", "pull_request"],
