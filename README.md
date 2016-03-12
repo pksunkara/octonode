@@ -902,7 +902,7 @@ ghorg.createHook({
 }, callback); // hook
 ```
 
-#### Delete a hook (DELETE /orgs/pksunkara/hub/hooks/37)
+#### Delete a hook (DELETE /orgs/flatiron/hub/hooks/37)
 
 ```js
 ghorg.deleteHook(37, callback);
