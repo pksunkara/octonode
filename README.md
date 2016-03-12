@@ -653,7 +653,7 @@ ghrepo.hooks(callback); //array of hooks
 #### Create a hook (POST /repos/pksunkara/hub/hooks)
 
 ```js
-ghrepo.createHook({
+ghrepo.hook({
   "name": "web",
   "active": true,
   "events": ["push", "pull_request"],
@@ -881,7 +881,7 @@ ghorg.createTeam({
 }, callback);
 ```
 
-#### Get the hooks for a repository (GET /orgs/flatiron/hub/hooks)
+#### Get the hooks for a repository (GET /orgs/flatiron/hooks)
 
 This query supports [pagination](#pagination).
 
@@ -889,10 +889,10 @@ This query supports [pagination](#pagination).
 ghorg.hooks(callback); //array of hooks
 ```
 
-#### Create a hook (POST /orgs/flatiron/hub/hooks)
+#### Create a hook (POST /orgs/flatiron/hooks)
 
 ```js
-ghorg.createHook({
+ghorg.hook({
   "name": "web",
   "active": true,
   "events": ["push", "pull_request"],
@@ -902,7 +902,7 @@ ghorg.createHook({
 }, callback); // hook
 ```
 
-#### Delete a hook (DELETE /orgs/flatiron/hub/hooks/37)
+#### Delete a hook (DELETE /orgs/flatiron/hooks/37)
 
 ```js
 ghorg.deleteHook(37, callback);
