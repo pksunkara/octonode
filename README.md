@@ -1072,7 +1072,7 @@ var image = fs.readFileSync(__dirname, 'octonode.png');
 var options = {
   name: 'octonode.png',
   contentType: 'image/png',
-  uplaodHost: 'uploads.github.com'
+  uploadHost: 'uploads.github.com'
 };
 ghrelease.uplaodAssets(image, options, callback)
 ```
