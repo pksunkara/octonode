@@ -454,6 +454,14 @@ This query supports [pagination](#pagination).
 ghuser.following(callback); //array of github users
 ```
 
+#### Get user public repos (GET /users/pksunkara/repos)
+
+This query supports [pagination](#pagination).
+
+```js
+ghuser.repos(callback); //array of public github repos
+```
+
 #### Get events performed by a user (GET /users/pksunkara/events)
 
 This query supports [pagination](#pagination).
