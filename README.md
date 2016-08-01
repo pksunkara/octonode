@@ -1315,6 +1315,30 @@ ghsearch.code({
 }, callback); //array of search results
 ```
 
+### Get all Organizations / Users
+This query supports [pagination](#pagination).
+
+**Note:** For listing all Organizations / Users pagination is powered exclusively by the `since` parameter
+([ Github APIs ](https://developer.github.com/v3/users/#get-all-users)) .
+`since` denotes the `login ID` of last org / user you encountered. Also, note that it's important to pass
+`true` as third param when using pagination.  
+
+**Organizations**
+```js
+  var client = github.client();
+  client.get('/organizations', callback);
+  // OR
+  client.get('/organizations', since, per_page, true, callback);  
+```
+
+**Users**
+```js
+  var client = github.client();
+  client.get('/users', callback);
+  // OR
+  client.get('/users', since, per_page, true, callback);  
+```
+
 ## Testing
 Before run test copy the `config.example.json` file in `test` folder to `config.json` and populate it with your github information.
 
