@@ -88,12 +88,16 @@ class Client
     return extend @requestDefaults, params1, params2
 
   # Github api URL builder
-  buildUrl: (path = '/', pageOrQuery = null, per_page = null) ->
+  buildUrl: (path = '/', pageOrQuery = null, per_page = null, since = null) ->
     if pageOrQuery? and typeof pageOrQuery == 'object'
       query = pageOrQuery
     else
       query = {}
-      query.page     = pageOrQuery if pageOrQuery?
+      if pageOrQuery?
+        if since? and since == true
+          query.since = pageOrQuery
+        else
+          query.page = pageOrQuery
       query.per_page = per_page if per_page?
     if @token
       if typeof @token == 'string'
