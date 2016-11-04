@@ -188,9 +188,10 @@ console.log('Server started on 3000');
 You can also check your rate limit status by calling the following.
 
 ```js
-client.limit(function (err, left, max) {
+client.limit(function (err, left, max, reset) {
   console.log(left); // 4999
   console.log(max);  // 5000
+  console.log(reset);  // 1372700873 (UTC epoch seconds)
 });
 ```
 
