@@ -122,6 +122,26 @@ github.auth.config({
 });
 ```
 
+**With two-factor auth:**
+
+If two-factor authentication is enabled then you will need to supply the One Time Password (OTP) within the auth configuration. Ensure that the scopes argument is an object containing the required `note` property.
+
+```js
+
+var scopes = {
+  'add_scopes': ['user', 'repo', 'gist'],
+  'note': 'admin script'
+};
+
+github.auth.config({
+  username: 'pksunkara',
+  password: 'password',
+  otp: '46692'
+}).login(scopes, function (err, id, token) {
+  console.log(id, token);
+});
+```
+
 #### Revoke authentication to github in cli mode (desktop application)
 
 ```js
