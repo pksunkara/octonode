@@ -113,11 +113,18 @@ __Many of the below use cases use parts of the above code__
 
 #### Authenticate to github in cli mode (desktop application)
 
+**Note:** Ensure that the scopes argument is an object containing the required `note` property. For two-factor authentication add the One Time Password `otp` key with its corresponding code to the configuration object.
+
 ```js
+var scopes = {
+  'add_scopes': ['user', 'repo', 'gist'],
+  'note': 'admin script'
+};
+
 github.auth.config({
   username: 'pksunkara',
   password: 'password'
-}).login(['user', 'repo', 'gist'], function (err, id, token) {
+}).login(scopes, function (err, id, token) {
   console.log(id, token);
 });
 ```
