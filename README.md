@@ -976,10 +976,10 @@ ghissue.deleteComment(3, callback);
 ghissue.addLabels(['label-name'], callback);
 ```
 
-#### Replace existing labels (PUT /repos/pksunkara/hub/issues/37/labels)
+#### Replace all labels (PUT /repos/pksunkara/hub/issues/37/labels)
 
 ```js
-ghissue.replaceLabels(['label-name'], callback);
+ghissue.replaceAllLabels(['label-name'], callback);
 ```
 
 #### Remove a single label (DELETE /repos/pksunkara/hub/issues/37/labels/label-name)

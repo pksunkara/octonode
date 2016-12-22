@@ -60,9 +60,9 @@ class Issue
       return cb(err) if err
       if s isnt 200 then cb(new Error("Issue addLabels error")) else cb null, b, h
 
-  # Replace labels
+  # Replace all labels
   # '/repos/pksunkara/hub/issues/37/labels' PUT
-  replaceLabels: (labels, cb) ->
+  replaceAllLabels: (labels, cb) ->
     @client.put "/repos/#{@repo}/issues/#{@number}/labels", labels, (err, s, b, h) =>
       return cb(err) if err
       if s isnt 200 then cb(new Error("Issue replaceLabels error")) else cb null, b, h
