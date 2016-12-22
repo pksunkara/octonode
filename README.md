@@ -970,6 +970,30 @@ ghissue.updateComment(3, {
 ghissue.deleteComment(3, callback);
 ```
 
+#### Add label(s) (POST /repos/pksunkara/hub/issues/37/labels)
+
+```js
+ghissue.addLabels(['label-name'], callback);
+```
+
+#### Replace existing labels (PUT /repos/pksunkara/hub/issues/37/labels)
+
+```js
+ghissue.replaceLabels(['label-name'], callback);
+```
+
+#### Remove a single label (DELETE /repos/pksunkara/hub/issues/37/labels/label-name)
+
+```js
+ghissue.removeLabel('label-name', callback);
+```
+
+#### Remove all labels (DELETE /repos/pksunkara/hub/issues/37/labels)
+
+```js
+ghissue.removeAllLabels(callback);
+```
+
 ## Github milestones api
 
 #### Get a single milestone (GET /repos/pksunkara/hub/milestones/37)
