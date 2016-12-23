@@ -53,6 +53,13 @@ class Issue
       return cb(err) if err
       if s isnt 204 then cb(new Error("Issue deleteComment error")) else cb null, b, h
 
+  # List labels
+  # '/repos/pksunkara/hub/issues/37/labels' GET
+  labels: (cb) ->
+    @client.get "/repos/" + @repo + "/issues/" + @number + "/labels", {}, (err, s, b, h)  ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error('Issue labels error')) else cb null, b, h
+
   # Add label(s)
   # '/repos/pksunkara/hub/issues/37/labels' POST
   addLabels: (labels, cb) ->
