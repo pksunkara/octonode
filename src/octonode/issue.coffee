@@ -77,7 +77,7 @@ class Issue
   # Remove a label
   # '/repos/pksunkara/hub/issues/37/labels/label-name' DELETE
   removeLabel: (label, cb) ->
-    @client.del "/repos/#{@repo}/issues/#{@number}/labels/#{label}", {}, (err, s, b, h) =>
+    @client.del encodeURI("/repos/#{@repo}/issues/#{@number}/labels/#{label}"), {}, (err, s, b, h) =>
       return cb(err) if err
       if s isnt 200 then cb(new Error("Issue removeLabel error")) else cb null, b, h
       ## The documenation here https://developer.github.com/v3/issues/labels/#remove-a-label-from-an-issue

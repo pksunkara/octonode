@@ -12,7 +12,7 @@ class Label
   # Get a single label
   # '/repos/pksunkara/hub/labels/todo' GET
   info: (cb) ->
-    @client.get "/repos/#{@repo}/labels/#{@name}", (err, s, b, h) ->
+    @client.get encodeURI("/repos/#{@repo}/labels/#{@name}"), (err, s, b, h) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error("Label info error")) else cb null, b, h
 
@@ -26,7 +26,7 @@ class Label
   # Delete a label for a repository
   # '/repos/pksunkara/hub/labels/todo' DELETE
   delete: (cb) ->
-    @client.del "/repos/#{@repo}/labels/#{@name}", {}, (err, s, b, h) ->
+    @client.del encodeURI("/repos/#{@repo}/labels/#{@name}"), {}, (err, s, b, h) ->
       return cb(err) if err
       if s isnt 204 then cb(new Error("Label delete error")) else cb null, b, h
 
