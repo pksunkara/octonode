@@ -970,6 +970,12 @@ ghissue.updateComment(3, {
 ghissue.deleteComment(3, callback);
 ```
 
+#### List labels on an issue (GET /repos/pksunkara/hub/issues/37/labels)
+
+```js
+ghissue.labels(callback);
+```
+
 #### Add label(s) (POST /repos/pksunkara/hub/issues/37/labels)
 
 ```js
