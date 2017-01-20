@@ -3,7 +3,6 @@ nock = require 'nock'
 
 # Mocking normal api
 viewNock = nock('https://api.github.com')
-authNock = nock('https://api.github.com').filteringPath /\?access_token=*/g, '?access_token=someaccesstoken'
 
 # Mocking api with body
 viewBodyNock = viewNock.matchHeader 'Content-Type', 'application/json'
