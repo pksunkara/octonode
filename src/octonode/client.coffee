@@ -37,6 +37,9 @@ class Client
       headers:
         'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
 
+    if @token and typeof @token == 'string'
+      @requestDefaults.headers.Authorization = "token " + @token
+
   # Get authenticated user instance for client
   me: ->
     new Me @
@@ -99,10 +102,7 @@ class Client
         else
           query.page = pageOrQuery
       query.per_page = per_page if per_page?
-    if @token
-      if typeof @token == 'string'
-        query.access_token = @token
-      else if typeof @token == 'object' and @token.id
+    if @token and typeof @token == 'object' and @token.id
         query.client_id = @token.id
         query.client_secret = @token.secret
 
