@@ -12,7 +12,9 @@
     "github"
   ],
   "scripts": {
-    "test": "vows --spec $(find test -name '*.js')"
+    "test": "vows --spec $(find test -name '*.js')",
+    "lib": "./node_modules/coffee-script/bin/cake lib",
+    "watch": "./node_modules/coffee-script/bin/cake watch"
   },
   "dependencies": {
     "deep-extend": "^0.4.1",

@@ -39,6 +39,9 @@ octonode = module.exports =
   # [Issue](octonode/issue.html) class for github
   issue: require './octonode/issue'
 
+  # [Project](octonode/project.html) class for github
+  project: require './octonode/project'
+
   # [Milestone](octonode/milestone.html) class for github
   milestone: require './octonode/milestone'
 

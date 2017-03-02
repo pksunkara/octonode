@@ -214,6 +214,29 @@ class Repo
       return cb(err) if err
       if s isnt 201 then cb(new Error("Repo createIssue error")) else cb null, b, h
 
+  # Get project instance for a repo
+  project: (numberOrProject, cb) ->
+    if typeof cb is 'function' and typeof numberOrProject is 'object'
+      @createProject numberOrProject, cb
+    else
+      @client.project @name, numberOrProject
+
+  # List projects for a repository
+  # '/repos/pksunkara/hub/projects' GET
+  # - page or query object, optional - params[0]
+  # - per_page, optional             - params[1]
+  projects: (params..., cb) ->
+    @client.get "/repos/#{@name}/projects", params..., (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Repo projects error")) else cb null, b, h
+
+  # Create an project for a repository
+  # '/repos/pksunkara/hub/projects' POST
+  createProject: (project, cb) ->
+    @client.post "/repos/#{@name}/projects", project, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 201 then cb(new Error("Repo createProject error")) else cb null, b, h
+
   # Get milestone instance for a repo
   milestone: (numberOrMilestone, cb) ->
     if typeof cb is 'function' and typeof numberOrMilestone is 'object'
