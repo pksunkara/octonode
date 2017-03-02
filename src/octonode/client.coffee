@@ -78,6 +78,9 @@ class Client
   issue: (repo, number) ->
     new Issue repo, number, @
 
+  project: (repo, number) ->
+    new Project repo, number, @
+
   milestone: (repo, number) ->
     new Milestone repo, number, @
 

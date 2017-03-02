@@ -25,6 +25,7 @@ var ghpr           = client.pr('pksunkara/hub', 37);
 var ghrelease      = client.release('pksunkara/hub', 37);
 var ghgist         = client.gist();
 var ghteam         = client.team(37);
+var ghproject      = client.project('pksunkara/hub', 37);
 var ghnotification = client.notification(37);
 
 var ghsearch = client.search();
@@ -620,6 +621,23 @@ ghrepo.milestone({
 }, callback); //milestone
 ```
 
+#### Get the projects for a repository (GET /repos/pksunkara/hub/projects)
+
+This query supports [pagination](#pagination).
+
+```js
+ghrepo.projects(callback); //array of projects
+```
+
+#### Create a project for a repository (POST /repos/pksunkara/hub/projects)
+
+```js
+ghrepo.project({
+  "name": "Sprint 345",
+  "body": "The sprint where we fix all the things!"
+}, callback); //project
+```
+
 
 #### Get the labels for a repository (GET /repos/pksunkara/hub/labels)
 
@@ -1022,6 +1040,28 @@ ghmilestone.update({
 ghmilestone.delete(callback); //milestone
 ```
 
+## Github projects api
+
+#### Get a single project (GET /repos/pksunkara/hub/projects/37)
+
+```js
+ghproject.info(callback); //project
+```
+
+#### Edit a project for a repository (PATCH /repos/pksunkara/hub/projects/37)
+
+```js
+ghproject.update({
+  "name": "Updated project name",
+}, callback); //project
+```
+
+#### Delete a project for a repository (DELETE /repos/pksunkara/hub/projects/37)
+
+```js
+ghproject.delete(callback); //project
+```
+
 ## Github labels api
 
 #### Get a single label (GET /repos/pksunkara/hub/labels/todo)
@@ -1359,14 +1399,14 @@ This query supports [pagination](#pagination).
 **Note:** For listing all Organizations / Users pagination is powered exclusively by the `since` parameter
 ([ Github APIs ](https://developer.github.com/v3/users/#get-all-users)) .
 `since` denotes the `login ID` of last org / user you encountered. Also, note that it's important to pass
-`true` as third param when using pagination.  
+`true` as third param when using pagination.
 
 **Organizations**
 ```js
   var client = github.client();
   client.get('/organizations', callback);
   // OR
-  client.get('/organizations', since, per_page, true, callback);  
+  client.get('/organizations', since, per_page, true, callback);
 ```
 
 **Users**
@@ -1374,7 +1414,7 @@ This query supports [pagination](#pagination).
   var client = github.client();
   client.get('/users', callback);
   // OR
-  client.get('/users', since, per_page, true, callback);  
+  client.get('/users', since, per_page, true, callback);
 ```
 
 ## Testing
