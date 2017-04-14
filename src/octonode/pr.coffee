@@ -57,6 +57,20 @@ class Pr
       return cb(err) if err
       if s isnt 200 then cb(new Error("Pr comments error")) else cb null, b, h
 
+  # Create a comment on a pull request
+  # '/repos/pksunkara/hub/pulls/37/comments' POST
+  createComment: (comment, cb) ->
+    @client.post "/repos/#{@repo}/pulls/#{@number}/comments", comment, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 201 then cb(new Error("Pr createComment error")) else cb null, b, h
+
+  # Removes a comment on a pull request
+  # '/repos/pksunkara/hub/pulls/37/comments/104' DELETE
+  removeComment: (id, cb) ->
+    @client.del "/repos/#{@repo}/pulls/#{@number}/comments/#{id}", {}, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 204 then cb(new Error("Pr removeComment error")) else cb null, b, h
+
   # List files in pull request
   # '/repos/pksunkara/hub/pulls/37/files' GET
   files: (cb) ->
