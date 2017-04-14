@@ -1124,6 +1124,23 @@ ghpr.commits(callback); //array of commits
 ghpr.comments(callback); //array of comments
 ```
 
+#### Add a comment on a pull request (POST /repos/pksunkara/hub/pulls/37/comments)
+
+```js
+ghpr.comment({
+  body: 'my comment',
+  commit_id: '8cde3b6c5be2c3067cd87ee4117c0f65e30f3e1f', // needed to comment on current time in PR
+  path: 'file.txt', // optional
+  position: 4 // optional
+}, callback);
+```
+
+#### Remove a comment on a pull request (DELETE /repos/pksunkara/hub/pulls/37/comments/104)
+
+```js
+ghpr.removecomment(104, callback);
+```
+
 #### List files in pull request (GET /repos/pksunkara/hub/pulls/37/files)
 
 ```js
@@ -1503,7 +1520,6 @@ repo.get_all_pull_request_comments(callback);
 repo.get_pull_request_comment('id', callback);
 repo.reply_to_pull_request_comment('id', 'body', callback);
 repo.edit_pull_request_comment('id', 'body', callback);
-repo.delete_pull_request_comment('id', callback);
 repo.get_issues(params, callback);
 repo.get_issue('id', callback);
 repo.create_issue({title: ''}, callback);
