@@ -59,7 +59,7 @@ class Pr
 
   # Create a comment on a pull request
   # '/repos/pksunkara/hub/pulls/37/comments' POST
-  comment: (comment, cb) ->
+  createComment: (comment, cb) ->
     @client.post "/repos/#{@repo}/pulls/#{@number}/comments", comment, (err, s, b, h) ->
       return cb(err) if err
       if s isnt 201 then cb(new Error("Pr createComment error")) else cb null, b, h

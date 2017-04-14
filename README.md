@@ -1127,7 +1127,7 @@ ghpr.comments(callback); //array of comments
 #### Add a comment on a pull request (POST /repos/pksunkara/hub/pulls/37/comments)
 
 ```js
-ghpr.comment({
+ghpr.createComment({
   body: 'my comment',
   commit_id: '8cde3b6c5be2c3067cd87ee4117c0f65e30f3e1f', // needed to comment on current time in PR
   path: 'file.txt', // optional
