@@ -1501,7 +1501,6 @@ repo.get_watchers(callback);
 // pull requests
 repo.get_all_pull_request_comments(callback);
 repo.get_pull_request_comment('id', callback);
-repo.create_pull_request_comment('id', {body:'', commit_id:'', path:'', position:''}, callback);
 repo.reply_to_pull_request_comment('id', 'body', callback);
 repo.edit_pull_request_comment('id', 'body', callback);
 repo.delete_pull_request_comment('id', callback);
