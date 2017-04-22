@@ -481,6 +481,13 @@ class Repo
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo statuses error")) else cb null, b, h
 
+  # Get the combined status for a specific ref
+  # '/repos/pksunkara/hub/commits/master/status' GET
+  combinedStatus: (ref, cb) ->
+    @client.get "/repos/#{@name}/commits/#{ref}/status", (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Repo statuses error")) else cb null, b, h
+
   # Create a status
   # '/repos/pksunkara/hub/statuses/18e129c213848c7f239b93fe5c67971a64f183ff' POST
   status: (sha, obj, cb) ->
