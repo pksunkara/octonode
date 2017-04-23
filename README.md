@@ -790,6 +790,12 @@ ghrepo.destroy();
 ghrepo.statuses('master', callback); //array of statuses
 ```
 
+#### List the combined status for a specific ref (GET /repos/pksunkara/hub/commits/master/status)
+
+```js
+ghrepo.combinedStatus('master', callback); //array of statuses
+```
+
 #### Create status (POST /repos/pksunkara/hub/statuses/SHA)
 
 ```js
