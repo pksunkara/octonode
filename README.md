@@ -867,6 +867,8 @@ ghorg.repo({
 
 #### Get an organization's teams (GET /orgs/flatiron/teams)
 
+This query supports [pagination](#pagination).
+
 ```js
 ghorg.teams(callback); //array of teams
 ```
