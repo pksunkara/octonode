@@ -129,5 +129,30 @@ class Pr
       return cb(err) if err
       if s isnt 200 then cb(new Error("Pr dismissReview error")) else cb null, b, h
 
+  # List review requests
+  # '/repos/pksunkara/hub/pulls/37/requested_reviewers' GET
+  reviewRequests: (cb) ->
+    @client.get "/repos/#{@repo}/pulls/#{@number}/requested_reviewers", (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Pr reviewRequests error")) else cb null, b, h
+
+  # Create review request(s)
+  # '/repos/pksunkara/hub/pulls/37/requested_reviewers' POST
+  createReviewRequests: (usernames, cb) ->
+    reviewRequest =
+      reviewers: usernames
+    @client.post "/repos/#{@repo}/pulls/#{@number}/requested_reviewers", reviewRequest, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 201 then cb(new Error("Pr createReviewRequests error")) else cb null, b, h
+
+  # Remove review request(s)
+  # '/repos/pksunkara/hub/pulls/37/requested_reviewers' DELETE
+  removeReviewRequests: (usernames, cb) ->
+    reviewRequest =
+      reviewers: usernames
+    @client.del "/repos/#{@repo}/pulls/#{@number}/requested_reviewers", reviewRequest, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Pr removeReviewRequests error")) else cb null, b, h
+      
 # Export module
 module.exports = Pr
