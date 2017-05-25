@@ -1192,8 +1192,7 @@ ghpr.createReview({
     }
   ],
   event: 'APPROVE || COMMENT || REQUEST_CHANGES' // optional
-}, callback);
-//pull request review
+}, callback); //pull request review
 ```
 
 #### Submit a pull request review (POST /repos/pksunkara/hub/pulls/37/reviews/104/events)
@@ -1202,8 +1201,7 @@ ghpr.createReview({
 ghpr.submitReview(104, {
   body: 'review message', // optional
   event: 'APPROVE || COMMENT || REQUEST_CHANGES' // required
-}, callback);
-//pull request review
+}, callback); //pull request review
 ```
 
 #### Dismiss a pull request review (PUT /repos/pksunkara/hub/pulls/37/reviews/104/dismissals)
