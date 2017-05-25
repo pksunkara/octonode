@@ -1154,6 +1154,25 @@ ghpr.removecomment(104, callback);
 ```js
 ghpr.files(callback); //array of files
 ```
+
+#### List review requests (GET /repos/pksunkara/hub/pulls/37/requested_reviewers)
+
+```js
+ghpr.reviewRequests(callback); //array of review requests
+```
+
+#### Create review request(s) (POST /repos/pksunkara/hub/pulls/37/requested_reviewers)
+
+```js
+ghpr.createReviewRequests(['user1', 'user2'], callback); //pull request
+```
+
+#### Delete review request(s) (DELETE /repos/pksunkara/hub/pulls/37/requested_reviewers)
+
+```js
+ghpr.removeReviewRequests(['user1', 'user2'], callback); //pull request
+```
+
 ## Github releases api
 
 ### Create release (POST /repos/pksunkara/releases)
