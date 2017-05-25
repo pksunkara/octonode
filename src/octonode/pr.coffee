@@ -95,7 +95,7 @@ class Pr
   # Delete a pending pull request review (pending only)
   # '/repos/pksunkara/hub/pulls/37/reviews/104' DELETE
   removeReview: (id, cb) ->
-    @client.del "/repos/#{@repo}/pulls/#{@number}/reviews/#{id}", (err, s, b, h) ->
+    @client.del "/repos/#{@repo}/pulls/#{@number}/reviews/#{id}", {}, (err, s, b, h) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error("Pr removeReview error")) else cb null, b, h
 
