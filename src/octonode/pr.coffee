@@ -78,5 +78,56 @@ class Pr
       return cb(err) if err
       if s isnt 200 then cb(new Error("Pr files error")) else cb null, b, h
 
+  # List pull request reviews
+  # '/repos/pksunkara/hub/pulls/37/reviews' GET
+  reviews: (cb) ->
+    @client.get "/repos/#{@repo}/pulls/#{@number}/reviews", (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Pr reviews error")) else cb null, b, h
+
+  # Get a single pull request review
+  # '/repos/pksunkara/hub/pulls/37/reviews/104' GET
+  review: (id, cb) ->
+    @client.get "/repos/#{@repo}/pulls/#{@number}/reviews/#{id}", (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Pr review error")) else cb null, b, h
+
+  # Delete a pending pull request review (pending only)
+  # '/repos/pksunkara/hub/pulls/37/reviews/104' DELETE
+  removeReview: (id, cb) ->
+    @client.del "/repos/#{@repo}/pulls/#{@number}/reviews/#{id}", {}, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Pr removeReview error")) else cb null, b, h
+
+  # List comments for a pull request review
+  # '/repos/pksunkara/hub/pulls/37/reviews/104/comments' GET
+  reviewComments: (id, cb) ->
+    @client.get "/repos/#{@repo}/pulls/#{@number}/reviews/#{id}/comments", (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Pr reviewComments error")) else cb null, b, h
+
+  # Create a pull request review
+  # '/repos/pksunkara/hub/pulls/37/reviews' POST
+  createReview: (reviewBody, cb) ->
+    @client.post "/repos/#{@repo}/pulls/#{@number}/reviews", reviewBody, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Pr createReview error")) else cb null, b, h
+
+  # Submit a pull request review
+  # '/repos/pksunkara/hub/pulls/37/reviews/104/events' POST
+  submitReview: (id, reviewBody, cb) ->
+    @client.post "/repos/#{@repo}/pulls/#{@number}/reviews/#{id}/events", reviewBody, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Pr submitReview error")) else cb null, b, h
+
+  # Dismiss a pull request review
+  # '/repos/pksunkara/hub/pulls/37/reviews/104/dismissals' PUT
+  dismissReview: (id, dismissalMessage, cb) ->
+    dismissal =
+      message: dismissalMessage
+    @client.put "/repos/#{@repo}/pulls/#{@number}/reviews/#{id}/dismissals", dismissal, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Pr dismissReview error")) else cb null, b, h
+
 # Export module
 module.exports = Pr

@@ -1154,6 +1154,62 @@ ghpr.removecomment(104, callback);
 ```js
 ghpr.files(callback); //array of files
 ```
+
+#### List pull request reviews (GET /repos/pksunkara/hub/pulls/37/reviews)
+
+```js
+ghpr.reviews(callback); //array of pull request reviews
+```
+
+#### Get a single pull request review (GET /repos/pksunkara/hub/pulls/37/reviews/104)
+
+```js
+ghpr.review(104, callback); //pull request review
+```
+
+#### Delete a *pending* pull request review (DELETE /repos/pksunkara/hub/pulls/37/reviews/104)
+
+```js
+ghpr.removeReview(104, callback); //pull request review
+```
+
+#### List comments for a pull request review (GET /repos/pksunkara/hub/pulls/37/reviews/104/comments)
+
+```js
+ghpr.reviewComments(104, callback); //array of review comments
+```
+
+#### Create a pull request review (POST /repos/pksunkara/hub/pulls/37/reviews)
+
+```js
+ghpr.createReview({
+  body: 'review message', // optional
+  comments: [ // optional
+    {
+      body: 'comment message', // required for each optional comment
+      path: 'file.txt', // required for each optional comment
+      position: 4 // required for each optional comment
+    }
+  ],
+  event: 'APPROVE || COMMENT || REQUEST_CHANGES' // optional
+}, callback); //pull request review
+```
+
+#### Submit a pull request review (POST /repos/pksunkara/hub/pulls/37/reviews/104/events)
+
+```js
+ghpr.submitReview(104, {
+  body: 'review message', // optional
+  event: 'APPROVE || COMMENT || REQUEST_CHANGES' // required
+}, callback); //pull request review
+```
+
+#### Dismiss a pull request review (PUT /repos/pksunkara/hub/pulls/37/reviews/104/dismissals)
+
+```js
+ghpr.dismissReview(104, 'dismissal message', callback); //pull request review
+```
+
 ## Github releases api
 
 ### Create release (POST /repos/pksunkara/releases)
