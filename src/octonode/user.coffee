@@ -15,21 +15,29 @@ class User
     Object.keys(data).forEach (e) =>
       @[e] = data[e]
 
-  # Get a user
-  # '/users/pkumar' GET
+  # Get a user (promise)
   info: (cb) ->
-    @client.get "/users/#{@login}", (err, s, b, h)  ->
-      return cb(err) if err
-      if s isnt 200 then cb(new Error('User info error')) else cb null, b, h
+    return @client.get("/users/#{@login}", cb)
+  # original
+  # '/users/pkumar' GET
+  # info: (cb) ->
+  #   @client.get "/users/#{@login}", (err, s, b, h)  ->
+  #     return cb(err) if err
+  #     if s isnt 200 then cb(new Error('User info error')) else cb null, b, h
 
   # Get the followers of a user
   # '/users/pkumar/followers' GET
   # - page or query object, optional - params[0]
   # - per_page, optional             - params[1]
+
   followers: (params..., cb) ->
-    @client.get "/users/#{@login}/followers", params..., (err, s, b, h)  ->
-      return cb(err) if err
-      if s isnt 200 then cb(new Error('User followers error')) else cb null, b, h
+    return @client.get "/users/#{@login}/followers", params..., cb
+
+  # original
+  # followers: (params..., cb) ->
+  #   @client.get "/users/#{@login}/followers", params..., (err, s, b, h)  ->
+  #     return cb(err) if err
+  #     if s isnt 200 then cb(new Error('User followers error')) else cb null, b, h
 
   # Get the followings of a user
   # '/users/pkumar/following' GET
