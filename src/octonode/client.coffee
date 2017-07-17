@@ -6,6 +6,7 @@
 
 # Requiring modules
 request = require 'request'
+rp = require 'request-promise-native'
 url = require 'url'
 
 Me           = require './me'
@@ -33,6 +34,7 @@ class Client
 
   constructor: (@token, @options) ->
     @request = @options and @options.request or request
+    @rp = @options and @options.rp or rp
     @requestDefaults =
       headers:
         'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
@@ -142,37 +144,106 @@ class Client
         body = JSON.parse(body || '{}')
       catch err
         return callback(err)
-
+    debugger
     return callback(new HttpError(body.message, res.statusCode, res.headers, body)) if body.message and res.statusCode in [400, 401, 403, 404, 410, 422]
     callback null, res.statusCode, body, res.headers
 
-  # Github api GET request
-  get: (path, params..., callback) ->
-    @request @requestOptions(
-      uri: @buildUrl path, params...
-      method: 'GET'
-    ), (err, res, body) =>
-      return callback(err) if err
-      @errorHandle res, body, callback
+  errorHandlePromise: (response, cb) ->
+    debugger
+    {statusCode, body, headers} = response
+
+    fiveError = new HttpError('Error ' + statusCode, statusCode, headers)
+    fourError = new HttpError(body.message, statusCode, headers, body)
+
+    return cb(fiveError) if Math.floor(statusCode/100) is 5
+    return cb(fourError) if body.message and Math.floor(statusCode/100) is 4
+
+    return cb(null, statusCode, body, headers)
 
   # Github api GET request
-  getNoFollow: (path, params..., callback) ->
-    @request @requestOptions(
+
+  get: (path, params..., cb) =>
+
+    cb = if cb then cb else () -> arguments
+
+    options = @requestOptions(
+      uri: @buildUrl path, params...
+      method: 'GET'
+      followRedirect: true
+      json: true
+      simple: false
+      resolveWithFullResponse: true
+    )
+
+    return @rp options
+      .then((response) => @errorHandlePromise(response, cb))
+      .catch((err) -> cb(err))
+
+  # original get with callback
+  # get: (path, params..., callback) ->
+  #   @request @requestOptions(
+  #     uri: @buildUrl path, params...
+  #     method: 'GET'
+  #   ), (err, res, body) =>
+  #     return callback(err) if err
+  #     @errorHandle res, body, callback
+
+  getNoFollow: (path, params..., cb) =>
+
+    cb = if cb then cb else () -> arguments
+
+    options = @requestOptions(
       uri: @buildUrl path, params...
       method: 'GET'
       followRedirect: false
-    ), (err, res, body) =>
-      return callback(err) if err
-      @errorHandle res, body, callback
+      json: true
+      simple: false
+      resolveWithFullResponse: true
+    )
 
-  # Github api GET request
-  getOptions: (path, options, params..., callback) ->
-    @request @requestOptions({
+    return @rp options
+      .then((response) => @errorHandlePromise(response, cb))
+      .catch((err) -> cb(err))
+  # Github api GET request no redirect follow
+  # getNoFollow: (path, params..., callback) ->
+  #
+  #   @request @requestOptions(
+  #     uri: @buildUrl path, params...
+  #     method: 'GET'
+  #     followRedirect: false
+  #   ), (err, res, body) =>
+  #     return callback(err) if err
+  #     @errorHandle res, body, callback
+
+  getOptions: (path, options, params..., cb) ->
+
+    if typeof options != 'object'
+      console.log('options arg must be an object, if no options use .get')
+      return
+
+    cb = if cb then cb else () -> arguments
+
+    options = @requestOptions({
       uri: @buildUrl path, params...
       method: 'GET'
-    }, options), (err, res, body) =>
-      return callback(err) if err
-      @errorHandle res, body, callback
+      followRedirect: false
+      json: true
+      simple: false
+      resolveWithFullResponse: true
+    }, options)
+
+    return @rp options
+      .then((response) => @errorHandlePromise(response, cb))
+      .catch((err) -> cb(err))
+
+  # Github api GET request with specified options
+  # getOptions: (path, options, params..., callback) ->
+  #   @request @requestOptions({
+  #     uri: @buildUrl path, params...
+  #     method: 'GET'
+  #   }, options), (err, res, body) =>
+  #     return callback(err) if err
+  #     @errorHandle res, body, callback
 
   # Github api POST request
   post: (path, content, options, callback) ->
