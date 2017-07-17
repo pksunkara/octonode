@@ -422,6 +422,13 @@ class Repo
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo updateRef error")) else cb null, b
 
+  # Delete a reference
+  # '/repos/pksunkara/hub/git/refs/REF' DELETE
+  deleteRef: (ref, cb) ->
+    @client.del "/repos/#{@name}/git/refs/#{ref}", {}, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 204 then cb(new Error("Ref delete error")) else cb null
+        
   # Delete the repository
   # '/repos/pksunkara/hub' DELETE
   destroy: (cb) ->
