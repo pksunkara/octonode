@@ -7,6 +7,7 @@
 # Requiring modules
 request = require 'request'
 url = require 'url'
+Promise = require 'bluebird'
 
 Me           = require './me'
 User         = require './user'
@@ -42,53 +43,53 @@ class Client
 
   # Get authenticated user instance for client
   me: ->
-    new Me @
+    Promise.promisifyAll(new Me(@) , {multiArgs: true})
 
   # Get user instance for client
   user: (name) ->
-    new User name, @
+    Promise.promisifyAll(new User(name, @) , {multiArgs: true})
 
   # Get repository instance for client
   repo: (name) ->
-    new Repo name, @
+    Promise.promisifyAll(new Repo(name, @) , {multiArgs: true})
 
   # Get organization instance for client
   org: (name) ->
-    new Org name, @
+    Promise.promisifyAll(new Org(name, @) , {multiArgs: true})
 
   # Get gist instance for client
   gist: ->
-    new Gist @
+    Promise.promisifyAll(new Gist(@) , {multiArgs: true})
 
   # Get team instance for client
   team: (id) ->
-    new Team id, @
+    Promise.promisifyAll(new Team(id, @) , {multiArgs: true})
 
   # Get pull request instance for client
   pr: (repo, number) ->
-    new Pr repo, number, @
+    Promise.promisifyAll(new Pr(repo, number, @) , {multiArgs: true})
 
   release: (repo, number) ->
-    new Release repo, number, @
+    Promise.promisifyAll(new Release(repo, number, @) , {multiArgs: true})
 
   # Get search instance for client
   search: ->
-    new Search @
+    Promise.promisifyAll(new Search(@) , {multiArgs: true})
 
   issue: (repo, number) ->
-    new Issue repo, number, @
+    Promise.promisifyAll(new Issue(repo, number, @) , {multiArgs: true})
 
   project: (repo, number) ->
-    new Project repo, number, @
+    Promise.promisifyAll(new Project(repo, number, @) , {multiArgs: true})
 
   milestone: (repo, number) ->
-    new Milestone repo, number, @
+    Promise.promisifyAll(new Milestone(repo, number, @) , {multiArgs: true})
 
   label: (repo, name) ->
-    new Label repo, name, @
+    Promise.promisifyAll(new Label(repo, name, @) , {multiArgs: true})
 
   notification: (id) ->
-    new Notification id, @
+    Promise.promisifyAll(new Notification(id, @) , {multiArgs: true})
 
   requestOptions: (params1, params2) =>
     return extend @requestDefaults, params1, params2
@@ -241,4 +242,4 @@ class Client
 
 # Export modules
 module.exports = (token, credentials...) ->
-  new Client(token, credentials...)
+  Promise.promisifyAll(new Client(token, credentials...) , {multiArgs: true})
