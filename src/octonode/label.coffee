@@ -4,8 +4,11 @@
 # Copyright © 2014 Matthew Taylor. All rights reserved
 #
 
+# Requiring modules
+Base = require './base'
+
 # Initiate class
-class Label
+class Label extends Base
 
   constructor: (@repo, @name, @client) ->
 

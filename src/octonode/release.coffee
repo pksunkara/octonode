@@ -4,8 +4,11 @@
 # Copyright © 2013 Josh Priestley. All rights reserved
 #
 
+# Requiring modules
+Base = require './base'
+
 # Initiate class
-class Release
+class Release extends Base
 
   constructor: (@repo, @number, @client) ->
 

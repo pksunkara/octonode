@@ -2,8 +2,11 @@
 # project.coffee: Github milestone class
 #
 
+# Requiring modules
+Base = require './base'
+
 # Initiate class
-class Project
+class Project extends Base
 
   constructor: (@repo, @number, @client) ->
 

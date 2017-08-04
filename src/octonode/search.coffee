@@ -5,9 +5,10 @@
 #
 
 # Requiring modules
+Base = require './base'
 
 # Initiate class
-class Search
+class Search extends Base
 
   constructor: (@client) ->
 

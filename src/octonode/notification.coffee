@@ -5,9 +5,10 @@
 #
 
 # Requiring modules
+Base = require './base'
 
 # Initiate class
-class Notification
+class Notification extends Base
 
   constructor: (@id, @client) ->
 
