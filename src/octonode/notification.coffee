@@ -5,9 +5,10 @@
 #
 
 # Requiring modules
+Cmd = require './cmd'
 
 # Initiate class
-class Notification
+class Notification extends Cmd
 
   constructor: (@id, @client) ->
 

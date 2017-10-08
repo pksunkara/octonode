@@ -5,9 +5,10 @@
 #
 
 # Requiring modules
+Cmd = require './cmd'
 
 # Initiate class
-class Repo
+class Repo extends Cmd
 
   constructor: (@name, @client) ->
 
@@ -428,7 +429,7 @@ class Repo
     @client.del "/repos/#{@name}/git/refs/#{ref}", {}, (err, s, b, h) ->
       return cb(err) if err
       if s isnt 204 then cb(new Error("Ref delete error")) else cb null
-        
+
   # Delete the repository
   # '/repos/pksunkara/hub' DELETE
   destroy: (cb) ->

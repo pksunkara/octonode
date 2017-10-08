@@ -5,9 +5,10 @@
 #
 
 # Requiring modules
+Cmd = require './cmd'
 
 # Initiate class
-class Team
+class Team extends Cmd
 
   constructor: (@id, @client) ->
 

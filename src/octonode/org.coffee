@@ -5,9 +5,10 @@
 #
 
 # Requiring modules
+Cmd = require './cmd'
 
 # Initiate class
-class Org
+class Org extends Cmd
 
   constructor: (@name, @client) ->
 
