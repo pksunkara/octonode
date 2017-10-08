@@ -4,8 +4,11 @@
 # Copyright © 2011 Pavan Kumar Sunkara. All rights reserved
 #
 
+# Requiring modules
+Cmd = require './cmd'
+
 # Initiate class
-class Me
+class Me extends Cmd
 
   constructor: (@client) ->
 

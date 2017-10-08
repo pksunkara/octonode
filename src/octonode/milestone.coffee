@@ -4,8 +4,11 @@
 # Copyright © 2014 Matthew Taylor. All rights reserved
 #
 
+# Requiring modules
+Cmd = require './cmd'
+
 # Initiate class
-class Milestone
+class Milestone extends Cmd
 
   constructor: (@repo, @number, @client) ->
 
