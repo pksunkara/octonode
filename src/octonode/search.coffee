@@ -5,9 +5,10 @@
 #
 
 # Requiring modules
+Cmd = require './cmd'
 
 # Initiate class
-class Search
+class Search extends Cmd
 
   constructor: (@client) ->
 

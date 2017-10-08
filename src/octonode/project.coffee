@@ -2,8 +2,11 @@
 # project.coffee: Github milestone class
 #
 
+# Requiring modules
+Cmd = require './cmd'
+
 # Initiate class
-class Project
+class Project extends Cmd
 
   constructor: (@repo, @number, @client) ->
 

@@ -10,8 +10,9 @@
 class Cmd
 
   # Add http conditional "etag"
-  conditional: (etag) -> @
+  conditional: (etag) ->
     @client.conditional(etag)
+    return @
 
 # Export module
 module.exports = Cmd
