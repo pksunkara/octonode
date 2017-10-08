@@ -4,8 +4,11 @@
 # Copyright © 2013 Josh Priestley. All rights reserved
 #
 
+# Requiring modules
+Cmd = require './cmd'
+
 # Initiate class
-class Issue
+class Issue extends Cmd
 
   constructor: (@repo, @number, @client) ->
 
