@@ -99,9 +99,11 @@ class Client
   requestOptions: (params1, params2) =>
     params3 = {}
     if @etag
-      params3['If-None-Match'] = @etag
+      params3.headers = {
+        'If-None-Match': @etag
+      }
       @etag = null
-    return extend @requestDefaults, params1, params2
+    return extend @requestDefaults, params1, params2, params3
 
   # Github api URL builder
   buildUrl: (path = '/', pageOrQuery = null, per_page = null, since = null) ->
