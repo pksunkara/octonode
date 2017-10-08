@@ -4,8 +4,11 @@
 # Copyright © 2014 Matthew Taylor. All rights reserved
 #
 
+# Requiring modules
+Cmd = require './cmd'
+
 # Initiate class
-class Label
+class Label extends Cmd
 
   constructor: (@repo, @name, @client) ->
 

@@ -4,8 +4,11 @@
 # Copyright © 2012 Pavan Kumar Sunkara. All rights reserved
 #
 
+# Requiring modules
+Cmd = require './cmd'
+
 # Initiate class
-class Pr
+class Pr extends Cmd
 
   constructor: (@repo, @number, @client) ->
 
@@ -153,6 +156,6 @@ class Pr
     @client.del "/repos/#{@repo}/pulls/#{@number}/requested_reviewers", reviewRequest, (err, s, b, h) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error("Pr removeReviewRequests error")) else cb null, b, h
-      
+
 # Export module
 module.exports = Pr
