@@ -1,5 +1,5 @@
 #
-# cmd.coffee: Generic Github command class
+# base.coffee: Base Github class
 #
 # Copyright © 2011 Pavan Kumar Sunkara. All rights reserved
 #
@@ -7,7 +7,7 @@
 # Requiring modules
 
 # Initiate class
-class Cmd
+class Base
 
   # Add http conditional "etag"
   conditional: (etag) ->
@@ -15,4 +15,4 @@ class Cmd
     return @
 
 # Export module
-module.exports = Cmd
+module.exports = Base

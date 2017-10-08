@@ -5,10 +5,10 @@
 #
 
 # Requiring modules
-Cmd = require './cmd'
+Base = require './base'
 
 # Initiate class
-class Org extends Cmd
+class Org extends Base
 
   constructor: (@name, @client) ->
 
