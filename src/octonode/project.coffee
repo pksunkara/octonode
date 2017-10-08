@@ -3,10 +3,10 @@
 #
 
 # Requiring modules
-Cmd = require './cmd'
+Base = require './base'
 
 # Initiate class
-class Project extends Cmd
+class Project extends Base
 
   constructor: (@repo, @number, @client) ->
 
