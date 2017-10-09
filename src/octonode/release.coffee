@@ -5,10 +5,10 @@
 #
 
 # Requiring modules
-Cmd = require './cmd'
+Base = require './base'
 
 # Initiate class
-class Release extends Cmd
+class Release extends Base
 
   constructor: (@repo, @number, @client) ->
 

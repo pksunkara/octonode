@@ -104,11 +104,24 @@ client.requestDefaults['proxy'] = 'https://myproxy.com:1085'
 ```
 These options are passed through to `request`, see their API here: https://github.com/request/request#requestoptions-callback
 
-### Proxies
+#### Proxies
 You can set proxies dynamically by using the example above, but Octonode will respect environment proxies by default. Just set this using:
 `export HTTP_PROXY='https://myproxy.com:1085'` if you are using the command line
 
 __Many of the below use cases use parts of the above code__
+
+## Conditional requests
+The client supports conditional requests and helps you respecting rate limits by caching information that hasn't changed.
+You can add the `If-None-Match` header to each request calling the `conditional` method.
+
+```js
+var client = github.client();
+
+# This add If-None-Match header to the request
+github.repo().conditional('ETAG').issues();
+```
+
+More info about conditional requests can be founded [here](https://developer.github.com/v3/guides/getting-started/#conditional-requests).
 
 ## Authentication
 
