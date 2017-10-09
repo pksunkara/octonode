@@ -117,7 +117,7 @@ You can add the `If-None-Match` header to each request calling the `conditional`
 ```js
 var client = github.client();
 
-# This add If-None-Match header to the request
+// This add If-None-Match header to the request
 github.repo().conditional('ETAG').issues();
 ```
 
