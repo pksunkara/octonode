@@ -1,6 +1,10 @@
 {
   "name": "octonode",
+<<<<<<< HEAD
   "version": "0.8.1",
+=======
+  "version": "0.9.0",
+>>>>>>> a87e819... Minor fixes + bump npm version to 0.9.0
   "author": "Pavan Kumar Sunkara <pavan.sss1991@gmail.com> (http://pksunkara.github.com)",
   "description": "nodejs wrapper for github v3 api",
   "main": "./lib/octonode",
