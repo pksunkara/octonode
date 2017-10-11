@@ -5,9 +5,10 @@
 #
 
 # Requiring modules
+Base = require './base'
 
 # Initiate class
-class Team
+class Team extends Base
 
   constructor: (@id, @client) ->
 
