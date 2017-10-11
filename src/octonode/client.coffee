@@ -41,6 +41,11 @@ class Client
     if @token and typeof @token == 'string'
       @requestDefaults.headers.Authorization = "token " + @token
 
+  # Add http conditional "etag"
+  conditional: (etag) ->
+    @etag = etag
+    return this
+
   # Get authenticated user instance for client
   me: ->
     Promise.promisifyAll(new Me(@) , {multiArgs: true})
@@ -92,7 +97,13 @@ class Client
     Promise.promisifyAll(new Notification(id, @) , {multiArgs: true})
 
   requestOptions: (params1, params2) =>
-    return extend @requestDefaults, params1, params2
+    params3 = {}
+    if @etag
+      params3.headers = {
+        'If-None-Match': @etag
+      }
+      @etag = null
+    return extend @requestDefaults, params1, params2, params3
 
   # Github api URL builder
   buildUrl: (path = '/', pageOrQuery = null, per_page = null, since = null) ->
