@@ -327,11 +327,19 @@ class Repo extends Base
 
   # Update a file at a path in repository
   # '/repos/pksunkara/hub/contents/lib/index.js' PUT
-  updateContents: (path, message, content, sha, cbOrBranch, cb) ->
-    if !cb? and cbOrBranch
-      cb = cbOrBranch
-      cbOrBranch = 'master'
-    @client.put "/repos/#{@name}/contents/#{path}", {branch: cbOrBranch, message: message, content: new Buffer(content).toString('base64'), sha: sha}, (err, s, b, h) ->
+  updateContents: (path, message, content, sha, cbOrBranchOrOptions, cb) ->
+    content = new Buffer(content).toString('base64')
+    if !cb? and cbOrBranchOrOptions
+      cb = cbOrBranchOrOptions
+      cbOrBranchOrOptions = 'master'
+    if typeof cbOrBranchOrOptions is 'string'
+      params = {branch: cbOrBranchOrOptions, message: message, content: content, sha: sha}
+    else if typeof cbOrBranchOrOptions is 'object'
+      params = cbOrBranchOrOptions
+      params['message'] = message
+      params['content'] = content
+      params['sha'] = sha
+    @client.put "/repos/#{@name}/contents/#{path}", params, (err, s, b, h) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo updateContents error")) else cb null, b, h
 
