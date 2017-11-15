@@ -1,4 +1,5 @@
 # octonode [![Gitter chat](https://badges.gitter.im/pksunkara/octonode.svg)](https://gitter.im/pksunkara/octonode)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fpksunkara%2Foctonode.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fpksunkara%2Foctonode?ref=badge_shield)
 
 octonode is a library for nodejs to access the [github v3 api](https://developer.github.com/)
 
@@ -1652,6 +1653,9 @@ __I accept pull requests and guarantee a reply back within a day__
 
 ## License
 MIT/X11
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fpksunkara%2Foctonode.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fpksunkara%2Foctonode?ref=badge_large)
 
 ## Bug Reports
 Report [here](https://github.com/pksunkara/octonode/issues). __Guaranteed reply within a day__.
