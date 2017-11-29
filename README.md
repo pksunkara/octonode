@@ -139,7 +139,7 @@ var scopes = {
 github.auth.config({
   username: 'pksunkara',
   password: 'password'
-}).login(scopes, function (err, id, token) {
+}).login(scopes, function (err, id, token, headers) {
   console.log(id, token);
 });
 ```
