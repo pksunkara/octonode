@@ -69,7 +69,7 @@ auth = module.exports =
             body = JSON.parse body
           catch err
             callback new Error('Unable to parse body')
-          if res.statusCode is 201 then callback(null, body.id, body.token, res.headers) else callback(new Error(body.message))
+          if res.statusCode is 201 then callback(null, body.id, body.token, res.headers) else callback(new Error(body.message), res.headers)
     else if @mode == @modes.web
       if scopes instanceof Array
         uri = "#{@options.webUrl}/login/oauth/authorize"
