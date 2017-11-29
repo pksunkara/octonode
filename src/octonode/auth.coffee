@@ -63,7 +63,7 @@ auth = module.exports =
 
       request options, (err, res, body) ->
         if err?
-          callback err
+          callback(err, null, null, res.headers)
         else
           try
             body = JSON.parse body
