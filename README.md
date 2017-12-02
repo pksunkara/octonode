@@ -191,7 +191,7 @@ http.createServer(function (req, res) {
       res.writeHead(403, {'Content-Type': 'text/plain'});
       res.end('');
     } else {
-      github.auth.login(values.code, function (err, token) {
+      github.auth.login(values.code, function (err, token, headers) {
         res.writeHead(200, {'Content-Type': 'text/plain'});
         res.end(token);
       });
