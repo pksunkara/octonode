@@ -63,13 +63,13 @@ auth = module.exports =
 
       request options, (err, res, body) ->
         if err?
-          callback(err, null, null, res.headers)
+          callback(err, null, null, res?.headers)
         else
           try
             body = JSON.parse body
           catch err
             callback new Error('Unable to parse body')
-          if res.statusCode is 201 then callback(null, body.id, body.token, res.headers) else callback(new Error(body.message), null, null, res.headers)
+          if res.statusCode is 201 then callback(null, body.id, body.token, res?.headers) else callback(new Error(body.message), null, null, res?.headers)
     else if @mode == @modes.web
       if scopes instanceof Array
         uri = "#{@options.webUrl}/login/oauth/authorize"
@@ -91,11 +91,11 @@ auth = module.exports =
             'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
         , (err, res, body) ->
           if err?
-            callback err
+            callback(err, null, res?.headers)
           else if res.statusCode is 404
             callback(new Error('Access token not found'))
           else
             body = qs.parse body
-            if body.error then callback(new Error(body.error)) else callback(null, body.access_token)
+            if body.error then callback(new Error(body.error), null, res?.headers) else callback(null, body.access_token, res?.headers)
     else
       callback new Error('No working mode defined')
