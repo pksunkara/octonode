@@ -139,7 +139,7 @@ var scopes = {
 github.auth.config({
   username: 'pksunkara',
   password: 'password'
-}).login(scopes, function (err, id, token) {
+}).login(scopes, function (err, id, token, headers) {
   console.log(id, token);
 });
 ```
@@ -191,7 +191,7 @@ http.createServer(function (req, res) {
       res.writeHead(403, {'Content-Type': 'text/plain'});
       res.end('');
     } else {
-      github.auth.login(values.code, function (err, token) {
+      github.auth.login(values.code, function (err, token, headers) {
         res.writeHead(200, {'Content-Type': 'text/plain'});
         res.end(token);
       });
