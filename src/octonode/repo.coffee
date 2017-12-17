@@ -90,6 +90,13 @@ class Repo extends Base
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo compare error")) else cb null, b, h
 
+  # Merge branches
+  # '/repos/pksunkara/hub/merges' POST
+  merge: (obj, cb) ->
+    @client.post "/repos/#{@repo}/merges", obj, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 201 then cb(new Error("Merge info error")) else cb null, b, h
+
   # Create a commit
   # '/repos/pksunkara/hub/git/commits' POST
   createCommit: (message, tree, parents, cbOrOptions, cb) ->
