@@ -132,7 +132,7 @@ More info about conditional requests can be founded [here](https://developer.git
 
 ```js
 var scopes = {
-  'add_scopes': ['user', 'repo', 'gist'],
+  'scopes': ['user', 'repo', 'gist'],
   'note': 'admin script'
 };
 
