@@ -670,7 +670,6 @@ ghrepo.label({
 }, callback); //label
 ```
 
-
 #### Get the pull requests for a repository (GET /repos/pksunkara/hub/pulls)
 
 This query supports [pagination](#pagination).
@@ -1104,6 +1103,14 @@ ghlabel.update({
 
 ```js
 ghlabel.delete(callback); //label
+```
+
+## Github Merge API
+
+#### Merge a branch (POST /repose/pksunkara/hub/merges)
+
+```js
+ghrepo.merge({ base: baseBranch, head: destinationBranch }, callback);
 ```
 
 ## Github pull requests api
