@@ -99,6 +99,18 @@ class Team extends Base
       return cb(err) if err
       if s isnt 200 then cb(new Error("Team repos error")) else cb null, b, h
 
+  # Add repo to a team
+  # '/teams/37/repos/flatiron/hub' PUT
+  addRepo: (repo, cbOrOptions, cb) ->
+    if !cb? and cbOrOptions
+      cb = cbOrOptions
+      param = {}
+    else if typeof cbOrOptions is 'object'
+      param = cbOrOptions
+    @client.put "/teams/#{@id}/repos/#{repo}", param, (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 204 then cb(new Error("Team addRepo error")) else cb null, b, h
+
   # Remove repo from a team
   # '/teams/37/repos/flatiron/hub' DELETE
   removeRepo: (repo, cb) ->
