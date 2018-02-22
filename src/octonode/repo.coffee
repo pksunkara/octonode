@@ -93,7 +93,7 @@ class Repo extends Base
   # Merge branches
   # '/repos/pksunkara/hub/merges' POST
   merge: (obj, cb) ->
-    @client.post "/repos/#{@repo}/merges", obj, (err, s, b, h) ->
+    @client.post "/repos/#{@name}/merges", obj, (err, s, b, h) ->
       return cb(err) if err
       if s isnt 201 then cb(new Error("Merge info error")) else cb null, b, h
 
