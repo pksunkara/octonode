@@ -56,6 +56,15 @@ class Issue extends Base
       return cb(err) if err
       if s isnt 204 then cb(new Error("Issue deleteComment error")) else cb null, b, h
 
+  # List events on an issue
+  # '/repos/pksunkara/hub/issues/37/events' GET
+  # - page or query object, optional - params[0]
+  # - per_page, optional             - params[1]
+  events: (params..., cb) ->
+    @client.get "/repos/" + @repo + "/issues/" + @number + "/events", params..., (err, s, b, h)  ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error('Issue events error')) else cb null, b, h
+
   # List labels
   # '/repos/pksunkara/hub/issues/37/labels' GET
   labels: (cb) ->
