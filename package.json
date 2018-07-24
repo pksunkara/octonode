@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "coffee-script": "^1.12.4",
-    "nock": "^8.0.0",
+    "nock": "^9.4.3",
     "vows": "^0.8.1"
   },
   "engines": {
