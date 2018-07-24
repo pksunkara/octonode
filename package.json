@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "bluebird": "^3.5.0",
-    "deep-extend": "^0.5.1",
+    "deep-extend": "^0.6.0",
     "randomstring": "^1.1.5",
     "request": "^2.72.0"
   },
