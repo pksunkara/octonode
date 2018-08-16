@@ -229,6 +229,22 @@ ghme.info(function(err, data, headers) {
 });
 ```
 
+## Async / Promises
+
+If you would like to work with promises rather than callbacks, you can call the promise based version of any of the api calls by appending `Async` to the function call. 
+
+For example `prs()` becomes `prsAsync()` like this:
+
+```js
+async function getPullRequests () {
+  const client = github.client(config.githubAccessToken)
+  const repo = client.repo('pksunkara/octonode')
+
+  const result = await repo.prsAsync({ per_page: 100 })
+  return result[0]
+}
+```
+
 ## Pagination
 
 If a function is said to be supporting pagination, then that function can be used in many ways as shown below. Results from the function are arranged in [pages](https://developer.github.com/v3/#pagination).
