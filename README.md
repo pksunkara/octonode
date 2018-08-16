@@ -231,7 +231,9 @@ ghme.info(function(err, data, headers) {
 
 ## Async
 
-__If you would like to work with promises rather than callbacks, you can call the promise based version of any of the api calls by appending `Async` to the function call. For example `prs()` becomes `prsAsync()` like this:__
+If you would like to work with promises rather than callbacks, you can call the promise based version of any of the api calls by appending `Async` to the function call. 
+
+For example `prs()` becomes `prsAsync()` like this:
 
 ```js
 async function getPullRequests () {
@@ -242,7 +244,6 @@ async function getPullRequests () {
   return result[0]
 }
 ```
-
 
 ## Pagination
 
