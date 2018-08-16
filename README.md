@@ -234,20 +234,6 @@ ghme.info(function(err, data, headers) {
 __If you would like to work with promises rather than callbacks, you can call the promise based version of any of the api calls by appending `Async` to the function call, like this:__
 
 ```js
-function getPullRequests () {
-  const client = github.client(config.githubAccessToken)
-  const repo = client.repo('pksunkara/octonode')
-
-  return new Promise((resolve) => {
-    repo.prsAsync({ per_page: 100 }).then(resolve)
-  })
-}
-
-```
-
-__OR with the async/await syntax__
-
-```js
 async function getPullRequests () {
   const client = github.client(config.githubAccessToken)
   const repo = client.repo('pksunkara/octonode')
