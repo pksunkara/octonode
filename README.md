@@ -229,7 +229,7 @@ ghme.info(function(err, data, headers) {
 });
 ```
 
-## Async
+## Async / Promises
 
 If you would like to work with promises rather than callbacks, you can call the promise based version of any of the api calls by appending `Async` to the function call. 
 
