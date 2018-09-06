@@ -133,6 +133,12 @@ class Repo extends Base
     else
       @client.release @name, numberOrRelease
 
+  # Get the release associated to a tag name
+  releaseByTag: (tag, cb) ->
+    @client.get "/repos/#{@name}/releases/tags/#{tag}", (err, s, b, h) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Repo releaseByTag error")) else cb null, b, h
+
   # Create a relase for a repo
   # '/repo/pksunkara/releases' POST
   createRelease: (release, cb) ->
