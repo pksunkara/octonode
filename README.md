@@ -280,15 +280,15 @@ ghme.emails(callback); //array of emails
 #### Set emails of the user (POST /user/emails)
 
 ```js
-ghme.emails(['new1@ma.il', 'new2@ma.il'], callback); //array of emails
-ghme.emails('new@ma.il', callback); //array of emails
+ghme.setEmails(['new1@ma.il', 'new2@ma.il'], callback); //array of emails
+ghme.setEmails('new@ma.il', callback); //array of emails
 ```
 
 #### Delete emails of the user (DELETE /user/emails)
 
 ```js
-ghme.emails(['new1@ma.il', 'new2@ma.il']);
-ghme.emails('new@ma.il');
+ghme.deleteEmails(['new1@ma.il', 'new2@ma.il'], callback);
+ghme.deleteEmails('new@ma.il', callback);
 ```
 
 #### Get the followers of the user (GET /user/followers)
@@ -314,13 +314,13 @@ ghme.following('marak', callback); //boolean
 #### Follow a user (PUT /user/following/marak)
 
 ```js
-ghme.follow('marak');
+ghme.follow('marak', callback);
 ```
 
 #### Unfollow a user (DELETE /user/following/marak)
 
 ```js
-ghme.unfollow('marak');
+ghme.unfollow('marak', callback);
 ```
 
 #### Get public keys of a user (GET /user/keys)
@@ -332,25 +332,25 @@ ghme.keys(callback); //array of keys
 #### Get a single public key (GET /user/keys/1)
 
 ```js
-ghme.keys(1, callback); //key
+ghme.getKey(1, callback); //key
 ```
 
 #### Create a public key (POST /user/keys)
 
 ```js
-ghme.keys({"title":"laptop", "key":"ssh-rsa AAA..."}, callback); //key
+ghme.createKey({"title":"laptop", "key":"ssh-rsa AAA..."}, callback); //key
 ```
 
 #### Update a public key (PATCH /user/keys/1)
 
 ```js
-ghme.keys(1, {"title":"desktop", "key":"ssh-rsa AAA..."}, callback); //key
+ghme.updateKey(1, {"title":"desktop", "key":"ssh-rsa AAA..."}, callback); //key
 ```
 
 #### Delete a public key (DELETE /user/keys/1)
 
 ```js
-ghme.keys(1);
+ghme.deleteKey(1);
 ```
 
 #### Get the starred repos for the user (GET /user/starred)
@@ -370,13 +370,13 @@ ghme.checkStarred('flatiron/flatiron', callback); //boolean
 #### Star a repository (PUT /user/starred/pksunkara/octonode)
 
 ```js
-ghme.star('flatiron/flatiron');
+ghme.star('flatiron/flatiron', callback);
 ```
 
 #### Unstar a repository (DELETE /user/starred/pksunkara/octonode)
 
 ```js
-ghme.unstar('flatiron/flatiron');
+ghme.unstar('flatiron/flatiron', callback);
 ```
 
 #### Get the subscriptions of the user (GET /user/subscriptions)
@@ -406,7 +406,7 @@ ghme.repos(callback); //array of repos
 #### Create a repository (POST /user/repos)
 
 ```js
-ghme.repo({
+ghme.createRepo({
   "name": "Hello-World",
   "description": "This is your first repo",
 }, callback); //repo
@@ -607,7 +607,7 @@ ghrepo.issues(callback); //array of issues
 #### Create an issue for a repository (POST /repos/pksunkara/hub/issues)
 
 ```js
-ghrepo.issue({
+ghrepo.createIssue({
   "title": "Found a bug",
   "body": "I'm having a problem with this.",
   "assignee": "octocat",
@@ -628,7 +628,7 @@ ghrepo.milestones(callback); //array of milestones
 #### Create a milestone for a repository (POST /repos/pksunkara/hub/milestones)
 
 ```js
-ghrepo.milestone({
+ghrepo.createMilestone({
   "title": "Sprint 345",
   "description": "The sprint where we fix all the things!",
   "due_on": new Date(2014, 7, 1)
@@ -646,7 +646,7 @@ ghrepo.projects(callback); //array of projects
 #### Create a project for a repository (POST /repos/pksunkara/hub/projects)
 
 ```js
-ghrepo.project({
+ghrepo.createProject({
   "name": "Sprint 345",
   "body": "The sprint where we fix all the things!"
 }, callback); //project
@@ -664,7 +664,7 @@ ghrepo.labels(callback); //array of labels
 #### Create a label for a repository (POST /repos/pksunkara/hub/labels)
 
 ```js
-ghrepo.label({
+ghrepo.createLabel({
   "name": "Priority",
   "color": "ff0000",
 }, callback); //label
@@ -681,7 +681,7 @@ ghrepo.prs(callback); //array of pull requests
 #### Create a pull request (POST /repos/pksunkara/hub/pulls)
 
 ```js
-ghrepo.pr({
+ghrepo.createPr({
   "title": "Amazing new feature",
   "body": "Please pull this in!",
   "head": "octocat:new-feature",
@@ -700,7 +700,7 @@ ghrepo.hooks(callback); //array of hooks
 #### Create a hook (POST /repos/pksunkara/hub/hooks)
 
 ```js
-ghrepo.hook({
+ghrepo.createHook({
   "name": "web",
   "active": true,
   "events": ["push", "pull_request"],
@@ -872,7 +872,7 @@ ghorg.repos(callback); //array of repos
 #### Create an organization repository (POST /orgs/flatiron/repos)
 
 ```js
-ghorg.repo({
+ghorg.createRepo({
   name: 'Hello-world',
   description: 'My first world program'
 }, callback); //repo
@@ -947,7 +947,7 @@ ghorg.hooks(callback); //array of hooks
 #### Create a hook (POST /orgs/flatiron/hooks)
 
 ```js
-ghorg.hook({
+ghorg.createHook({
   "name": "web",
   "active": true,
   "events": ["push", "pull_request"],
@@ -1253,7 +1253,7 @@ ghpr.removeReviewRequests(['user1', 'user2'], callback); //pull request
 
 ### Create release (POST /repos/pksunkara/releases)
 ```js
-ghrepo.release({
+ghrepo.createRelease({
   tag_name: 'v1.0.0',
   draft: true
 }, callback);
@@ -1372,13 +1372,13 @@ ghgist.check(37); //boolean
 #### List comments on a gist (GET /gists/37/comments)
 
 ```js
-ghgist.comments(37, callback); //array of comments
+ghgist.listComments(37, callback); //array of comments
 ```
 
 #### Create a comment (POST /gists/37/comments)
 
 ```js
-ghgist.comments(37, {
+ghgist.createComment(37, {
   body: "Just commenting"
 }, callback); //comment
 ```
@@ -1386,13 +1386,13 @@ ghgist.comments(37, {
 #### Get a single comment (GET /gists/comments/1)
 
 ```js
-ghgist.comment(1, callback); //comment
+ghgist.getComment(1, callback); //comment
 ```
 
 #### Edit a comment (POST /gists/comments/1)
 
 ```js
-ghgist.comment(1, {
+ghgist.updateComment(1, {
   body: "lol at commenting"
 }, callback); //comment
 ```
@@ -1400,7 +1400,7 @@ ghgist.comment(1, {
 #### Delete a comment (DELETE /gists/comments/1)
 
 ```js
-ghgist.comment(1);
+ghgist.deleteComment(1);
 ```
 
 ## Github teams api

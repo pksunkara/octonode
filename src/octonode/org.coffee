@@ -149,7 +149,7 @@ class Org extends Base
 
   # Create a hook
   # '/orgs/flatiron/hub/hooks' POST
-  hook: (hook, cb) ->
+  createHook: (hook, cb) ->
     @client.post "/orgs/#{@name}/hooks", hook, (err, s, b, h) ->
       return cb(err) if err
       if s isnt 201 then cb(new Error("Org createHook error")) else cb null, b, h

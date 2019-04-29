@@ -485,7 +485,7 @@ class Repo extends Base
 
   # Create a hook
   # '/repos/pksunkara/hub/hooks' POST
-  hook: (hook, cb) ->
+  createHook: (hook, cb) ->
     @client.post "/repos/#{@name}/hooks", hook, (err, s, b, h) ->
       return cb(err) if err
       if s isnt 201 then cb(new Error("Repo createHook error")) else cb null, b, h
