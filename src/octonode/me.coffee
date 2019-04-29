@@ -87,7 +87,11 @@ class Me extends Base
   # '/user/following/pksunkara' GET
   checkFollowing: (user, cb) ->
     @client.get "/user/following/#{user}", (err, s, b, h)  ->
-      return cb(err) if err
+      if err
+        if err.statusCode == 404
+          s = err.statusCode
+        else
+          return cb(err)
       cb null, s is 204, h
 
   # Follow a user
@@ -116,7 +120,11 @@ class Me extends Base
   # '/user/starred/pksunkara/octonode' GET
   checkStarred: (repo, cb) ->
     @client.get "/user/starred/#{repo}", (err, s, b, h)  ->
-      return cb(err) if err
+      if err
+        if err.statusCode == 404
+          s = err.statusCode
+        else
+          return cb(err)
       cb null, s is 204, h
 
   # Star a repository
@@ -254,7 +262,11 @@ class Me extends Base
   # '/repos/pksunkara/hub/subscription' GET
   checkWatching: (repo, cb) ->
     @client.get "/repos/#{repo}/subscription", (err, s, b, h) ->
-      return cb(err) if err
+      if err
+        if err.statusCode == 404
+          s = err.statusCode
+        else
+          return cb(err)
       if s is 200 then cb(null, b, h) else cb null, false, h
 
   # Set a repository subscription

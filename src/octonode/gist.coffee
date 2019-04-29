@@ -101,7 +101,11 @@ class Gist extends Base
   # '/gists/37/star' GET
   check: (id, cb) ->
     @client.get "/gists/#{id}/star", (err, s, b, h) ->
-      return cb(err) if err
+      if err
+        if err.statusCode == 404
+          s = err.statusCode
+        else
+          return cb(err)
       cb null, s is 204, h
 
   # List comments on a gist
