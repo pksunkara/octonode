@@ -13,8 +13,8 @@
   ],
   "scripts": {
     "test": "vows --spec test/auth/index.js",
-    "lib": "./node_modules/coffee-script/bin/cake lib",
-    "watch": "./node_modules/coffee-script/bin/cake watch"
+    "lib": "./node_modules/coffeescript/bin/cake lib",
+    "watch": "./node_modules/coffeescript/bin/cake watch"
   },
   "dependencies": {
     "bluebird": "^3.5.0",
