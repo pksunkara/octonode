@@ -23,9 +23,9 @@
     "request": "^2.72.0"
   },
   "devDependencies": {
-    "coffee-script": "^1.12.4",
+    "coffeescript": "^1.12.7",
     "nock": "^10.0.0",
-    "vows": "^0.8.1"
+    "vows": "^0.8.2"
   },
   "engines": {
     "node": ">0.4.11"
