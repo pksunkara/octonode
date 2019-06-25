@@ -1,5 +1,4 @@
-# octonode [![Gitter chat](https://badges.gitter.im/pksunkara/octonode.svg)](https://gitter.im/pksunkara/octonode)
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fpksunkara%2Foctonode.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fpksunkara%2Foctonode?ref=badge_shield)
+# octonode
 
 octonode is a library for nodejs to access the [github v3 api](https://developer.github.com/)
 
