@@ -12,9 +12,8 @@
     "github"
   ],
   "scripts": {
-    "test": "vows --spec test/auth/index.js",
-    "lib": "./node_modules/coffeescript/bin/cake lib",
-    "watch": "./node_modules/coffeescript/bin/cake watch"
+    "test": "npm run lib && vows --spec test/auth/index.js",
+    "lib": "coffee -c -o lib src"
   },
   "dependencies": {
     "bluebird": "^3.5.0",

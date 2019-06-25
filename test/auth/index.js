@@ -1,7 +1,7 @@
 var asrt = require('assert')
   , vows = require('vows')
   , sprt = require('../support')
-  , ghub = require('../../src/octonode');
+  , ghub = require('../../lib/octonode');
 
 vows.describe('auth').addBatch({
   'Authentication': {
