@@ -23,7 +23,7 @@
     "request": "^2.72.0"
   },
   "devDependencies": {
-    "coffeescript": "^1.12.7",
+    "coffeescript": "^2.4.1",
     "nock": "^10.0.0",
     "vows": "^0.8.2"
   },
