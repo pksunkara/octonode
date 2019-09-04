@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "coffeescript": "^1.12.7",
-    "nock": "^10.0.0",
+    "nock": "^11.3.2",
     "vows": "^0.8.2"
   },
   "engines": {
