@@ -1267,12 +1267,21 @@ ghpr.removeReviewRequests(['user1', 'user2'], callback); //pull request
 ## Github releases api
 
 ### Create release (POST /repos/pksunkara/releases)
+
 ```js
 ghrepo.release({
   tag_name: 'v1.0.0',
   draft: true
-}, callback);
+}, function (err, release, response) {
+  if (err) {
+    // handle error
+    return;
+  }
+  console.log('Release available at' + release.html_url);
+});
 ```
+
+See [Releases/Create A Release](https://developer.github.com/v3/repos/releases/#create-a-release).
 
 #### Upload assets in a release (POST /uploads.github.com/repos/pksunkara/hub/releases/37/assets?name=archve-v0.0.1.zip)
 
@@ -1295,7 +1304,7 @@ var options = {
   contentType: 'image/png',
   uploadHost: 'uploads.github.com'
 };
-ghrelease.uplaodAssets(image, options, callback)
+ghrelease.uploadAssets(image, options, callback)
 ```
 ## Github gists api
 
