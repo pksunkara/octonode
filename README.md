@@ -1295,7 +1295,7 @@ var options = {
   contentType: 'image/png',
   uploadHost: 'uploads.github.com'
 };
-ghrelease.uplaodAssets(image, options, callback)
+ghrelease.uploadAssets(image, options, callback)
 ```
 ## Github gists api
 
