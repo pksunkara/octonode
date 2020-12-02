@@ -25,7 +25,7 @@ var ghpr           = client.pr('pksunkara/hub', 37);
 var ghrelease      = client.release('pksunkara/hub', 37);
 var ghgist         = client.gist();
 var ghteam         = client.team(37);
-var ghproject      = client.project('pksunkara/hub', 37);
+var ghproject      = client.project(37);
 var ghnotification = client.notification(37);
 
 var ghsearch = client.search();
@@ -1038,13 +1038,13 @@ ghmilestone.delete(callback); //milestone
 
 ## Github projects api
 
-#### Get a single project (GET /repos/pksunkara/hub/projects/37)
+#### Get a single project (GET /projects/37)
 
 ```js
 ghproject.info(callback); //project
 ```
 
-#### Edit a project for a repository (PATCH /repos/pksunkara/hub/projects/37)
+#### Edit a project for a repository (PATCH /projects/37)
 
 ```js
 ghproject.update({
@@ -1052,7 +1052,7 @@ ghproject.update({
 }, callback); //project
 ```
 
-#### Delete a project for a repository (DELETE /repos/pksunkara/hub/projects/37)
+#### Delete a project for a repository (DELETE /projects/37)
 
 ```js
 ghproject.delete(callback); //project
@@ -1631,16 +1631,15 @@ repo.get_all_references(callback);
 repo.update_reference('ref', 'sha', force, callback);
 ```
 
-__I accept pull requests and guarantee a reply back within a day__
+__I accept pull requests__
 
 ## License
 MIT/X11
 
-
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fpksunkara%2Foctonode.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fpksunkara%2Foctonode?ref=badge_large)
 
 ## Bug Reports
-Report [here](https://github.com/pksunkara/octonode/issues). __Guaranteed reply within a day__.
+Report [here](https://github.com/pksunkara/octonode/issues).
 
 ## Contact
 Pavan Kumar Sunkara (pavan.sss1991@gmail.com)

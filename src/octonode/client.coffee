@@ -189,6 +189,18 @@ class Client
       return callback(err) if err
       @errorHandle res, body, callback
 
+  # Github api GET request
+  getAccept: (path, accept, params..., callback) ->
+    @request @requestOptions(
+      uri: @buildUrl path, params...
+      method: 'GET'
+      headers:
+        'Content-Type': 'application/json'
+        'Accept': "application/vnd.github.#{accept}+json"
+    ), (err, res, body) =>
+      return callback(err) if err
+      @errorHandle res, body, callback
+
   # Github api POST request
   post: (path, content, options, callback) ->
     if !callback? and typeof options is 'function'
@@ -221,6 +233,19 @@ class Client
       return callback(err) if err
       @errorHandle res, body, callback
 
+  # Github api PATCH request
+  patchAccept: (path, accept, content, callback) ->
+    @request @requestOptions(
+      uri: @buildUrl path
+      method: 'PATCH'
+      body: JSON.stringify content
+      headers:
+        'Content-Type': 'application/json'
+        'Accept': "application/vnd.github.#{accept}+json"
+    ), (err, res, body) =>
+      return callback(err) if err
+      @errorHandle res, body, callback
+
   # Github api PUT request
   put: (path, content, options, callback) ->
     if !callback and options
@@ -244,6 +269,19 @@ class Client
       body: JSON.stringify content
       headers:
         'Content-Type': 'application/json'
+    ), (err, res, body) =>
+      return callback(err) if err
+      @errorHandle res, body, callback
+
+  # Github api DELETE request
+  delAccept: (path, accept, content, callback) ->
+    @request @requestOptions(
+      uri: @buildUrl path
+      method: 'DELETE'
+      body: JSON.stringify content
+      headers:
+        'Content-Type': 'application/json'
+        'Accept': "application/vnd.github.#{accept}+json"
     ), (err, res, body) =>
       return callback(err) if err
       @errorHandle res, body, callback

@@ -240,7 +240,7 @@ class Repo extends Base
   # - page or query object, optional - params[0]
   # - per_page, optional             - params[1]
   projects: (params..., cb) ->
-    @client.get "/repos/#{@name}/projects", params..., (err, s, b, h) ->
+    @client.getAccept "/repos/#{@name}/projects", 'inertia-preview', params..., (err, s, b, h) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo projects error")) else cb null, b, h
 
