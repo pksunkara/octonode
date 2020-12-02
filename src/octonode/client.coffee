@@ -9,6 +9,8 @@ request = require 'request'
 url = require 'url'
 Promise = require 'bluebird'
 
+pkg = require '../../package.json'
+
 Me           = require './me'
 User         = require './user'
 Repo         = require './repo'
@@ -37,7 +39,7 @@ class Client
     @request = @options and @options.request or request
     @requestDefaults =
       headers:
-        'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
+        'User-Agent': "octonode/#{pkg.version} (https://github.com/pksunkara/octonode) terminal/0.0"
 
     if @token and typeof @token == 'string'
       @requestDefaults.headers.Authorization = "token " + @token
