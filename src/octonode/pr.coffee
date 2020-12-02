@@ -48,8 +48,10 @@ class Pr extends Base
 
   # List commits on a pull request
   # '/repos/pksunkara/hub/pulls/37/commits' GET
-  commits: (cb) ->
-    @client.get "/repos/#{@repo}/pulls/#{@number}/commits", (err, s, b, h) ->
+  # - page or query object, optional - params[0]
+  # - per_page, optional             - params[1]
+  commits: (params..., cb) ->
+    @client.get "/repos/#{@repo}/pulls/#{@number}/commits", params..., (err, s, b, h) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error("Pr commits error")) else cb null, b, h
 
@@ -58,7 +60,7 @@ class Pr extends Base
   # - page or query object, optional - params[0]
   # - per_page, optional             - params[1]
   comments: (params..., cb) ->
-    @client.get "/repos/" + @repo + "/pulls/" + @number + "/comments", params..., (err, s, b, h)  ->
+    @client.get "/repos/#{@repo}/pulls/#{@number}/comments", params..., (err, s, b, h)  ->
       return cb(err) if err
       if s isnt 200 then cb(new Error('Pr Comments error')) else cb null, b, h
 
