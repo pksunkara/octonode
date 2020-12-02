@@ -44,33 +44,7 @@ client.get('/users/pksunkara', {}, function (err, status, body, headers) {
 #### Build a client from an access token
 
 ```js
-var client = github.client('someaccesstoken');
-
-client.get('/user', {}, function (err, status, body, headers) {
-  console.log(body); //json object
-});
-```
-
-#### Build a client from credentials
-
-```js
-var client = github.client({
-  username: 'pksunkara',
-  password: 'password'
-});
-
-client.get('/user', {}, function (err, status, body, headers) {
-  console.log(body); //json object
-});
-```
-
-#### Build a client from client keys
-
-```js
-var client = github.client({
-  id: 'abcdefghijklmno',
-  secret: 'abcdefghijk'
-});
+var client = github.client('some_access_token');
 
 client.get('/user', {}, function (err, status, body, headers) {
   console.log(body); //json object
@@ -81,10 +55,7 @@ client.get('/user', {}, function (err, status, body, headers) {
 You can configure the `protocol`, `hostname` and `port` to use. For example to connect to a GitHub Enterprise instance.
 
 ```js
-var client = github.client({
-  username: 'pksunkara',
-  password: 'password'
-},{
+var client = github.client('some_access_token', {
   hostname: 'mydomain.com/api/v3'
 });
 
@@ -140,17 +111,6 @@ github.auth.config({
   password: 'password'
 }).login(scopes, function (err, id, token, headers) {
   console.log(id, token);
-});
-```
-
-#### Revoke authentication to github in cli mode (desktop application)
-
-```js
-github.auth.config({
-  username: 'pksunkara',
-  password: 'password'
-}).revoke(id, function (err) {
-  if (err) throw err;
 });
 ```
 
@@ -230,7 +190,7 @@ ghme.info(function(err, data, headers) {
 
 ## Async / Promises
 
-If you would like to work with promises rather than callbacks, you can call the promise based version of any of the api calls by appending `Async` to the function call. 
+If you would like to work with promises rather than callbacks, you can call the promise based version of any of the api calls by appending `Async` to the function call.
 
 For example `prs()` becomes `prsAsync()` like this:
 
