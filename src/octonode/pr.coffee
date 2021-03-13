@@ -87,8 +87,8 @@ class Pr extends Base
 
   # List pull request reviews
   # '/repos/pksunkara/hub/pulls/37/reviews' GET
-  reviews: (cb) ->
-    @client.get "/repos/#{@repo}/pulls/#{@number}/reviews", (err, s, b, h) ->
+  reviews: (params...,cb) ->
+    @client.get "/repos/#{@repo}/pulls/#{@number}/reviews", params..., (err, s, b, h) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error("Pr reviews error")) else cb null, b, h
 
