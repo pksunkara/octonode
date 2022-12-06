@@ -206,7 +206,7 @@ async function getPullRequests () {
 
 ## Pagination
 
-If a function is said to be supporting pagination, then that function can be used in many ways as shown below. Results from the function are arranged in [pages](https://developer.github.com/v3/#pagination).
+If a function is said to be supporting pagination, then that function can be used in many ways as shown below. Results from the function are arranged in [pages](https://docs.github.com/en/rest/guides/traversing-with-pagination?apiVersion=2022-11-28).
 
 The page argument is optional and is used to specify which page of issues to retrieve.
 The perPage argument is also optional and is used to specify how many issues per page.
@@ -222,7 +222,7 @@ ghrepo.issues(10, callback); //array of 30 issues from page 10
 // Pagination parameters can be set with query object too
 ghrepo.issues({
   page: 2,
-  per_page: 100,
+  per_page: 100, //maximum is 100
   state: 'closed'
 }, callback); //array of second 100 issues which are closed
 ```
